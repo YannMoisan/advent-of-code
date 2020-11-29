@@ -10,7 +10,8 @@ lazy val root = (project in file("."))
     `advent-of-code-2015`,
     `advent-of-code-2018`,
     `advent-of-code-2019`,
-    `advent-of-code-2020`
+    `advent-of-code-2020`,
+    `benchmark-2018`
   )
   .settings(
     name := "advent-of-code"
@@ -43,6 +44,12 @@ lazy val `advent-of-code-2020` = (project in file("2020"))
 lazy val `core` = (project in file("core")).settings(
   libraryDependencies += scalaTest % Test
 )
+
+lazy val `benchmark-2018` = project
+  .enablePlugins(JmhPlugin)
+  .settings(
+    scalaVersion := "2.12.10"
+  )
 
 //lazy val root = (project in file("."))
 //  .settings(

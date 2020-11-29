@@ -6,7 +6,12 @@ ThisBuild / organization := "com.example"
 ThisBuild / organizationName := "example"
 
 lazy val root = (project in file("."))
-  .aggregate(`advent-of-code-2015`, `advent-of-code-2019`, `advent-of-code-2020`)
+  .aggregate(
+    `advent-of-code-2015`,
+    `advent-of-code-2018`,
+    `advent-of-code-2019`,
+    `advent-of-code-2020`
+  )
   .settings(
     name := "advent-of-code"
   )
@@ -15,6 +20,13 @@ lazy val `advent-of-code-2015` = (project in file("2015"))
   .dependsOn(core).settings(
     wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
     libraryDependencies += scalaTest % Test
+  )
+
+lazy val `advent-of-code-2018` = (project in file("2018"))
+  .settings(
+    scalaVersion := "2.12.10",
+    scalacOptions --= Seq("-Xfatal-warnings"),
+    libraryDependencies += scalaTest308 % Test
   )
 
 lazy val `advent-of-code-2019` = (project in file("2019"))

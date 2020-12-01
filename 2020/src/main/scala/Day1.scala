@@ -1,15 +1,23 @@
-object Day1 extends SinglePuzzle[Int, Int] {
-  override def part1(input: String): Int = input.foldLeft(0) {
-    case (acc, i) => if (i == '(') acc + 1 else acc - 1
+object Day1 extends MultiPuzzle[Int, Int] {
+  override def part1(input: Iterator[String]): Int = {
+    val numbers = input.map(_.toInt).toSet
+    twoSum(numbers, 2020) match {
+      case Some((a, b)) => a * b
+      case None         => sys.error("illegal state")
+    }
   }
 
-  override def part2(input: String): Int = {
-    var i     = 0
-    var floor = 0
-    while (i < input.length && floor != -1) {
-      if (input.charAt(i) == '(') floor += 1 else floor -= 1
-      i += 1
+  override def part2(input: Iterator[String]): Int = {
+    val numbers = input.map(_.toInt).toSet
+
+    numbers
+      .flatMap(x => twoSum(numbers, 2020 - x).map { case (a, b) => (x, a, b) })
+      .headOption match {
+      case Some((a, b, c)) => a * b * c
+      case None            => sys.error("illegal state")
     }
-    i
   }
+
+  def twoSum(set: Set[Int], target: Int): Option[(Int, Int)] =
+    set.find(x => set.contains(target - x)).map(x => (x, target - x))
 }

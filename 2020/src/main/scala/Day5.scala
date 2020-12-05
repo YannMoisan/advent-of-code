@@ -16,7 +16,5 @@ object Day5 extends MultiPuzzle[Int, Int] {
 
 object Binary extends App {
   def id(s: String): Int =
-    s.zip(9 to 0 by -1).foldLeft(0) {
-      case (acc, (c, idx)) => if (c == 'B' || c == 'R') acc | 1 << idx else acc
-    }
+    s.foldLeft(0) { case (acc, c) => acc << 1 | (if (c == 'B' || c == 'R') 1 else 0) }
 }

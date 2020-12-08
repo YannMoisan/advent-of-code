@@ -1,4 +1,5 @@
 import scala.collection.mutable
+import scala.util.matching.Regex
 
 object Day7 extends MultiPuzzle[Int, Int] {
   // Find all distinct ancestors of a vertex in a DAG (repr. as adjacency list)
@@ -12,7 +13,6 @@ object Day7 extends MultiPuzzle[Int, Int] {
       rules.foreach {
         case (outer, inners) =>
           if (inners.exists(_._2 == cur)) {
-            println(outer)
             val _ = visited.add(outer)
             val _ = q.enqueue(outer)
           }
@@ -35,17 +35,12 @@ object Day7 extends MultiPuzzle[Int, Int] {
     }
 
   // muted lavender bags contain 5 dull brown bags, 4 pale maroon bags, 2 drab orange bags.
-  def parse(s: String): (String, List[(Int, String)]) = {
-    val Array(outer, inners) = s.dropRight(1).split(" bags contain ")
-    val innersArr            = inners.split(", ")
-    val ret: List[(Int, String)] = innersArr match {
-      case Array("no other bags") => List()
-      case _ =>
-        innersArr.map { a =>
-          val arr = a.split(" ").dropRight(1)
-          (arr(0).toInt, arr.drop(1).mkString(" "))
-        }.toList
+  def parse(s: String): (String, List[(Int, String)]) =
+    s match {
+      case s"$outer bags contain no other bags." => (outer, List())
+      case s"$outer bags contain $inners." =>
+        val regex = raw"(\d+) ((?:\w+ ?)+) bag".r
+        val bags  = regex.findAllMatchIn(inners).toList.map(m => (m.group(1).toInt, m.group(2)))
+        (outer, bags)
     }
-    (outer, ret)
-  }
 }

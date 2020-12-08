@@ -22,11 +22,11 @@ object Day8 extends MultiPuzzle[Int, Int] {
       }
     }
 
-    Iterator
-      .from(0).map { i =>
+    programs.view
+      .map { program =>
         val initial = State(0, 0, Set[Int]())
         loop(initial)(
-          executeNextInstruction(programs(i)),
+          executeNextInstruction(program),
           s => s.visited.contains(s.ptr) || s.ptr == program.length
         )
       }.find(_.ptr == program.length) match {

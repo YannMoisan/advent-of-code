@@ -9,15 +9,15 @@ object Day11 extends MultiPuzzle[Int, Int] {
     run(grid, pos => Direction.all.flatMap(dir => nextVisible(grid, pos, dir)), 5)
   }
 
-  private def run(grid: Grid, neighbors: Position => Seq[Position], limit: Int): Int = {
-    val it = Iterator.iterate(grid)(applyRules(_, neighbors, limit))
-    findFirstDuplicate(it) match {
-      case Some(grid) => grid.count(_ == '#')
-      case None       => sys.error("illegal state")
+  private def run(grid: Grid, neighbors: Position => Seq[Position], limit: Int): Int =
+    Iterator
+      .iterate(grid)(applyRules(neighbors, limit))
+      .sliding(2).find(seq => seq(0) == seq(1)) match {
+      case Some(seq) => seq(0).count(_ == '#')
+      case None      => sys.error("illegal state")
     }
-  }
 
-  private def applyRules(grid: Grid, neighbors: Position => Seq[Position], limit: Int): Grid = {
+  private def applyRules(neighbors: Position => Seq[Position], limit: Int)(grid: Grid): Grid = {
     val newGrid = grid.fill('?')
     newGrid.positions.foreach { pos =>
       grid(pos) match {
@@ -34,22 +34,6 @@ object Day11 extends MultiPuzzle[Int, Int] {
     Iterator
       .unfold(start)(p => grid.move(p, dir).map(x => (x, x)))
       .find(p => grid(p) != '.')
-
-  private def findFirstDuplicate[A](it: Iterator[A]): Option[A] = {
-    val withPreviousIterator = new Iterator[(A, Option[A])] {
-      var prev: Option[A] = None
-
-      override def hasNext: Boolean = it.hasNext
-
-      override def next(): (A, Option[A]) = {
-        val next = it.next()
-        val ret  = (next, prev)
-        prev = Some(next)
-        ret
-      }
-    }
-    withPreviousIterator.find { case (next, prev) => prev.exists(_ == next) }.map(_._1)
-  }
 }
 
 object Direction {

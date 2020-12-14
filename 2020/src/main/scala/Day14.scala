@@ -8,16 +8,11 @@ object Day14 extends MultiPuzzle[Long, Long] {
     input.foreach {
       case s"mask = $mask_" => mask = mask_
       case s"mem[$adr] = $value" =>
-        val str = value.toLong.toBinaryString.reverse.padTo(36, '0').reverse
-
-        val str3 = mask.zipWithIndex.foldLeft(str) {
-          case (str2, (ch, idx)) =>
-            ch match {
-              case 'X' => str2
-              case '1' => StringUtils.update(str2, idx, '1')
-              case '0' => StringUtils.update(str2, idx, '0')
-            }
-        }
+        val str3 = mask
+          .zip(value.toLong.toBinaryString.reverse.padTo(36, '0').reverse).map {
+            case ('X', v) => v
+            case (ch, _)  => ch
+          }.mkString
 
         mem(adr) = java.lang.Long.parseLong(str3, 2)
     }

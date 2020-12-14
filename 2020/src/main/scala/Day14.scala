@@ -40,18 +40,12 @@ object Day14 extends MultiPuzzle[Long, Long] {
     } else Seq(s)
   }
 
-  def apply(mask: String, value: String): String = {
-    val str = value.toLong.toBinaryString.reverse.padTo(36, '0').reverse
-
-    mask.zipWithIndex.foldLeft(str) {
-      case (str2, (ch, idx)) =>
-        ch match {
-          case 'X' => StringUtils.update(str2, idx, 'X')
-          case '1' => StringUtils.update(str2, idx, '1')
-          case '0' => str2
-        }
-    }
-  }
+  def apply(mask: String, value: String): String =
+    mask
+      .zip(value.toLong.toBinaryString.reverse.padTo(36, '0').reverse).map {
+        case ('0', v) => v
+        case (ch, _)  => ch
+      }.mkString
 }
 
 object StringUtils {

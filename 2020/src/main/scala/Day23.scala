@@ -1,60 +1,37 @@
-import java.util.LinkedList
+import scala.collection.mutable
 
-//import scala.jdk.CollectionConverters._
-//asJavaIterableConverter
-
-@SuppressWarnings(Array("org.wartremover.warts.Any", "org.wartremover.warts.TraversableOps"))
+@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day23 extends MultiPuzzle[Long, Long] {
   override def part1(input: Iterator[String]): Long = {
-    val ll = new LinkedList[Int]()
-    "643719258".map(_.toString.toInt).foreach(ll.add)
+    val arr = "643719258".map(_.toString.toInt).toArray
 
-    var ptr = 0
-    (1 to 100).foreach(_ => ptr = update(ll, ptr))
+    // use a Map to store a circular list.
+    // each element represents a value (key) and its successor (value).
+    val succ = mutable.Map[Int, Int]()
+    (0 to arr.length - 2).foreach(i => succ(arr(i)) = arr(i + 1))
+    succ(arr(arr.length - 1)) = arr(0)
 
-    val oneIndex = ll.indexOf(1)
-    val indices  = (oneIndex + 1 until ll.size) ++ (0 until oneIndex)
-    indices.map(ll.get).mkString.toLong
+    var ptr = arr(0)
+
+    (1 to 100).foreach(_ => ptr = update2(succ, ptr, 9))
+
+    // TODO recursion
+    Seq(
+      succ(1),
+      succ(succ(1)),
+      succ(succ(succ(1))),
+      succ(succ(succ(succ(1)))),
+      succ(succ(succ(succ(succ(1))))),
+      succ(succ(succ(succ(succ(succ(1)))))),
+      succ(succ(succ(succ(succ(succ(succ(1))))))),
+      succ(succ(succ(succ(succ(succ(succ(succ(1))))))))
+    ).mkString.toLong
   }
 
-  def update(ll: LinkedList[Int], ptr: Int): Int = {
-    val size = ll.size
-
-    val it = ll.listIterator(ptr)
-
-    val currentCupLabel = it.next()
-
-    val a = if (it.hasNext) {
-      val v = it.next
-      val _ = it.previous()
-      it.remove()
-      v
-    } else ll.removeFirst()
-
-    val b = if (it.hasNext) {
-      val v = it.next
-      val _ = it.previous()
-      it.remove()
-      v
-    } else ll.removeFirst()
-
-    val c = if (it.hasNext) {
-      val v = it.next
-      val _ = it.previous()
-      it.remove()
-      v
-    } else ll.removeFirst()
-
-//    if (it.hasNext) it.remove() else ll.removeFirst()
-//    if (it.hasNext) it.remove() else ll.removeFirst()
-
-//    val currentCupLabel = ll.get(ptr)
-//
-//    val a = ll.remove(if (ptr + 1 < ll.size) ptr + 1 else 0)
-//    val b = ll.remove(if (ptr + 1 < ll.size) ptr + 1 else 0)
-//    val c = ll.remove(if (ptr + 1 < ll.size) ptr + 1 else 0)
-
-    //val pickUpValues = Seq(a, b, c)
+  def update2(m: mutable.Map[Int, Int], currentCupLabel: Int, max: Int): Int = {
+    val a = m(currentCupLabel)
+    val b = m(a)
+    val c = m(b)
 
     // find destination
     var dest   = -1
@@ -67,48 +44,28 @@ object Day23 extends MultiPuzzle[Long, Long] {
       }
     }
     if (dest == -1) {
-      dest = (size - 2 to size).toSet.diff(Set(a, b, c)).max
+      dest = (max - 2 to max).toSet.diff(Set(a, b, c)).max
     }
 
-    val destIndex = ll.indexOf(dest)
-
-    val it2 = ll.listIterator(destIndex + 1)
-    //while (it2.hasNext && it2.next() != dest) {}
-    //it2.next()
-    it2.add(a)
-    it2.add(b)
-    it2.add(c)
-
-    //val _         = ll.addAll(destIndex + 1, pickUpValues.asJava)
-//    ll.add(destIndex + 1, b)
-//    ll.add(destIndex + 1, a)
-
-    //if (it.hasNext) it.nextIndex() else 0
-
-//    if (destIndex > ptr) (ptr + 1) % ll.size
-//    else (ptr + 4)                 % ll.size
-
-    (ll.indexOf(currentCupLabel) + 1) % ll.size
+    m(currentCupLabel) = m(c)
+    m(c) = m(dest)
+    m(dest) = a
+    m(currentCupLabel)
   }
 
   override def part2(input: Iterator[String]): Long = {
-    val ll = new LinkedList[Int]()
-    ("643719258".map(_.toString.toInt) ++ (10 to 1_000_000)).foreach(ll.add)
+    val arr = ("643719258".map(_.toString.toInt) ++ (10 to 1_000_000)).toArray
 
-    var ptr = 0
-    (1 to 10_000_000).foreach(_ => ptr = update(ll, ptr))
+    // use a Map to store a circular list.
+    // each element represents a value (key) and its successor (value).
+    val succ = mutable.Map[Int, Int]()
+    (0 to arr.length - 2).foreach(i => succ(arr(i)) = arr(i + 1))
+    succ(arr(arr.length - 1)) = arr(0)
 
-    //10000000  => 100000s = 27h
+    var ptr = arr(0)
 
-    val oneIndex = ll.indexOf(1)
-    ll.get(oneIndex + 1).toLong * ll.get(oneIndex + 2).toLong
-    //    val ll = new LinkedList[Int]()
-    //    ("643719258".map(_.toString.toInt) ++ (10 to 1_000_000)).foreach(ll.add)
-    //    val ptr = 0
-    //42L
-    //    val state    = State("643719258".map(_.toString.toInt) ++ (10 to 1_000_000), 0)
-    //    val end      = Iterator.iterate(state)(next).drop(100).next()
-    //    val oneIndex = end.cups.indexOf(1)
-    //    end.cups(oneIndex + 1).toLong * end.cups(oneIndex + 2).toLong
+    (1 to 10_000_000).foreach(_ => ptr = update2(succ, ptr, 1_000_000))
+
+    succ(1).toLong * succ(succ(1)).toLong
   }
 }

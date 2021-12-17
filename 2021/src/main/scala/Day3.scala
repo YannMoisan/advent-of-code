@@ -1,4 +1,4 @@
-object Day3 extends MultiPuzzle[Int, Int] with App {
+object Day3 extends MultiPuzzle[Int, Int] {
   case class State(numbers: Array[String], pos: Int)
 
   override def part1(input: Iterator[String]): Int = {

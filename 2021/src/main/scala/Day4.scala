@@ -1,5 +1,5 @@
 // grids are represented as 2d mutable array
-object Day4 extends MultiPuzzle[Int, Int] with App {
+object Day4 extends MultiPuzzle[Int, Int] {
   case class State(turn: Int)
 
   override def part1(input: Iterator[String]): Int = {

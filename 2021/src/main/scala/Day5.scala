@@ -1,4 +1,4 @@
-object Day5 extends MultiPuzzle[Int, Int] with App {
+object Day5 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
     solve(input, horOrVer)
 

@@ -1,63 +1,38 @@
-import scala.collection.mutable
-
 @SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
-    val grid = input.map(_.toCharArray.map(_.toString.toInt)).toArray
-    (1 to 100).map(_ => flash(grid)).sum
+    val grid = new Grid(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
+    Iterator.continually(flash(grid)).take(100).sum
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid = input.map(_.toCharArray.map(_.toString.toInt)).toArray
-    Iterator.from(1).find(_ => flash(grid) == 100).get
-
+    val grid = new Grid(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
+    Iterator.continually(flash(grid)).zipWithIndex.find(_._1 == 100).get._2 + 1
   }
 
-  def neighbors(g: Array[Array[Int]], x: Int, y: Int): Seq[(Int, Int)] =
-    for {
-      dx <- -1 to 1
-      dy <- -1 to 1
-      xx = x + dx
-      yy = y + dy
-      if xx >= 0 && yy >= 0 && xx < g.head.length && yy < g.length && (dx != 0 || dy != 0)
-    } yield (x + dx, y + dy)
+  def flash(g: Grid[Int]): Int = {
+    g.indices.foreach { case p => g(p) = g(p) + 1 }
 
-  def flash(g: Array[Array[Int]]): Int = {
-    val flash = mutable.Set[(Int, Int)]()
-
-    for {
-      x <- 0 until g.head.length
-      y <- 0 until g.length
-    } {
-      g(y)(x) = g(y)(x) + 1
-    }
-
-    var candidates: Seq[(Int, Int)] = for {
-      x <- 0 until g.head.length
-      y <- 0 until g.length
-      if g(y)(x) > 9 && !flash.contains((x, y))
-    } yield (x, y)
-
-    while (!candidates.isEmpty) {
-      candidates.foreach {
-        case (x, y) =>
-          val _ = flash.add((x, y))
-          neighbors(g, x, y).foreach { case (x, y) => g(y)(x) = g(y)(x) + 1 }
+    while (g.indices.exists(g(_) > 9)) {
+      g.indices.foreach { p =>
+        if (g(p) > 9) {
+          g(p) = -1
+          g.neighbors(p).foreach { n =>
+            if (g(n) != -1) {
+              g(n) = g(n) + 1
+            }
+          }
+        }
       }
-      candidates = for {
-        x <- 0 until g.head.length
-        y <- 0 until g.length
-        if g(y)(x) > 9 && !flash.contains((x, y))
-      } yield (x, y)
     }
 
-    for {
-      x <- 0 until g.head.length
-      y <- 0 until g.length
-      if g(y)(x) > 9
-    } {
-      g(y)(x) = 0
+    var flash = 0
+    g.indices.foreach { p =>
+      if (g(p) == -1) {
+        flash += 1
+        g(p) = 0
+      }
     }
-    flash.size
+    flash //.size
   }
 }

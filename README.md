@@ -17,7 +17,7 @@ advent-of-code-2020/runMain PuzzlesApp 1
 ## Others
 
 ```
-curl https://adventofcode.com/2015/day/2/input -o /Users/yann.moisan/projects/perso/advent-of-code/src/main/resources/input2 --cookie "session=SESSION"
+curl https://adventofcode.com/2015/day/2/input -o /Users/yannmoisan/projects/perso/advent-of-code/src/main/resources/input2 --cookie "session=SESSION"
 ```
 
 ## TODO

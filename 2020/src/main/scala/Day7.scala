@@ -1,5 +1,4 @@
 import scala.collection.mutable
-import scala.util.matching.Regex
 
 object Day7 extends MultiPuzzle[Int, Int] {
   // Find all distinct ancestors of a vertex in a DAG (repr. as adjacency list)

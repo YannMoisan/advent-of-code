@@ -1,11 +1,12 @@
 import scala.annotation.tailrec
 
 object Day1 extends MultiPuzzle[Int, Int] {
-  override def part1: Iterator[String] => Int = { lines =>
+
+  override def part1(lines: Iterator[String]) : Int = {
     lines.map(_.toInt).map(fuel).sum
   }
 
-  override def part2: Iterator[String] => Int = { lines =>
+  override def part2(lines: Iterator[String]) : Int = {
     lines.map(_.toInt).map(recFuel(_, 0)).sum
   }
 

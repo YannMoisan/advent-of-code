@@ -1,11 +1,11 @@
 object Day8 extends SinglePuzzle[Int, String] {
-  override def part1: String => Int = { line =>
+  override def part1(line: String) : Int = {
     val groups   = line.grouped(25 * 6).toArray
     val selected = groups.minBy(_.count(_ == '0'))
     selected.count(_ == '1') * selected.count(_ == '2')
   }
 
-  override def part2: String => String = { line =>
+  override def part2(line: String) : String = {
     val groups: Array[String] = line.grouped(25 * 6).toArray
     val s: String = (0 until 25 * 6)
       .map { i =>

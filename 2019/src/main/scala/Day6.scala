@@ -3,7 +3,7 @@ import scala.collection.mutable
 object Day6 extends MultiPuzzle[Int, Int] {
   // it's a tree, each node has only one parent
   // sum of height in the tree
-  override def part1: Iterator[String] => Int = { lines =>
+  override def part1(lines: Iterator[String]) : Int = {
     val adj: Seq[(String, String)] = lines.map { line =>
       val Array(src, dst) = line.split(')')
       (src, dst)
@@ -14,7 +14,7 @@ object Day6 extends MultiPuzzle[Int, Int] {
     m.values.sum
   }
 
-  override def part2: Iterator[String] => Int = { _ =>
+  override def part2(lines: Iterator[String]) : Int = {
     val adj: Seq[(String, String)] = lines.map { line =>
       val Array(src, dst) = line.split(')')
       (src, dst)

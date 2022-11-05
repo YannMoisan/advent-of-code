@@ -1,7 +1,7 @@
 import scala.collection.Iterator
 
 object Day3 extends MultiPuzzle[Int, Int] {
-  override def part1: Iterator[String] => Int = { lines =>
+  override def part1(lines: Iterator[String]) : Int = {
     val line1        = lines.next()
     val line2        = lines.next()
     val path1        = fullPath(parseLine(line1))
@@ -12,7 +12,7 @@ object Day3 extends MultiPuzzle[Int, Int] {
     }.min
   }
 
-  override def part2: Iterator[String] => Int = { lines =>
+  override def part2(lines: Iterator[String]) : Int = {
     val line1        = lines.next()
     val line2        = lines.next()
     val path1        = fullPath(parseLine(line1))

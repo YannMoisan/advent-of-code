@@ -1,7 +1,7 @@
 import scala.collection.mutable
 
 object Day12 extends MultiPuzzle[Int, Long] {
-  override def part1: Iterator[String] => Int = { _ =>
+  override def part1(lines: Iterator[String]) : Int = {
     val vel0 = Position(0, 0, 0)
 
 //    val moons = Array(
@@ -34,7 +34,7 @@ object Day12 extends MultiPuzzle[Int, Long] {
     end.map(_.energy).sum
   }
 
-  override def part2: Iterator[String] => Long = { _ =>
+  override def part2(lines: Iterator[String]) : Long = {
     val vel0 = Position(0, 0, 0)
 
 //    val moons = Array(

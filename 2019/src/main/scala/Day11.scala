@@ -3,7 +3,7 @@ import Day11.ParameterMode.{Immediate, Position, Relative}
 import scala.collection.mutable
 
 object Day11 extends SinglePuzzle[Int, Int] {
-  override def part1: String => Int = { line =>
+  override def part1(line: String) : Int = {
     val program = line.split(",").map(_.toLong)
 
     computeOutput(
@@ -11,7 +11,7 @@ object Day11 extends SinglePuzzle[Int, Int] {
     )
   }
 
-  override def part2: String => Int = { line =>
+  override def part2(line: String) : Int = {
     val program = line.split(",").map(_.toLong)
 
     computeOutput(Memory(program, mutable.Map.empty[Long, Long]))

@@ -1,4 +1,6 @@
 import scala.io.Codec.defaultCharsetCodec
+import scala.reflect.runtime.{universe => ru}
+import scala.util.Try
 
 trait Puzzle[O1, O2] {
   type I
@@ -40,7 +42,8 @@ trait SinglePuzzle[O1, O2] extends Puzzle[O1, O2] {
   override def input = lines.next()
 }
 
-class Puzzles(val puzzles: List[Puzzle[_, _]]) extends App {
+object Puzzles extends App {
+  val puzzles = findPuzzles()
 
   val day = if (args.length == 1) {
     Some(args(0))
@@ -52,9 +55,20 @@ class Puzzles(val puzzles: List[Puzzle[_, _]]) extends App {
     case Some(d) =>
       puzzles.find(_.day() == d) match {
         case Some(puzzle) => puzzle.run()
-        case None         => sys.error(s"Unknown day '$d'")
+        case None => sys.error(s"Unknown day '$d'")
       }
     case None => puzzles.foreach(_.run())
+  }
+
+  // use runtime reflection to detect implemented puzzles
+  private def findPuzzles(): Seq[Puzzle[_, _]] = {
+    val m = ru.runtimeMirror(getClass.getClassLoader)
+    (1 to 24).flatMap { day =>
+      Try {
+        val ccr = m.staticModule(s"Day$day")
+        m.reflectModule(ccr).instance.asInstanceOf[Puzzle[_, _]]
+      }.toOption
+    }
   }
 }
 

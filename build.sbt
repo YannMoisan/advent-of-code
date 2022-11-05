@@ -77,7 +77,8 @@ lazy val `advent-of-code-2021` = (project in file("2021"))
   )
 
 lazy val `core` = (project in file("core")).settings(
-  libraryDependencies += scalaTest % Test
+  libraryDependencies += scalaTest % Test,
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.13.10"
 )
 
 lazy val `benchmark-2018` = project

@@ -7,7 +7,7 @@ class Day1Spec extends AnyFlatSpec with Matchers {
   behavior of "Part 2"
 
   it should "work on example 1" in {
-    Day1.part2("(") shouldEqual 1
+    Day1.part1("(") shouldEqual 1
   }
 
   it should "work on example 2" in {

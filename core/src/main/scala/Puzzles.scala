@@ -61,7 +61,7 @@ object Puzzles extends App {
   }
 
   // use runtime reflection to detect implemented puzzles
-  private def findPuzzles(): Seq[Puzzle[_, _]] = {
+  def findPuzzles(): Seq[Puzzle[_, _]] = {
     val m = ru.runtimeMirror(getClass.getClassLoader)
     (1 to 24).flatMap { day =>
       Try {

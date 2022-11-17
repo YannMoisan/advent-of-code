@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 object Day4 extends MultiPuzzle[Int, Int] {
   def valid(f: String => String): Iterator[String] => Int = {
     lines: Iterator[String] =>
@@ -8,7 +6,7 @@ object Day4 extends MultiPuzzle[Int, Int] {
       }.sum
   }
 
-  override def part1 = valid(identity)
+  override def part1(lines: Iterator[String]): Int = valid(identity)(lines)
 
-  override def part2 = valid(_.sorted)
+  override def part2(lines: Iterator[String]): Int = valid(_.sorted)(lines)
 }

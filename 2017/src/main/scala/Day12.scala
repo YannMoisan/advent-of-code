@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 import scala.collection.immutable.Queue
 
 object Day12 extends MultiPuzzle[Int, Int] {
@@ -35,7 +33,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
     }
   }
 
-  override def part1 = { lines =>
+  override def part1(lines: Iterator[String]) : Int = {
     val arr = lines
       .map(_.split(" <-> "))
       .map { case Array(a, b) => (a, b.split(", ").toSeq) }
@@ -47,7 +45,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
     0
   }
 
-  override def part2 = { lines =>
+  override def part2(lines: Iterator[String]) : Int = {
     0
   }
 }

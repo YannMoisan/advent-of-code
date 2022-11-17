@@ -1,7 +1,5 @@
-package com.yannmoisan.aoc
-
 object Day13 extends MultiPuzzle[Int, Int] {
-  override def part1 = { lines =>
+  override def part1(lines: Iterator[String]) : Int = {
     val a = lines.map(_.split(": "))
     val b = a.map { t =>
       (t(0).toInt, t(1).toInt)
@@ -22,7 +20,7 @@ object Day13 extends MultiPuzzle[Int, Int] {
     }.sum
   }
 
-  override def part2 = { lines =>
+  override def part2(lines: Iterator[String]) : Int = {
     val a = lines.map(_.split(": "))
     val b = a.map { t =>
       (t(0).toInt, t(1).toInt)

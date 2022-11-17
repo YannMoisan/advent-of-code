@@ -1,9 +1,7 @@
-package com.yannmoisan.aoc
-
 object Day9 extends SinglePuzzle[Int, Int] {
   val garbage = "<(?:!.|[^>])*>"
 
-  override def part1 = { line =>
+  override def part1(line: String) : Int = {
     val cleaned = line.replaceAll(garbage, "")
 
     final case class State(level: Int, sum: Int)
@@ -21,7 +19,7 @@ object Day9 extends SinglePuzzle[Int, Int] {
       .sum
   }
 
-  override def part2 = { line =>
+  override def part2(line: String) : Int = {
     garbage.r
       .findAllIn(line)
       .map(_.replaceAll("!.", "").length - 2)

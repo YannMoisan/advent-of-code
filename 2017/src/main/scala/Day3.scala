@@ -1,7 +1,5 @@
-package com.yannmoisan.aoc
-
 object Day3 extends SinglePuzzle[Int, Unit] {
-  override def part1 = { line =>
+  override def part1(line: String) : Int = {
     def closest(i: Int, values: Seq[Int]): Int = {
       values.map(v => math.abs(v - i)).min
     }
@@ -23,6 +21,5 @@ object Day3 extends SinglePuzzle[Int, Unit] {
     circle(i) + closest(i, values(circle(i)))
   }
 
-  override def part2 = { line =>
-    }
+  override def part2(line: String) : Unit = ()
 }

@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 object Day8 extends MultiPuzzle[Int, Int] {
   final case class Instr(reg: String, op: String, amount: Int, cond: Condition)
   final case class Condition(reg: String, comp: String, value: Int)
@@ -41,7 +39,7 @@ object Day8 extends MultiPuzzle[Int, Int] {
     }
   }
 
-  override def part1 = { lines =>
+  override def part1(lines: Iterator[String]) : Int = {
     val instructions = lines.map(parse)
     val state0 = State(Map.empty[String, Int])
     val allStates = instructions.scanLeft(state0) {
@@ -51,7 +49,7 @@ object Day8 extends MultiPuzzle[Int, Int] {
 
   }
 
-  override def part2 = { lines =>
+  override def part2(lines: Iterator[String]) : Int = {
     val instructions = lines.map(parse)
     val state0 = State(Map.empty[String, Int])
     val allStates = instructions.scanLeft(state0) {

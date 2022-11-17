@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 object Day10 extends SinglePuzzle[Int, String] {
   final case class State(list: IndexedSeq[Int], pos: Int, skipSize: Int)
 
@@ -22,7 +20,7 @@ object Day10 extends SinglePuzzle[Int, String] {
     }
   }
 
-  override def part1 = { line =>
+  override def part1(line: String) : Int = {
     val stateF =
       line.split(",").map(_.toInt).foldLeft(state0) {
         case (s, i) => next(i, s)
@@ -30,7 +28,7 @@ object Day10 extends SinglePuzzle[Int, String] {
     stateF.list(0) * stateF.list(1)
   }
 
-  override def part2 = { line =>
+  override def part2(line: String) : String = {
     val lengths = line.map(_.toInt) ++ Seq(17, 31, 73, 47, 23)
     val lengths64 = (0 until 63).foldLeft(lengths) {
       case (l, _) => l ++ lengths

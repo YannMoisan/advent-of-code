@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 import scala.annotation.tailrec
 
 object Day7 extends MultiPuzzle[String, Unit] {
@@ -23,7 +21,7 @@ object Day7 extends MultiPuzzle[String, Unit] {
     }
   }
 
-  override def part1 = { llines =>
+  override def part1(llines: Iterator[String]) : String = {
     val lines = llines.collect {
       case pattern(word, weight, words) =>
         Line(word,
@@ -44,7 +42,7 @@ object Day7 extends MultiPuzzle[String, Unit] {
 
   }
 
-  override def part2 = { llines =>
+  override def part2(llines: Iterator[String]) : Unit = {
 //    val root = lookup(child2Parent, child2Parent.head._1)
 //    println(w(parent2Child, root))
   }

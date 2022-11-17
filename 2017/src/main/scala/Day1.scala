@@ -1,5 +1,3 @@
-package com.yannmoisan.aoc
-
 object Day1 extends SinglePuzzle[Int, Int] {
   def captcha(f: Int => Int): String => Int = { line: String =>
     (0 until line.length)
@@ -8,9 +6,9 @@ object Day1 extends SinglePuzzle[Int, Int] {
       .sum
   }
 
-  override def part1 = captcha(_ + 1)
+  override def part1(s: String) = captcha(_ + 1)(s)
 
-  override def part2 = { line =>
+  override def part2(line: String) = {
     captcha(_ + line.length / 2)(line)
   }
 }

@@ -1,5 +1,5 @@
 object Day5 extends SinglePuzzle[Int, Int] {
-  override def part1: String => Int = { s =>
+  override def part1(s: String) : Int = {
     react(s)
   }
 
@@ -17,7 +17,7 @@ object Day5 extends SinglePuzzle[Int, Int] {
     t.length
   }
 
-  override def part2: String => Int = { s =>
+  override def part2(s: String) : Int = {
     ('a' to 'z')
       .map { c =>
         s.replaceAll(s"(${c}|${c.toUpper})", "")

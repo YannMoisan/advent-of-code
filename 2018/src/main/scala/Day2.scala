@@ -1,6 +1,6 @@
 object Day2 extends MultiPuzzle[Int, String] {
 
-  override def part1: Iterator[String] => Int = { iter =>
+  override def part1(iter: Iterator[String]) : Int = {
     val lines = iter.toArray
     val countByLine = lines
       .flatMap(
@@ -14,7 +14,7 @@ object Day2 extends MultiPuzzle[Int, String] {
     countByLine.count(_ == 2) * countByLine.count(_ == 3)
   }
 
-  override def part2: Iterator[String] => String = { iter =>
+  override def part2(iter: Iterator[String]) : String = {
     val lines = iter.toArray
     (for {
       s1 <- lines

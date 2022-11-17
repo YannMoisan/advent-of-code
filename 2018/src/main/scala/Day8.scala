@@ -9,7 +9,7 @@ object Day8 extends SinglePuzzle[Int, Int] {
     val meta: ArrayBuffer[Int] = ArrayBuffer.empty[Int]
   )
 
-  override def part1: String => Int = { s =>
+  override def part1(s: String) : Int = {
     val numbers: Array[Int] = s.split(" ").map(_.toInt)
 
     var sum = 0
@@ -39,7 +39,7 @@ object Day8 extends SinglePuzzle[Int, Int] {
     sum
   }
 
-  override def part2: String => Int = { s =>
+  override def part2(s: String) : Int = {
     //val s2 = "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"
     val numbers: Array[Int] = s.split(" ").map(_.toInt)
 

@@ -9,7 +9,7 @@ object Day4 extends MultiPuzzle[Int, Int] {
   private val WakesUp = """\[(.*)\] wakes up""".r
   private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
-  override def part1: Iterator[String] => Int = { iter =>
+  override def part1(iter: Iterator[String]) : Int = {
     val asleepByGuard = computeMinutesAsleepByGuard(iter)
     val winner = asleepByGuard.toSeq.maxBy(_._2.length)
     val mostFreqMinute = winner._2.groupBy(identity).maxBy(_._2.length)._1
@@ -23,7 +23,7 @@ object Day4 extends MultiPuzzle[Int, Int] {
       case WakesUp(ts)         => (LocalDateTime.parse(ts, formatter), -2)
     }
   }
-  override def part2: Iterator[String] => Int = { iter =>
+  override def part2(iter: Iterator[String]) : Int = {
     val asleepByGuard = computeMinutesAsleepByGuard(iter)
     val tmp =
       asleepByGuard.mapValues(_.groupBy(identity).toSeq.maxBy(_._2.length))

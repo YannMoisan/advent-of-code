@@ -7,7 +7,7 @@ case class Rectangle(id: Int, x: Int, y: Int, w: Int, h: Int) {
 }
 
 object Day3 extends MultiPuzzle[Int, Int] {
-  override def part1: Iterator[String] => Int = { iter =>
+  override def part1(iter: Iterator[String]) : Int = {
     val lines = iter.toArray
     val parsedLines = lines.map(parseLine)
     val arr: Array[Array[Int]] = Array.fill(1000)(Array.fill(1000)(0))
@@ -36,7 +36,7 @@ object Day3 extends MultiPuzzle[Int, Int] {
   def isInRect(r: Rectangle, x: Int, y: Int): Boolean =
     x >= r.x && x < r.x + r.w && y >= r.y && y < r.y + r.h
 
-  override def part2: Iterator[String] => Int = { iter =>
+  override def part2(iter: Iterator[String]) : Int = {
     val lines = iter.toArray
     val parsedLines = lines.map(parseLine)
     val ids = (for {

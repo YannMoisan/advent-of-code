@@ -1,12 +1,12 @@
 import scala.annotation.tailrec
 import scala.collection.mutable
 object Day1 extends MultiPuzzle[Int, Int] {
-  override def part1: Iterator[String] => Int = { iter =>
+  override def part1(iter: Iterator[String]) : Int = {
     iter.toArray.map(_.toInt).sum
   }
 
   /** Stream approach */
-  override def part2: Iterator[String] => Int = part2_stream
+  override def part2(iter: Iterator[String]) : Int = part2_stream(iter)
 
   def part2_stream: Iterator[String] => Int = { iter =>
     val frequencies = iter.toArray.map(_.toInt)

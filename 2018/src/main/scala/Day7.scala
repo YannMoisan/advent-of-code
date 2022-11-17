@@ -1,5 +1,5 @@
 object Day7 extends MultiPuzzle[String, String] {
-  override def part1: Iterator[String] => String = { iter =>
+  override def part1(iter: Iterator[String]) : String = {
     val lines = iter.toArray
     val pattern = """Step (\w) must be finished before step (\w) can begin.""".r
     var instructions: Array[(String, String)] = lines.map{ case pattern(a,b ) => (a, b)}
@@ -21,7 +21,7 @@ object Day7 extends MultiPuzzle[String, String] {
     solutions.mkString
   }
 
-  override def part2: Iterator[String] => String = { iter =>
+  override def part2(iter: Iterator[String]) : String = {
     println("--- paRT2 ---")
     val lines = iter.toArray
     val pattern = """Step (\w) must be finished before step (\w) can begin.""".r

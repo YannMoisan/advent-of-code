@@ -46,7 +46,6 @@ lazy val `advent-of-code-2016` = (project in file("2016"))
 
 lazy val `advent-of-code-2017` = (project in file("2017"))
   .settings(
-    scalaVersion := "2.12.10",
     scalacOptions --= Seq("-Xfatal-warnings"),
     libraryDependencies += scalaTest308 % Test
   )

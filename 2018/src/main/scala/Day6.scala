@@ -17,7 +17,7 @@ object Day6 extends MultiPuzzle[Int, Int] {
       arr(y)(x) = closest
     }
 
-    val m: Map[Int, Int] = arr.flatten.groupBy(identity).mapValues(_.length)
+    val m: Map[Int, Int] = arr.flatten.groupBy(identity).view.mapValues(_.length).toMap
     m.toSeq.sortBy(-_._2)
 
     val border: Seq[Int] = (0 until 1000).map { i =>

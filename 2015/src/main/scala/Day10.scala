@@ -1,25 +1,24 @@
 import scala.collection.mutable
 
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
-object Day10 extends SinglePuzzle[String, String] {
+object Day10 extends SinglePuzzle[Int, Int] {
   // conclusion 1 : ArrayBuffer > ListBuffer
 
   // [day=10] (t=351018ms) 492982
   //               1709308ms
-  override def part1(input: String): String = {
+  override def part1(input: String): Int = {
     val input = "1321131112"
-
-    println(Iterator.iterate(input)(lookAndSay).take(51).toList.last.length)
-
-    println(lookAndSay(input))
-    "42"
+    Iterator.iterate(input)(lookAndSay).take(41).toList.last.length
   }
 
-  override def part2(input: String): String = "???"
+  override def part2(input: String): Int = {
+    val input = "1321131112"
+    Iterator.iterate(input)(lookAndSay).take(51).toList.last.length
+  }
 
   def lookAndSay(s: String): String = {
-    if (s.length < 100) println(s)
-    println(s"-${s.length}")
+//    if (s.length < 100) println(s)
+//    println(s"-${s.length}")
     val buf = new mutable.ArrayBuffer[(Char, Int)](s.length)
     (0 until s.length).foreach { i =>
       if (i == 0) {

@@ -1,49 +1,27 @@
-import scala.collection.mutable
-
 object Day3 extends SinglePuzzle[Int, Int] {
-  override def part1(input: String): Int = {
-    var i       = 0
-    var pos     = (0, 0)
-    val visited = mutable.Set[(Int, Int)](pos)
-    while (i < input.length) {
-      input.charAt(i) match {
-        case '^' => pos = (pos._1, pos._2 - 1)
-        case 'v' => pos = (pos._1, pos._2 + 1)
-        case '<' => pos = (pos._1 - 1, pos._2)
-        case '>' => pos = (pos._1 + 1, pos._2)
-      }
-      val _ = visited.add(pos)
-      i += 1
-    }
-    visited.size
-  }
+  override def part1(input: String): Int = positions(input).size
 
-  override def part2(input: String): Int = {
-    var i       = 0
-    var pos1    = (0, 0)
-    var pos2    = (0, 0)
-    val visited = mutable.Set[(Int, Int)](pos1)
-    while (i < input.length) {
+  override def part2(input: String): Int =
+    (positions(input.sliding(1, 2).mkString) ++
+      positions(input.tail.sliding(1, 2).mkString)).size
 
-      if (i % 2 == 0) {
-        pos1 = input.charAt(i) match {
-          case '^' => (pos1._1, pos1._2 - 1)
-          case 'v' => (pos1._1, pos1._2 + 1)
-          case '<' => (pos1._1 - 1, pos1._2)
-          case '>' => (pos1._1 + 1, pos1._2)
-        }
-        val _ = visited.add(pos1)
-      } else {
-        pos2 = input.charAt(i) match {
-          case '^' => (pos2._1, pos2._2 - 1)
-          case 'v' => (pos2._1, pos2._2 + 1)
-          case '<' => (pos2._1 - 1, pos2._2)
-          case '>' => (pos2._1 + 1, pos2._2)
-        }
-        val _ = visited.add(pos2)
-      }
-      i += 1
-    }
-    visited.size
-  }
+  private def positions(input: String): Set[(Int, Int)] =
+    input
+      .scanLeft((0, 0)) {
+        case (pos, '^') => (pos._1, pos._2 - 1)
+        case (pos, 'v') => (pos._1, pos._2 + 1)
+        case (pos, '<') => (pos._1 - 1, pos._2)
+        case (pos, '>') => (pos._1 + 1, pos._2)
+      }.toSet
 }
+
+//scala> "ABCDEFGHI".sliding(1,2).mkString
+//val res1: String = ACEGI
+//
+//scala> "ABCDEFGHI".tail.sliding(1,2).mkString
+//val res2: String = BDFH
+
+//>>> "ABCDEFGHI"[::2]
+//'ACEGI'
+//>>> "ABCDEFGHI"[1::2]
+//'BDFH'

@@ -5,3 +5,5 @@ addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.15")
 addSbtPlugin("org.wartremover" % "sbt-wartremover" % "2.4.13")
 
 addSbtPlugin("pl.project13.scala" % "sbt-jmh" % "0.3.4")
+
+addSbtPlugin("org.lyranthe.sbt" % "partial-unification" % "1.1.2")

@@ -61,14 +61,14 @@ object Day1 extends Puzzle {
 
   def part1 = { lines: Seq[String] =>
     val instructions = parse(lines)
-    val state: State[PosAndDir, List[Unit]] = instructions.map(i => State.modify(update(i))).toList.sequenceU
+    val state: State[PosAndDir, List[Unit]] = instructions.map(i => State.modify(update(i))).toList.sequence
     val finalState = state.runS(PosAndDir(Pos(0, 0), North)).value
     math.abs(finalState.pos.x) + math.abs(finalState.pos.y)
   }
 
   def part2 = { lines: Seq[String] =>
     val instructions = parse(lines).toStream
-    val state = instructions.map(update2).sequenceU
+    val state = instructions.map(update2).sequence
     val positions = state.runA(PosAndDir(Pos(0, 0), North)).value.flatten
     val p = firstDuplicate(positions).get
     math.abs(p.x) + math.abs(p.y)

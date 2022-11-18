@@ -29,10 +29,11 @@ lazy val `advent-of-code-2015` = (project in file("2015"))
 val monocleVersion = "2.0.5"
 
 lazy val `advent-of-code-2016` = (project in file("2016"))
+  .dependsOn(core)
   .settings(
     scalacOptions --= Seq("-Xfatal-warnings"),
     scalacOptions += "-Ymacro-annotations",
-    libraryDependencies += scalaTest308 % Test,
+    libraryDependencies += scalaTest % Test,
     // Change this to another test framework if you prefer
     libraryDependencies += "org.typelevel" %% "cats-core"      % "2.0.0",
     libraryDependencies ++= Seq(

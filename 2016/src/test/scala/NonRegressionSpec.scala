@@ -1,16 +1,8 @@
-import org.scalatest.flatspec.AnyFlatSpec
-import org.scalatest.matchers.should.Matchers
 import org.scalatest.prop.TableDrivenPropertyChecks._
 
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.Any",
-    "org.wartremover.warts.AsInstanceOf",
-    "org.wartremover.warts.NonUnitStatements"
-  )
-)
-class NonRegressionSpec extends AnyFlatSpec with Matchers {
-  val m = Table(
+@SuppressWarnings(Array("org.wartremover.warts.Any"))
+class NonRegressionSpec extends AllPuzzlesSpec(
+  Table(
     ("day", "part", "result"),
     (1, 1, 300),
     (1, 2, 159),
@@ -64,15 +56,4 @@ class NonRegressionSpec extends AnyFlatSpec with Matchers {
     (24, 2, 696),
     (25, 1, 180)
   )
-
-  forAll(m) { (d: Int, p: Int, res: Any) =>
-    Puzzles.findPuzzles().find(_.day() == s"$d") match {
-      case Some(puzzle) =>
-        p match {
-          case 1 => puzzle.part1(puzzle.input) shouldBe res
-          case 2 => puzzle.part2(puzzle.input) shouldBe res
-        }
-      case None => sys.error(s"Unknown day '$d'")
-    }
-  }
-}
+)

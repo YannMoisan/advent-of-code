@@ -5,10 +5,6 @@ import org.scalatest.matchers.should.Matchers
 class Day16Spec extends AnyFlatSpec with Matchers {
   behavior of "Part 1"
 
-  it should "work on input" in {
-    Day16.part1(Day16.input) shouldEqual 957
-  }
-
   it should "work on example 1" in {
     sum(parse(toBinary("8A004A801A8002F478"))._1) shouldEqual 16
   }
@@ -57,8 +53,5 @@ class Day16Spec extends AnyFlatSpec with Matchers {
 
   it should "9C0141080250320F1802104A08 produces 1, because 1 + 3 = 2 * 2" in {
     compute(parse(toBinary("9C0141080250320F1802104A08"))._1) shouldEqual 1L
-  }
-  it should "work on input" in {
-    Day16.part2(Day16.input) shouldEqual 744953223228L
   }
 }

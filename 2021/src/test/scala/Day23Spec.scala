@@ -49,17 +49,4 @@ class Day23Spec extends AnyFlatSpec with Matchers {
   it should "work on Hallway to Room C" in {
     Day23.next(s2, HallwayToRoom(6, "C"))._2 shouldEqual 600
   }
-
-  behavior of "Part 1"
-
-  it should "work on input" in {
-    Day23.part1(Day23.input) shouldEqual 18051
-  }
-
-  behavior of "Part 2"
-
-  it should "work on input" in {
-    Day23.part2(Day23.input) shouldEqual 50245
-  }
-
 }

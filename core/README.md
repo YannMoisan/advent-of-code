@@ -43,12 +43,12 @@ The code must be placed into an object suffixed by the day `Day{{day}}.scala`
 - `MultiPuzzle` if the input file contains multiple lines
 
 Even though the answer must be filled in a text field, the answers are typed.
-Both traits have 2 type parameters, one for the output of part1, one for the output of part2.
+Both traits have 2 type parameters, one for the output of part1, and one for the output of part2.
 
 # Testing
 
-A helper class `AllPuzzlesSpec`, based on [table driven property checks](https://www.scalatest.org/user_guide/table_driven_property_checks), is provided in order to check for non-regression once a puzzle is solved.
-It allows to perform some refactoring safely afterwards.
+A helper class `AllPuzzlesSpec`, based on [table driven property checks](https://www.scalatest.org/user_guide/table_driven_property_checks), is provided to check for non-regression once a puzzle is solved.
+It allows performing some refactoring safely afterward.
 
 # Show me the code
 
@@ -97,7 +97,7 @@ Run a single day
 advent-of-code-2020/runMain Puzzles 1
 ```
 
-Run non regression tests
+Run non-regression tests
 
 ```
 advent-of-code-2020/test

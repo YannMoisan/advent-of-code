@@ -6,7 +6,7 @@ More often than never, a way to solve a given puzzle is to generate all the poss
 
 This puzzle is the well-known [Travelling salesman problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem), which is a NP-complete problem.
 
-Hopefully, there are only 8 items in my input, so the number of possible solutions is `8!` = 40320.
+Hopefully, there are only 8 items in my input, so the possible solutions are the full-length permutations. There are `8!` = 40320.
 
 ## Day 13
 
@@ -30,11 +30,11 @@ So the number of the possible solutions is only `7!/2` = 2520
 
 ## Day 15
 
-We are looking for 4-permutations (order matters) which the sum is 100.
+We are looking for 4-permutations in the set 0..100 (the order matters) for which the sum of elements is 100.
 
-The naive approach is to generate all solutions 101^4 and filter out for the right sum.
+The naive approach is to generate all the solutions : 101^4 and keep those with the right sum.
 
-i.e. looking at 10M possibilities to retain only 176851
+i.e. looking at 10M possibilities to keep only 176851
 
 ```scala
   println((for {
@@ -46,7 +46,7 @@ i.e. looking at 10M possibilities to retain only 176851
   } yield (i, j, k, l)).size)
 ```
 
-But we can do better. It is possible to iterate only through the possible solutions
+And there is a better way: iterating only through the possible solutions
 
 ```scala
   println((for {
@@ -61,7 +61,7 @@ But we can do better. It is possible to iterate only through the possible soluti
 
 In this puzzle, we have 20 containers, and we need to find all combinations that can contain exactly a given amount of liquid.
 
-In other words, we need to generate the powerset. 2^20 = 1048576
+The possible solutions are the powerset. There are 2^20 = 1048576.
 
 # Day 21
 
@@ -78,8 +78,6 @@ So the number of combinations is 5 * 22 * 6 = 660
 
 # Day 24
 
-This puzzle looks like the day 17. The solutions to consider is the power of a set of 28 elements, so 2^28.
+This puzzle looks like the day 17. The solutions to consider are the powerset of a set of 28 elements, so 2^28.
 
-Hopefully, we might not need to explore all possible solutions.
-
-We can iterate in increasing length of candidates.
+Hopefully, we might not need to explore all the possible solutions by iterating in ascending order of number of elements : 1-combinations, 2-combinations, 3-combinations and so on.

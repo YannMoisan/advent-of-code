@@ -9,6 +9,8 @@ class NonRegressionSpec extends AllPuzzlesSpec(
     (2, 1, 13526),
     (2, 2, 14204),
     (3, 1, 7742),
-    (3, 2, 2276)
+    (3, 2, 2276),
+    (4, 1, 526),
+    (4, 2, 886),
   )
 )

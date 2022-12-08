@@ -18,6 +18,8 @@ class NonRegressionSpec extends AllPuzzlesSpec(
     (6, 2, 2265),
     (7, 1, 1477771),
     (7, 2, 3579501),
+    (8, 1, 1690),
+    (8, 2, 535680),
 
   )
 )

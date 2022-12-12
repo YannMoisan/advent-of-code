@@ -31,5 +31,7 @@ class NonRegressionSpec extends AllPuzzlesSpec(
               |#..#..###.####.####.#..#..##..#..#.#..#.""".stripMargin),
     (11,1,58794L),
     (11,2,20151213744L),
+    (12, 1, 423),
+    (12, 2, 416),
   )
 )

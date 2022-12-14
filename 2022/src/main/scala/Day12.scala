@@ -18,6 +18,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
   }
 
   private def length(grid: Grid, s: Pos, e: Pos): Int = {
+    grid(s) = 'a' // hacky
     grid(e) = 'z' // hacky
     val q       = mutable.Queue[(Pos, Int)]()
     val visited = mutable.Set[Pos]()
@@ -32,7 +33,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
         Pos(cur._1.x, cur._1.y + 1),
         Pos(cur._1.x, cur._1.y - 1)
       ).filter(grid.isInRange)
-        .filter(p => cur._1 == s || grid(p) - grid(cur._1) <= 1)
+        .filter(p => grid(p) - grid(cur._1) <= 1)
         .filter(p => !visited.contains(p))
       val _ = q.enqueueAll(candidates.map(c => (c, cur._2 + 1)))
       visited.addAll(candidates)

@@ -1,43 +1,57 @@
 case class Pos(x: Int, y: Int)
+
+class Grid(private val grid: Array[Array[Char]]) {
+  def height = grid.length
+  def xindices: Seq[Int] = grid.head.indices
+  def yindices: Seq[Int] = grid.indices
+  def apply(p: Pos) : Char = grid(p.y)(p.x)
+  def update(p: Pos, c: Char): Unit = grid(p.y)(p.x) = c
+  def count(p: Char => Boolean) : Int = allPos.count(pos => p(apply(pos)))
+  private def allPos: Seq[Pos] = for {
+    x <- xindices
+    y <- yindices
+  } yield Pos(x, y)
+}
+
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day14 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
     fill(grid)
-    countSand(grid)
+    grid.count(_ == 'o')
   }
 
   override def part2(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
     // add floor
-    grid.head.indices.foreach(x => grid(grid.length - 1)(x) = '#')
+    grid.xindices.foreach(x => grid(Pos(x, grid.height - 1)) = '#')
     fill(grid)
-    countSand(grid)
+    grid.count(_ == 'o')
   }
 
-  private def fill(grid: Array[Array[Char]]) = {
-    def nextPos(grid: Array[Array[Char]], p: Pos): Option[Pos] =
+  private def fill(grid: Grid) = {
+    def nextPos(p: Pos): Option[Pos] =
       Seq(
         Pos(p.x, p.y + 1),     // one step down ?
         Pos(p.x - 1, p.y + 1), // one step down and to the left
         Pos(p.x + 1, p.y + 1)  // one step down and to the right
-      ).find(p => grid(p.y)(p.x) == '.')
+      ).find(p => grid(p) == '.')
 
     var sand    = Pos(500, 0)
     var blocked = false
-    while (!blocked && sand.y < grid.length - 1) {
-      nextPos(grid, sand) match {
+    while (!blocked && sand.y < grid.height - 1) {
+      nextPos(sand) match {
         case Some(p) => sand = p
         case None =>
           if (sand == Pos(500, 0))
             blocked = true
-          grid(sand.y)(sand.x) = 'o'
+          grid(sand) = 'o'
           sand = Pos(500, 0)
       }
     }
   }
 
-  private def makeGrid(input: Iterator[String]): Array[Array[Char]] = {
+  private def makeGrid(input: Iterator[String]): Grid = {
     def parse(s: String): Array[Pos] =
       s.split(" -> ").map { seg =>
         val Array(x, y) = seg.split(",").map(_.toInt)
@@ -53,21 +67,14 @@ object Day14 extends MultiPuzzle[Int, Int] {
 
     val paths: Seq[Array[Pos]]   = input.map(parse).toList
     val maxY                     = paths.flatten.maxBy(t => t.y).y
-    val grid: Array[Array[Char]] = Array.fill[Char](maxY + 3, 1000)('.') // (y,x) coordinates
+    val grid = new Grid(Array.fill[Char](maxY + 3, 1000)('.')) // (y,x) coordinates
 
     // add paths on the grid
     paths.foreach { path =>
       path.sliding(2).foreach {
-        case Array(start, end) => allPositions(start, end).foreach(pos => grid(pos.y)(pos.x) = '#')
+        case Array(start, end) => allPositions(start, end).foreach(pos => grid(pos) = '#')
       }
     }
     grid
   }
-
-  private def countSand(grid: Array[Array[Char]]): Int =
-    (for {
-      x <- grid.head.indices
-      y <- grid.indices
-      if grid(y)(x) == 'o'
-    } yield (x, y)).size
 }

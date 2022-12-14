@@ -1,18 +1,3 @@
-case class Pos(x: Int, y: Int)
-
-class Grid(private val grid: Array[Array[Char]]) {
-  def height = grid.length
-  def xindices: Seq[Int] = grid.head.indices
-  def yindices: Seq[Int] = grid.indices
-  def apply(p: Pos) : Char = grid(p.y)(p.x)
-  def update(p: Pos, c: Char): Unit = grid(p.y)(p.x) = c
-  def count(p: Char => Boolean) : Int = allPos.count(pos => p(apply(pos)))
-  private def allPos: Seq[Pos] = for {
-    x <- xindices
-    y <- yindices
-  } yield Pos(x, y)
-}
-
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day14 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {

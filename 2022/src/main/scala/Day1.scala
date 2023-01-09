@@ -19,7 +19,7 @@ object Day1 extends MultiPuzzle[Int, Int] {
       val line = it.next()
       if (line == sep) {
         val _ = buf.append(current.reverse)
-        current = Nil.asInstanceOf[List[A]]
+        current = Nil
       } else {
         current = line :: current
       }

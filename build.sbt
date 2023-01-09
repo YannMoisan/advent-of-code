@@ -90,7 +90,7 @@ lazy val `core` = (project in file("core")).settings(
 lazy val `benchmark-2018` = project
   .enablePlugins(JmhPlugin)
   .settings(
-    scalaVersion := "2.12.10"
+    scalacOptions --= Seq("-Xfatal-warnings")
   )
 
 //lazy val root = (project in file("."))

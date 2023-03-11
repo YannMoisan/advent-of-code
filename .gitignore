@@ -1,1 +1,3 @@
 target/
+flame-*.html
+summary-alloc.txt

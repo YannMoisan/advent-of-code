@@ -1,12 +1,13 @@
 package com.yannmoisan.util.grid
 
-//import scala.reflect.ClassTag
+import scala.reflect.ClassTag
 
 class Grid1D[@specialized(Int, Char, Boolean) A](grid: Array[A], width: Int, height: Int)
     extends Grid[A] {
-//  def this(grid: Array[Array[A]]) = {
-//    this(grid.flatten, grid.head.length, grid.length)
-//  }
+
+  def copy(): Grid1D[A] = {
+    new Grid1D(grid.clone(), width, height)
+  }
 
   override def apply(p: Pos): A = grid(p.index)
 
@@ -18,5 +19,18 @@ class Grid1D[@specialized(Int, Char, Boolean) A](grid: Array[A], width: Int, hei
 
    def update(index: Int, ch: A): Unit = grid(index) = ch
 
+  override def equals(obj: Any): Boolean =
+    obj match {
+      case other: Grid1D[_] => dim.allPos.forall(p => apply(p) == other(p))
+      case _ => false
+    }
+
+
   override val dim: Dimension = Dimension(width, height)
+}
+
+object Grid1D {
+    def apply[A:ClassTag](grid: Array[Array[A]]): Grid1D[A] = {
+      new Grid1D(grid.flatten, grid.head.length, grid.length)
+    }
 }

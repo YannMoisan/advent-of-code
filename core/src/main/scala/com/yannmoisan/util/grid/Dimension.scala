@@ -3,11 +3,13 @@ package com.yannmoisan.util.grid
 import scala.collection.mutable
 
 sealed abstract case class Dimension(width: Int, height: Int) {
+  def isInRange(p: Pos) : Boolean = p.x >= 0 && p.x < width && p.y >= 0 && p.y < height
+
   // for perf reason (cpu cache), order matters here
-  val allPos = for {
+  val allPos = (for {
     y <- 0 until height
     x <- 0 until width
-  } yield Pos(x, y)(this)
+  } yield Pos(x, y)(this)).toArray
 
   private val neighborsCache: Array[Array[Pos]] = {
     val cache = Array.ofDim[Array[Pos]](width * height)
@@ -41,9 +43,31 @@ sealed abstract case class Dimension(width: Int, height: Int) {
     cache
   }
 
+  private val neighbors8IntCache: Array[Array[Int]] = {
+    val cache = Array.ofDim[Array[Int]](width * height)
+    allPos.foreach { pos =>
+      cache(pos.index) = Seq(
+        Pos(pos.x + 1, pos.y)(this),
+        Pos(pos.x - 1, pos.y)(this),
+        Pos(pos.x, pos.y + 1)(this),
+        Pos(pos.x, pos.y - 1)(this),
+        Pos(pos.x + 1, pos.y + 1)(this),
+        Pos(pos.x + 1, pos.y - 1)(this),
+        Pos(pos.x - 1, pos.y + 1)(this),
+        Pos(pos.x - 1, pos.y - 1)(this)
+      ).filter(p => p.x >= 0 && p.x < width && p.y >= 0 && p.y < height).map(_.index).toArray
+
+    }
+    cache
+  }
+
   def neighbors(p: Pos): Array[Pos] = neighborsCache(p.index)
 
   def neighbors8(p: Pos): Array[Pos] = neighbors8Cache(p.index)
+  def neighbors8(index: Int): Array[Pos] = neighbors8Cache(index)
+
+  def neighbors8Int(p: Pos): Array[Int] = neighbors8IntCache(p.index)
+  def neighbors8Int(index: Int): Array[Int] = neighbors8IntCache(index)
 
   // The grid is torus-shaped, meaning exiting the grid from one side will wrap you round to the other side.
   private val moveCache = {

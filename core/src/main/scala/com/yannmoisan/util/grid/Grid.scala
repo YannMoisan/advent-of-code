@@ -12,6 +12,6 @@ trait Grid[A] {
   }
 
   def findAll(ch: A): Seq[Pos] = {
-    dim.allPos.filter(apply(_) == ch)
+    dim.allPos.toIndexedSeq.filter(apply(_) == ch)
   }
 }

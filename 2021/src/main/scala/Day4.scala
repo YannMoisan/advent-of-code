@@ -1,6 +1,9 @@
+import com.yannmoisan.util.grid.Grid2D
+import com.yannmoisan.util.grid.Pos
+
 // grids are represented as 2d mutable array
 object Day4 extends MultiPuzzle[Int, Int] {
-  case class State(grids: Array[Grid[Int]], numbers: Array[Int], index: Int)
+  case class State(grids: Array[Grid2D[Int]], numbers: Array[Int], index: Int)
 
   override def part1(input: Iterator[String]): Int = {
     val start  = parse(input)
@@ -18,32 +21,32 @@ object Day4 extends MultiPuzzle[Int, Int] {
   }
 
   private def parse(input: Iterator[String]): State = {
-    def parseGrid(arr: Array[String]): Grid[Int] =
-      new Grid((0 until 5).map(i => arr(i).trim.split("\\s+").map(_.toInt)).toArray)
+    def parseGrid(arr: Array[String]): Grid2D[Int] =
+      new Grid2D((0 until 5).map(i => arr(i).trim.split("\\s+").map(_.toInt)).toArray)
 
     val lines                                 = input.toArray
     val numbers: Array[Int]                   = lines.head.split(",").map(_.toInt)
     val groupedLines: Iterator[Array[String]] = lines.drop(2).grouped(6)
-    val grids: Array[Grid[Int]]               = groupedLines.map(parseGrid).toArray
+    val grids: Array[Grid2D[Int]]               = groupedLines.map(parseGrid).toArray
     State(grids, numbers, 0)
   }
 
-  private def hasCompleted(grid: Grid[Int]): Boolean = {
-    def hasCompletedRow(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(i => grid.row(i).forall(_ == 0))
+  private def hasCompleted(grid: Grid2D[Int]): Boolean = {
+    def hasCompletedRow(grid: Grid2D[Int]): Boolean =
+      (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x,y)(grid.dim)) == 0))
 
-    def hasCompletedCol(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(i => grid.col(i).forall(_ == 0))
+    def hasCompletedCol(grid: Grid2D[Int]): Boolean =
+      (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x,y)(grid.dim)) == 0))
 
     hasCompletedRow(grid) || hasCompletedCol(grid)
   }
 
-  private def sumOfAllNonMarkedNumbers(grid: Grid[Int]): Int =
-    grid.all.sum
+  private def sumOfAllNonMarkedNumbers(grid: Grid2D[Int]): Int =
+    grid.dim.allPos.foldLeft(0)((acc, p) => acc + grid(p))
 
   private def draw(state: State): State = {
     val value = state.numbers(state.index)
-    state.grids.foreach(grid => grid.indices.filter(grid(_) == value).foreach(grid(_) = 0))
+    state.grids.foreach(grid => grid.dim.allPos.filter(grid(_) == value).foreach(grid(_) = 0))
     state.copy(index = state.index + 1)
   }
 

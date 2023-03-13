@@ -4,10 +4,10 @@ import scala.collection.mutable
 
 object BFS {
   def shortestPath(
-      grid: Grid[Char],
-      start: Pos,
-      target: Char,
-      valid: Set[Char]
+                    grid: Grid[Char],
+                    start: Pos,
+                    target: Char,
+                    isValid: (Pos, Pos) => Boolean
   ): Option[List[Pos]] = {
     val q = mutable.Queue[List[Pos]]()
     val visited = Array.ofDim[Boolean](grid.dim.width * grid.dim.height)
@@ -27,7 +27,7 @@ object BFS {
           if (
             !visited(
               newPos.index
-            ) && valid.contains(grid.apply(newPos))
+            ) && isValid(pos, newPos)
           ) {
             q.enqueue(newPos :: path)
             visited(newPos.index) = true

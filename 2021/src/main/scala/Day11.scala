@@ -1,18 +1,18 @@
-import com.yannmoisan.util.grid.Grid2D
+import com.yannmoisan.util.grid.Grid1D
 
 @SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
-    val grid = new Grid2D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
+    val grid = Grid1D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
     Iterator.continually(flash(grid)).take(100).sum
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid = new Grid2D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
+    val grid = Grid1D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
     Iterator.continually(flash(grid)).zipWithIndex.find(_._1 == 100).get._2 + 1
   }
 
-  def flash(g: Grid2D[Int]): Int = {
+  def flash(g: Grid1D[Int]): Int = {
     g.dim.allPos.foreach { case p => g(p) = g(p) + 1 }
 
     while (g.dim.allPos.exists(g(_) > 9)) {

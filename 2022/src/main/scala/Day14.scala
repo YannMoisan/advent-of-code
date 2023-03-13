@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Dimension, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Dimension, Grid, Grid1D, Pos}
 
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day14 extends MultiPuzzle[Int, Int] {
@@ -16,7 +16,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
     grid.findAll('o').size
   }
 
-  private def fill(grid: Grid1D[Char]) = {
+  private def fill(grid: Grid[Char]) = {
     def nextPos(p: Pos): Option[Pos] =
       Seq(
         Pos(p.x, p.y + 1)(grid.dim),     // one step down ?

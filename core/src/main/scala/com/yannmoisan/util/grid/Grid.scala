@@ -14,4 +14,7 @@ trait Grid[A] {
   def findAll(ch: A): Seq[Pos] = {
     dim.allPos.toIndexedSeq.filter(apply(_) == ch)
   }
+
+  def count(f: A => Boolean): Int
+
 }

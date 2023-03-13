@@ -19,6 +19,8 @@ class Grid2D[A: ClassTag](val grid: Array[Array[A]]) extends Grid[A] {
   def debug(): Unit =
     grid.foreach(line => Console.err.println(line.mkString))
 
+  def count(f: A => Boolean): Int = ???
+
   override val dim: Dimension = Dimension(grid.head.length, grid.length)
 
     override def equals(obj: Any): Boolean =

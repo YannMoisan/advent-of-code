@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.Grid1D
+import com.yannmoisan.util.grid.{Grid, Grid1D}
 
 @SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends MultiPuzzle[Int, Int] {
@@ -12,7 +12,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
     Iterator.continually(flash(grid)).zipWithIndex.find(_._1 == 100).get._2 + 1
   }
 
-  def flash(g: Grid1D[Int]): Int = {
+  def flash(g: Grid[Int]): Int = {
     g.dim.allPos.foreach { case p => g(p) = g(p) + 1 }
 
     while (g.dim.allPos.exists(g(_) > 9)) {

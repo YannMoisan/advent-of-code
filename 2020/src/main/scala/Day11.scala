@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Direction8, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Direction8, Grid, Grid1D, Pos}
 
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
@@ -11,7 +11,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
     run(grid, pos => Direction8.all.flatMap(dir => nextVisible(grid, pos, dir)).toArray, 5)
   }
 
-  private def run(grid: Grid1D[Char], neighbors: Pos => Array[Pos], limit: Int): Int =
+  private def run(grid: Grid[Char], neighbors: Pos => Array[Pos], limit: Int): Int =
     Iterator
       .iterate(grid)(applyRules(neighbors, limit))
       .sliding(2).find(seq => seq(0) == seq(1)) match {
@@ -19,7 +19,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       case None      => sys.error("illegal state")
     }
 
-  private def applyRules(neighbors: Pos => Array[Pos], limit: Int)(grid: Grid1D[Char]): Grid1D[Char] = {
+  private def applyRules(neighbors: Pos => Array[Pos], limit: Int)(grid: Grid[Char]): Grid[Char] = {
     val newGrid = Grid1D.fill(grid.dim.width, grid.dim.height)('?')
     newGrid.dim.allPos.foreach { pos =>
       newGrid(pos) = grid(pos) match {

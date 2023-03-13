@@ -1,9 +1,8 @@
-import com.yannmoisan.util.grid.Grid1D
-import com.yannmoisan.util.grid.Pos
+import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 // grids are represented as 2d mutable array
 object Day4 extends MultiPuzzle[Int, Int] {
-  case class State(grids: Array[Grid1D[Int]], numbers: Array[Int], index: Int)
+  case class State(grids: Array[Grid[Int]], numbers: Array[Int], index: Int)
 
   override def part1(input: Iterator[String]): Int = {
     val start  = parse(input)
@@ -21,27 +20,27 @@ object Day4 extends MultiPuzzle[Int, Int] {
   }
 
   private def parse(input: Iterator[String]): State = {
-    def parseGrid(arr: Array[String]): Grid1D[Int] =
+    def parseGrid(arr: Array[String]): Grid[Int] =
       Grid1D((0 until 5).map(i => arr(i).trim.split("\\s+").map(_.toInt)).toArray)
 
     val lines                                 = input.toArray
     val numbers: Array[Int]                   = lines.head.split(",").map(_.toInt)
     val groupedLines: Iterator[Array[String]] = lines.drop(2).grouped(6)
-    val grids: Array[Grid1D[Int]]               = groupedLines.map(parseGrid).toArray
+    val grids: Array[Grid[Int]]               = groupedLines.map(parseGrid).toArray
     State(grids, numbers, 0)
   }
 
-  private def hasCompleted(grid: Grid1D[Int]): Boolean = {
-    def hasCompletedRow(grid: Grid1D[Int]): Boolean =
+  private def hasCompleted(grid: Grid[Int]): Boolean = {
+    def hasCompletedRow(grid: Grid[Int]): Boolean =
       (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x,y)(grid.dim)) == 0))
 
-    def hasCompletedCol(grid: Grid1D[Int]): Boolean =
+    def hasCompletedCol(grid: Grid[Int]): Boolean =
       (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x,y)(grid.dim)) == 0))
 
     hasCompletedRow(grid) || hasCompletedCol(grid)
   }
 
-  private def sumOfAllNonMarkedNumbers(grid: Grid1D[Int]): Int =
+  private def sumOfAllNonMarkedNumbers(grid: Grid[Int]): Int =
     grid.dim.allPos.foldLeft(0)((acc, p) => acc + grid(p))
 
   private def draw(state: State): State = {

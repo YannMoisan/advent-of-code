@@ -14,10 +14,10 @@ object Day12 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = {
     val grid = Grid1D(input.toArray)
     val e    = grid.find('E').get
-    (0 to 40).map(y => Pos(0, y)(grid.dim)).map(ss => length(grid, ss, e)).min
+    (0 to 40).map(y => Pos(0, y)(grid.dim)).map(ss => length(grid, ss.index, e)).min
   }
 
-  private def length(grid: Grid[Char], s: Pos, e: Pos): Int = {
+  private def length(grid: Grid[Char], s: Int, e: Int): Int = {
     grid(s) = 'a' // hacky
     grid(e) = 'z' // hacky
     BFS.shortestPath(grid, s, 'z', (from, to) => grid(to) - grid(from) <= 1).get.length + 1

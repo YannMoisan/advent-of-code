@@ -33,9 +33,9 @@ class Y2021D25Bench {
     val n = g.copy()
     g.dim.allPos.foreach { p =>
       val pn = Pos((p.x + 1) % g.dim.width, p.y)(g.dim)
-      if (g(p) == '>' && g(pn) == '.') {
-        n(p) = '.'
-        n(pn) = '>'
+      if (g(p.index) == '>' && g(pn.index) == '.') {
+        n(p.index) = '.'
+        n(pn.index) = '>'
       }
     }
     n
@@ -45,9 +45,9 @@ class Y2021D25Bench {
     val n = g.copy()
     g.dim.allPos.foreach { p =>
       val pn = Pos(p.x, (p.y + 1) % g.dim.height)(g.dim)
-      if (g(p) == 'v' && g(pn) == '.') {
-        n(p) = '.'
-        n(pn) = 'v'
+      if (g(p.index) == 'v' && g(pn.index) == '.') {
+        n(p.index) = '.'
+        n(pn.index) = 'v'
       }
     }
     n

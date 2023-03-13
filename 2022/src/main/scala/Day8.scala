@@ -16,7 +16,7 @@ object Day8 extends MultiPuzzle[Int, Int]{
   }
 
   private def isVisible(grid: Grid[Char], p: Pos) =
-    views(grid, p).exists(xs => xs.forall(x => grid(x) < grid(p)))
+    views(grid, p).exists(xs => xs.forall(x => grid(x.index) < grid(p.index)))
 
   private def views(grid: Grid[Char], p: Pos) = Seq(
     (0 until p.y).map(Pos(p.x, _)(grid.dim)).reverse,
@@ -27,7 +27,7 @@ object Day8 extends MultiPuzzle[Int, Int]{
 
   private def score(grid: Grid[Char], p: Pos) = {
     views(grid, p)
-      .map { xs => math.min(xs.length, xs.takeWhile { pos => grid(pos) < grid(p) }.length + 1) }
+      .map { xs => math.min(xs.length, xs.takeWhile { pos => grid(pos.index) < grid(p.index) }.length + 1) }
       .product
   }
 }

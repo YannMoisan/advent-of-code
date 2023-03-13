@@ -11,7 +11,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
     // add floor
-    (0 until grid.dim.width).foreach(x => grid(Pos(x, grid.dim.height - 1)(grid.dim)) = '#')
+    (0 until grid.dim.width).foreach(x => grid(Pos(x, grid.dim.height - 1)(grid.dim).index) = '#')
     fill(grid)
     grid.findAll('o').size
   }
@@ -22,7 +22,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
         Pos(p.x, p.y + 1)(grid.dim),     // one step down ?
         Pos(p.x - 1, p.y + 1)(grid.dim), // one step down and to the left
         Pos(p.x + 1, p.y + 1)(grid.dim)  // one step down and to the right
-      ).find(p => grid(p) == '.')
+      ).find(p => grid(p.index) == '.')
 
     var sand    = Pos(500, 0)(grid.dim)
     var blocked = false
@@ -32,7 +32,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
         case None =>
           if (sand == Pos(500, 0)(grid.dim))
             blocked = true
-          grid(sand) = 'o'
+          grid(sand.index) = 'o'
           sand = Pos(500, 0)(grid.dim)
       }
     }
@@ -59,7 +59,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
     // add paths on the grid
     paths.foreach { path =>
       path.sliding(2).foreach {
-        case Array(start, end) => allPositions(Pos(start._1, start._2)(grid.dim), Pos(end._1, end._2)(grid.dim), grid.dim).foreach(pos => grid(pos) = '#')
+        case Array(start, end) => allPositions(Pos(start._1, start._2)(grid.dim), Pos(end._1, end._2)(grid.dim), grid.dim).foreach(pos => grid(pos.index) = '#')
       }
     }
     grid

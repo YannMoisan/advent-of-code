@@ -1,5 +1,6 @@
 package com
 
+import com.yannmoisan.util.grid.Grid1D
 import org.openjdk.jmh.annotations._
 
 import java.util.concurrent.TimeUnit
@@ -15,109 +16,110 @@ class Y2015D18Bench {
   var grid: Array[Array[Char]] = _
   var flatgrid: Array[Char] = _
   var flatgridbool: Array[Boolean] = _
+  var flatgridbool2: Grid1D[Boolean] = _
   val offsets = List(
     (-1, -1), (-1, 0), (-1, +1),
     (-0, -1), (-0, +1),
     (+1, -1), (+1, 0), (+1, +1)
   )
 
-  @Benchmark
+  //@Benchmark
   def a_baseline: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def b_flatten: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_flatten) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def c_flatten_better: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_flatten_better) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def d_offset: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_offset) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def e_offset_constants: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_offset_constants) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def f_offset_better_for: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_offset_better_for) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def g_offset_collect: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_offset_collect) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def h_offset_pool: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_offset_pool) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def i_cache: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def j_foreach: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_foreach(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def k_while: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_while(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def l_no_lambda_call: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_no_lambda_call(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def m_no_method_call: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_no_method_call(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def n_vector_array: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_vector_array(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def o_inline3_colbased: Unit = {
     val end = (1 to 100).foldLeft(grid) { case (acc, _) => nextState_inline3_colbased(acc, neighborIndices_cache) }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def p_1d_foreach: Unit = {
     val end = (1 to 100).foldLeft(flatgrid) { case (acc, _) => nextState_1d_foreach(acc) }
     assert(end.count(_ == '#') == 814)
   }
 
-  @Benchmark
+  //@Benchmark
   def q_1d_while: Unit = {
     val end = (1 to 100).foldLeft(flatgrid) { case (acc, _) => nextState_1d_while(acc) }
     assert(end.count(_ == '#') == 814)
@@ -127,6 +129,12 @@ class Y2015D18Bench {
   def s_1d_bool: Unit = {
     val end = (1 to 100).foldLeft(flatgridbool) { case (acc, _) => nextState_1d_bool(acc) }
     assert(end.count(_ == true) == 814)
+  }
+
+  @Benchmark
+  def s_1d_bool_grid: Unit = {
+    val end = (1 to 100).foldLeft(flatgridbool2) { case (acc, _) => nextState_1d_bool_grid(acc) }
+    assert(end.dim.allPos.toIndexedSeq.count(p => end(p.index)) == 814)
   }
 
   def nextState(grid: Array[Array[Char]], neighborIndices: (Int, Int) => Seq[(Int, Int)]): Array[Array[Char]] = {
@@ -350,6 +358,30 @@ class Y2015D18Bench {
     newState
   }
 
+  def nextState_1d_bool_grid(grid: Grid1D[Boolean]): Grid1D[Boolean] = {
+    val newState = new Grid1D(Array.ofDim[Boolean](10000), 100, 100)
+
+    var index = 0
+    while (index < 10000) {
+      val neighbors = grid.dim.neighbors8(index)
+      var neighborsOn = 0
+      var i = 0
+      while (i < neighbors.length) {
+        val index = neighbors(i)
+        if (grid(index)) neighborsOn += 1
+        i += 1
+      }
+      newState(index) = (grid(index), neighborsOn) match {
+        case (true, 2) | (true, 3) => true
+        case (true, _) => false
+        case (false, 3) => true
+        case (false, _) => false
+      }
+      index += 1
+    }
+    newState
+  }
+
   def nextState_inline3_colbased(grid: Array[Array[Char]], neighborIndices: (Int, Int) => Seq[(Int, Int)]): Array[Array[Char]] = {
     val newState = Array.ofDim[Char](grid.size, grid.head.size)
 
@@ -494,5 +526,6 @@ class Y2015D18Bench {
     grid = io.Source.fromInputStream(is).getLines().toArray.map(_.toArray)
     flatgrid = grid.flatten
     flatgridbool = flatgrid.map(_ == '#')
+    flatgridbool2 = new Grid1D(flatgrid.map(_ == '#'), 100, 100)
   }
 }

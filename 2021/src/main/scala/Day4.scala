@@ -32,20 +32,20 @@ object Day4 extends MultiPuzzle[Int, Int] {
 
   private def hasCompleted(grid: Grid[Int]): Boolean = {
     def hasCompletedRow(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x,y)(grid.dim)) == 0))
+      (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x,y)(grid.dim).index) == 0))
 
     def hasCompletedCol(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x,y)(grid.dim)) == 0))
+      (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x,y)(grid.dim).index) == 0))
 
     hasCompletedRow(grid) || hasCompletedCol(grid)
   }
 
   private def sumOfAllNonMarkedNumbers(grid: Grid[Int]): Int =
-    grid.dim.allPos.foldLeft(0)((acc, p) => acc + grid(p))
+    grid.dim.allPos.foldLeft(0)((acc, p) => acc + grid(p.index))
 
   private def draw(state: State): State = {
     val value = state.numbers(state.index)
-    state.grids.foreach(grid => grid.dim.allPos.filter(grid(_) == value).foreach(grid(_) = 0))
+    state.grids.foreach(grid => grid.dim.allPos.filter(p => grid(p.index) == value).foreach(p => grid(p.index) = 0))
     state.copy(index = state.index + 1)
   }
 

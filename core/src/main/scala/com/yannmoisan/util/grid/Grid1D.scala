@@ -2,7 +2,7 @@ package com.yannmoisan.util.grid
 
 import scala.reflect.ClassTag
 
-class Grid1D[@specialized(Int, Char, Boolean) A](grid: Array[A], width: Int, height: Int)
+class Grid1D[@specialized(Int, Char, Boolean) A](private val grid: Array[A], width: Int, height: Int)
     extends Grid[A] {
 
   def copy(): Grid1D[A] = {
@@ -21,7 +21,16 @@ class Grid1D[@specialized(Int, Char, Boolean) A](grid: Array[A], width: Int, hei
 
   override def equals(obj: Any): Boolean =
     obj match {
-      case other: Grid1D[_] => dim.allPos.forall(p => apply(p) == other(p))
+      case other: Grid1D[_] =>
+        var i = 0
+        var ret = true
+        while (ret && i < dim.allPos.length) {
+          val p = dim.allPos(i)
+          if (this.apply(p) == other(p)) ret = false
+          i += 1
+        }
+        true
+
       case _ => false
     }
 
@@ -30,7 +39,7 @@ class Grid1D[@specialized(Int, Char, Boolean) A](grid: Array[A], width: Int, hei
 }
 
 object Grid1D {
-    def apply[A:ClassTag](grid: Array[Array[A]]): Grid1D[A] = {
+  def apply[@specialized(Int, Char, Boolean) A:ClassTag](grid: Array[Array[A]]): Grid1D[A] = {
       new Grid1D(grid.flatten, grid.head.length, grid.length)
     }
 }

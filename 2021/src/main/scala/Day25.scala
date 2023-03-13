@@ -1,4 +1,5 @@
 import com.yannmoisan.util.grid.{Grid1D, Pos}
+import fp.Functional
 
 // Double buffering
 // reuse array

@@ -1,3 +1,5 @@
+package fp
+
 // Given a function f : A => A and a start value
 // Determine the number of iterations before f converges i.e. f(a) = a
 // https://en.wikipedia.org/wiki/Fixed_point_(mathematics)

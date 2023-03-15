@@ -134,7 +134,7 @@ class Y2015D18Bench {
   @Benchmark
   def s_1d_bool_grid: Unit = {
     val end = (1 to 100).foldLeft(flatgridbool2) { case (acc, _) => nextState_1d_bool_grid(acc) }
-    assert(end.dim.allPos.toIndexedSeq.count(p => end(p.index)) == 814)
+    assert(end.dim.indices.toIndexedSeq.count(p => end(p)) == 814)
   }
 
   def nextState(grid: Array[Array[Char]], neighborIndices: (Int, Int) => Seq[(Int, Int)]): Array[Array[Char]] = {

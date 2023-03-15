@@ -13,13 +13,13 @@ object Day11 extends MultiPuzzle[Int, Int] {
   }
 
   def flash(g: Grid[Int]): Int = {
-    g.dim.allPos.foreach { case p => g(p.index) = g(p.index) + 1 }
+    g.dim.indices.foreach { case p => g(p) = g(p) + 1 }
 
-    while (g.dim.allPos.exists(p => g(p.index) > 9)) {
-      g.dim.allPos.foreach { p =>
-        if (g(p.index) > 9) {
-          g(p.index) = -1
-          g.dim.neighbors8(p.index).foreach { n =>
+    while (g.dim.indices.exists(p => g(p) > 9)) {
+      g.dim.indices.foreach { p =>
+        if (g(p) > 9) {
+          g(p) = -1
+          g.dim.neighbors8(p).foreach { n =>
             if (g(n) != -1) {
               g(n) = g(n) + 1
             }
@@ -29,10 +29,10 @@ object Day11 extends MultiPuzzle[Int, Int] {
     }
 
     var flash = 0
-    g.dim.allPos.foreach { p =>
-      if (g(p.index) == -1) {
+    g.dim.indices.foreach { p =>
+      if (g(p) == -1) {
         flash += 1
-        g(p.index) = 0
+        g(p) = 0
       }
     }
     flash //.size

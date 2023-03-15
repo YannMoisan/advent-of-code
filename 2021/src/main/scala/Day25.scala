@@ -1,8 +1,9 @@
-import com.yannmoisan.util.grid.{Grid1D, Pos}
+import com.yannmoisan.util.grid.{Direction, Grid1D}
 import fp.Functional
 
 // Double buffering
 // reuse array
+@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day25 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val cur = Grid1D(input.toArray.map(_.toCharArray))
@@ -13,11 +14,11 @@ object Day25 extends MultiPuzzle[Int, Int] {
 
   def `next>`(g: Grid1D[Char]): Grid1D[Char] = {
     val n = g.copy()
-    g.dim.allPos.foreach { p =>
-      val pn = Pos((p.x + 1) % g.dim.width,p.y)(g.dim)
-      if (g(p.index) == '>' && g(pn.index) == '.') {
-        n(p.index) = '.'
-        n(pn.index) = '>'
+    g.dim.indices.foreach { p =>
+      val pn = g.dim.move(p, Direction.Right).get
+      if (g(p) == '>' && g(pn) == '.') {
+        n(p) = '.'
+        n(pn) = '>'
       }
     }
     n
@@ -25,11 +26,11 @@ object Day25 extends MultiPuzzle[Int, Int] {
 
   def `nextv`(g: Grid1D[Char]): Grid1D[Char] = {
     val n = g.copy()
-    g.dim.allPos.foreach { p =>
-      val pn = Pos(p.x,(p.y + 1) % g.dim.height)(g.dim)
-      if (g(p.index) == 'v' && g(pn.index) == '.') {
-        n(p.index) = '.'
-        n(pn.index) = 'v'
+    g.dim.indices.foreach { p =>
+      val pn = g.dim.move(p, Direction.Down).get
+      if (g(p) == 'v' && g(pn) == '.') {
+        n(p) = '.'
+        n(pn) = 'v'
       }
     }
     n

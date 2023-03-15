@@ -41,11 +41,11 @@ object Day4 extends MultiPuzzle[Int, Int] {
   }
 
   private def sumOfAllNonMarkedNumbers(grid: Grid[Int]): Int =
-    grid.dim.allPos.foldLeft(0)((acc, p) => acc + grid(p.index))
+    grid.dim.indices.foldLeft(0)((acc, p) => acc + grid(p))
 
   private def draw(state: State): State = {
     val value = state.numbers(state.index)
-    state.grids.foreach(grid => grid.dim.allPos.filter(p => grid(p.index) == value).foreach(p => grid(p.index) = 0))
+    state.grids.foreach(grid => grid.dim.indices.filter(p => grid(p) == value).foreach(p => grid(p) = 0))
     state.copy(index = state.index + 1)
   }
 

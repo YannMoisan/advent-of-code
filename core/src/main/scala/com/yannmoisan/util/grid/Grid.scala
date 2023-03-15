@@ -18,7 +18,7 @@ trait Grid[@specialized(Int, Char, Boolean) A] {
   }
 
   def findAll(ch: A): Seq[Int] = {
-    dim.allPos.toIndexedSeq.filter(p => apply(p.index) == ch).map(_.index)
+    dim.positions.toIndexedSeq.filter(p => apply(p.index) == ch).map(_.index)
   }
 
   def count(f: A => Boolean): Int

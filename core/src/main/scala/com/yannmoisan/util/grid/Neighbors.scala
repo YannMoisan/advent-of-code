@@ -10,7 +10,7 @@ class PrecomputedNeighbors(move: AbsMove, directions: Seq[Direction])
 
   private val cache: Array[Array[Int]] = {
     val arr = Array.ofDim[Array[Int]](move.dim.width * move.dim.height)
-    move.dim.allPos.foreach { p =>
+    move.dim.positions.foreach { p =>
       arr(p.index) =
         directions.map { dir => move.move(p.index, dir) }.flatten.toArray
     }

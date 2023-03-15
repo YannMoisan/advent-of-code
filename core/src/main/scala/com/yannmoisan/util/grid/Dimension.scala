@@ -4,10 +4,13 @@ import scala.collection.mutable
 
 sealed abstract case class Dimension(width: Int, height: Int) {
   // for perf reason (cpu cache), order matters here
-  val allPos = (for {
+  private[grid] val positions = (for {
     y <- 0 until height
     x <- 0 until width
   } yield Pos(x, y)(this)).toArray
+
+  val indices = 0 until width * height
+  def pos(i: Int) = positions(i)
 
   private val neighbors4_ =
     new PrecomputedNeighbors(new StandardMove(this) {}, Direction.all4)

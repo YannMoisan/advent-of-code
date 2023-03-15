@@ -27,8 +27,8 @@ class Grid1D[@specialized(Int, Char, Boolean) A](
       case other: Grid1D[_] =>
         var i = 0
         var ret = true
-        while (ret && i < dim.allPos.length) {
-          val p = dim.allPos(i)
+        while (ret && i < dim.positions.length) {
+          val p = dim.positions(i)
           if (this.apply(p.index) != other(p.index)) ret = false
           i += 1
         }

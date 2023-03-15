@@ -8,7 +8,7 @@ abstract class AbsMove(val dim: Dimension) extends Move
 
 abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
   override def move(index: Int, dir: Direction): Option[Int] = {
-    val pos = dim.allPos(index)
+    val pos = dim.positions(index)
     val dst = Pos(pos.x + dir.delta._1, pos.y + dir.delta._2)(dim)
     Option.when(isInRange(dst))(dst.index)
   }
@@ -21,7 +21,7 @@ abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
 abstract class TorusShapedMove(override val dim: Dimension)
     extends AbsMove(dim) {
   override def move(index: Int, dir: Direction): Option[Int] = {
-    val pos = dim.allPos(index)
+    val pos = dim.positions(index)
     val dst = Pos(
       (pos.x + dir.delta._1 + dim.width) % dim.width,
       (pos.y + dir.delta._2 + dim.height) % dim.height
@@ -41,7 +41,7 @@ class PrecomputedMove(underlying: AbsMove) extends Move {
       Array.ofDim[Option[Int]](8 * underlying.dim.width * underlying.dim.height)
     for {
       dir <- Direction.all8
-      p <- underlying.dim.allPos
+      p <- underlying.dim.positions
     } {
       arr(dir.value + 8 * p.index) = underlying.move(p.index, dir)
     }

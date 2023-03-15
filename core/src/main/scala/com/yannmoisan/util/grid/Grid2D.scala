@@ -11,12 +11,12 @@ class Grid2D[A: ClassTag](val grid: Array[Array[A]]) extends Grid[A] {
   override val dim: Dimension = Dimension(grid.head.length, grid.length)
 
   override def apply(index: Int): A = {
-    val pos = dim.allPos(index)
+    val pos = dim.positions(index)
     grid(pos.y)(pos.x)
   }
 
   override def update(p: Int, ch: A): Unit = {
-    val pos = dim.allPos(p)
+    val pos = dim.positions(p)
     grid(pos.y)(pos.x) = ch
   }
 
@@ -32,7 +32,7 @@ class Grid2D[A: ClassTag](val grid: Array[Array[A]]) extends Grid[A] {
   override def equals(obj: Any): Boolean =
     obj match {
       case other: Grid2D[_] =>
-        dim.allPos.forall(p => apply(p.index) == other(p.index))
+        dim.positions.forall(p => apply(p.index) == other(p.index))
       case _ => false
     }
 }

@@ -1,6 +1,6 @@
-import com.yannmoisan.util.grid.{Dimension, Grid, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Dimension, Direction, Grid, Grid1D, Pos}
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
+@SuppressWarnings(Array("org.wartremover.warts.TraversableOps","org.wartremover.warts.OptionPartial"))
 object Day14 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
@@ -19,10 +19,10 @@ object Day14 extends MultiPuzzle[Int, Int] {
   private def fill(grid: Grid[Char]) = {
     def nextPos(p: Pos): Option[Pos] =
       Seq(
-        Pos(p.x, p.y + 1)(grid.dim),     // one step down ?
-        Pos(p.x - 1, p.y + 1)(grid.dim), // one step down and to the left
-        Pos(p.x + 1, p.y + 1)(grid.dim)  // one step down and to the right
-      ).find(p => grid(p.index) == '.')
+        grid.dim.moveS(p.index, Direction.Down).get, // one step down ?
+        grid.dim.moveS(p.index, Direction.Left).get, // one step down ?
+        grid.dim.moveS(p.index, Direction.Right).get // one step down ?
+      ).find(p => grid(p) == '.').map(grid.dim.pos)
 
     var sand    = Pos(500, 0)(grid.dim)
     var blocked = false

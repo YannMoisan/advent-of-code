@@ -54,4 +54,9 @@ object Grid1D {
   def apply(grid: Array[String]): Grid1D[Char] = {
     new Grid1D(grid.flatten, grid.head.length, grid.length)
   }
+
+  def tabulate[@specialized(Int, Char, Boolean) A: ClassTag](dim: Dimension)(f: Int => A): Grid1D[A] = {
+    val arr = Array.tabulate(dim.width * dim.height)(f)
+    new Grid1D(arr, dim.width, dim.height)
+  }
 }

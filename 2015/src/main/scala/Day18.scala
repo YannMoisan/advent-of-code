@@ -9,18 +9,13 @@ object Day18 extends MultiPuzzle[Int, Int] {
 
   override def part2(input: Iterator[String]): Int = {
     val grid: Grid[Char] = Grid1D(input.toArray)
-    grid(Pos(0,0)(grid.dim).index) = '#'
-    grid(Pos(0,99)(grid.dim).index) = '#'
-    grid(Pos(99,0)(grid.dim).index) = '#'
-    grid(Pos(99,99)(grid.dim).index) = '#'
+    val coins = List(Pos(0, 0)(grid.dim), Pos(0, 99)(grid.dim), Pos(99, 0)(grid.dim), Pos(99, 99)(grid.dim))
+    coins.foreach { p => grid(p.index) = '#'}
 
     val end = (1 to 100).foldLeft(grid) {
       case (acc, _) =>
         val res = next(acc)
-        res(Pos(0, 0)(grid.dim).index) = '#'
-        res(Pos(0, 99)(grid.dim).index) = '#'
-        res(Pos(99, 0)(grid.dim).index) = '#'
-        res(Pos(99, 99)(grid.dim).index) = '#'
+        coins.foreach { p => res(p.index) = '#'}
         res
     }
 
@@ -28,10 +23,7 @@ object Day18 extends MultiPuzzle[Int, Int] {
   }
 
   def next(grid: Grid[Char]): Grid[Char] = {
-    val res = Grid1D.fill(grid.dim.width, grid.dim.height)('?')
-
-    var index = 0
-    while (index < 10000) {
+    Grid1D.tabulate(grid.dim) { index =>
       val neighbors = grid.dim.neighbors8(index)
       var neighborsOn = 0
       var i = 0
@@ -40,14 +32,12 @@ object Day18 extends MultiPuzzle[Int, Int] {
         if (grid(index) == '#') neighborsOn += 1
         i += 1
       }
-      res(index) = (grid(index), neighborsOn) match {
+      (grid(index), neighborsOn) match {
         case ('#', 2) | ('#', 3) => '#'
         case ('#', _) => '.'
         case ('.', 3) => '#'
         case ('.', _) => '.'
       }
-      index += 1
     }
-    res
   }
 }

@@ -19,8 +19,8 @@ object Day11 extends MultiPuzzle[Int, Int] {
       case None      => sys.error("illegal state")
     }
 
-  private def applyRules(neighbors: Int => Array[Int], limit: Int)(grid: Grid[Char]): Grid[Char] = {
-    val arr = Array.tabulate(grid.dim.width * grid.dim.height) { index =>
+  private def applyRules(neighbors: Int => Array[Int], limit: Int)(grid: Grid[Char]): Grid[Char] =
+    Grid1D.tabulate(grid.dim) { index =>
         grid(index) match {
           case '.' => '.'
           case 'L' if neighbors(index).count(p => grid(p) == '#') == 0 => '#'
@@ -28,8 +28,6 @@ object Day11 extends MultiPuzzle[Int, Int] {
           case _ => grid(index)
         }
       }
-    new Grid1D(arr, grid.dim.width, grid.dim.height)
-    }
 
   private def nextVisible(grid: Grid1D[Char], start: Int, dir: Direction): Option[Int] =
     Iterator

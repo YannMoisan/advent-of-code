@@ -12,10 +12,12 @@ object Direction {
   object Left extends Direction("LEFT", (-1, 0), 2)
   object Right extends Direction("RIGHT", (1, 0), 3)
 
-  def all = Seq(Up, Down, Left, Right)
-  def find(delta: (Int, Int)): Direction = all.find(_.delta == delta).get
-}
+  object NW extends Direction("NW", (-1, -1), 4)
+  object NE extends Direction("NE", (1, -1), 5)
+  object SW extends Direction("SW", (-1, 1), 6)
+  object SE extends Direction("SE", (1, 1), 7)
 
-object Direction8 {
-  val all = Seq((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
+  def all4 = Seq(Up, Down, Left, Right)
+  def all8 = all4 ++ Seq(NW, NE, SW, SE)
+  def find(delta: (Int, Int)): Direction = all4.find(_.delta == delta).get
 }

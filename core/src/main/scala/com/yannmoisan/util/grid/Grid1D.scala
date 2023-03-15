@@ -19,6 +19,9 @@ class Grid1D[@specialized(Int, Char, Boolean) A](
 
   override def count(f: A => Boolean): Int = grid.count(f)
 
+  def debug(): Unit =
+    grid.grouped(dim.width).foreach(line => Console.err.println(line.mkString))
+
   override def equals(obj: Any): Boolean =
     obj match {
       case other: Grid1D[_] =>

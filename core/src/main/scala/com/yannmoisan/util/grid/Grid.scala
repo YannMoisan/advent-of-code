@@ -22,4 +22,6 @@ trait Grid[@specialized(Int, Char, Boolean) A] {
   }
 
   def count(f: A => Boolean): Int
+
+  def copy(): Grid[A]
 }

@@ -9,10 +9,6 @@ class Grid1D[@specialized(Int, Char, Boolean) A](
 ) extends Grid[A] {
   override val dim: Dimension = Dimension(width, height)
 
-  def copy(): Grid1D[A] = {
-    new Grid1D(grid.clone(), width, height)
-  }
-
   override def apply(index: Int): A = grid(index)
 
   override def update(index: Int, ch: A): Unit = grid(index) = ch
@@ -21,6 +17,10 @@ class Grid1D[@specialized(Int, Char, Boolean) A](
 
   def debug(): Unit =
     grid.grouped(dim.width).foreach(line => Console.err.println(line.mkString))
+
+  def copy(): Grid[A] = {
+    new Grid1D(grid.clone(), width, height)
+  }
 
   override def equals(obj: Any): Boolean =
     obj match {

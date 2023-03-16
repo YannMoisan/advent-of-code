@@ -3,6 +3,7 @@ package com.yannmoisan.util.grid
 import scala.collection.mutable
 
 sealed abstract case class Dimension(width: Int, height: Int) {
+  val size = width * height
   // for perf reason (cpu cache), order matters here
   private[grid] val positions = (for {
     y <- 0 until height

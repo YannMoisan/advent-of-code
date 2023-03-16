@@ -1,4 +1,6 @@
-import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Grid, Grid1D}
+
+import scala.collection.mutable
 
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day15 extends MultiPuzzle[Int, Int] {
@@ -17,18 +19,22 @@ object Day15 extends MultiPuzzle[Int, Int] {
       }
 
   def dijkstra(grid: Grid[Int]) = {
-    val dist    = Array.fill[Int](grid.dim.width * grid.dim.height)(Int.MaxValue)
+    val dist    = Array.fill[Int](grid.dim.size)(Int.MaxValue)
     dist(0) = 0
-    var toVisit = grid.dim.indices.toSet
+    val toVisit = mutable.TreeSet[(Int, Int)](dist.zipWithIndex.toIndexedSeq :_*)
+
     while (toVisit.size > 0) {
       // find min
-      val s1 = toVisit.minBy { index => dist(index) }
-      toVisit -= s1
+      val (d, s1) = toVisit.head
+      val _ = toVisit.remove((d, s1))
       grid.dim.neighbors4(s1).foreach { j =>
-            if (dist(j) > dist(s1) + grid(j))
+            if (dist(j) > dist(s1) + grid(j)) {
+              val _ = toVisit.remove((dist(j), j))
               dist(j) = dist(s1) + grid(j)
-        }
+              val _ = toVisit.addOne((dist(j), j))
+            }
+      }
     }
-    dist(Pos(grid.dim.width - 1, grid.dim.height - 1)(grid.dim).index)
+    dist(grid.dim.size - 1)
   }
 }

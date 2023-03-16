@@ -1,44 +1,21 @@
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day15 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]) =
-    dijkstra(input.toArray)
+    dijkstra(input.toArray.map(_.toCharArray.map(_.asDigit)))
 
-  override def part2(input: Iterator[String]) = dijkstra(fiveTimesLarger(input.toArray))
+  override def part2(input: Iterator[String]) = dijkstra(fiveTimesLarger(input.toArray.map(_.toCharArray.map(_.asDigit))))
 
-  def fiveTimesLarger(input: Array[String]): Array[String] =
+  def fiveTimesLarger(input: Array[Array[Int]]): Array[Array[Int]] =
     Array
       .tabulate(input.head.length * 5, input.length * 5) { (x, y) =>
         val dx = x / input.head.length
         val dy = y / input.length
-        applyNTimes(input(y % input.head.length)(x % input.length), dx + dy)(next)
-      }.map(_.mkString)
+        val value = input(y % input.head.length)(x % input.length) + dx + dy
+        if (value > 9) value - 9 else value
+      }
 
-  // TODO create a combinator
-  def applyNTimes[A](s: Char, n: Int)(f: Char => Char): Char = {
-    var i   = 0
-    var cur = s
-    while (i < n) {
-      cur = f(cur)
-      i += 1
-    }
-    cur
-  }
-
-  def next(s: Char): Char =
-    s match {
-      case '1' => '2'
-      case '2' => '3'
-      case '3' => '4'
-      case '4' => '5'
-      case '5' => '6'
-      case '6' => '7'
-      case '7' => '8'
-      case '8' => '9'
-      case '9' => '1'
-    }
-
-  def apply(lines: Array[String], x: Int, y: Int): Int =
-    Integer.parseInt(lines(y)(x).toString)
+  def apply(lines: Array[Array[Int]], x: Int, y: Int): Int =
+    lines(y)(x) //.asDigit
 
   def neighbors(mx: Int, my: Int, x: Int, y: Int): Seq[(Int, Int)] =
     Seq(
@@ -48,7 +25,7 @@ object Day15 extends MultiPuzzle[Int, Int] {
       (x, y - 1)
     ).filter { case (x, y) => x >= 0 && y >= 0 && x < mx && y < my }
 
-  def dijkstra(grid: Array[String]) = {
+  def dijkstra(grid: Array[Array[Int]]) = {
     val mx: Int = grid.head.length
     val my: Int = grid.length
     val dist    = Array.fill[Int](mx, my)(Int.MaxValue)

@@ -1,3 +1,4 @@
+@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day23 extends MultiPuzzle[Int, Int] {
   trait Instruction                               extends Product with Serializable
   case class Half(reg: String)                    extends Instruction
@@ -16,20 +17,18 @@ object Day23 extends MultiPuzzle[Int, Int] {
 
   override def part1(input: Iterator[String]): Int = {
     val program = input.map(parseInstruction).toVector
-    var current = State.init1
-    while (current.position < program.size) {
-      current = applyInstruction(program(current.position), current)
-    }
-    current.registers("b")
+    Iterator
+      .iterate(State.init1)(s => applyInstruction(program(s.position), s)).find(
+        _.position >= program.size
+      ).get.registers("b")
   }
 
   override def part2(input: Iterator[String]): Int = {
     val program = input.map(parseInstruction).toVector
-    var current = State.init2
-    while (current.position < program.size) {
-      current = applyInstruction(program(current.position), current)
-    }
-    current.registers("b")
+    Iterator
+      .iterate(State.init2)(s => applyInstruction(program(s.position), s)).find(
+        _.position >= program.size
+      ).get.registers("b")
   }
 
   private def parseInstruction(line: String): Instruction =

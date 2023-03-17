@@ -18,12 +18,11 @@ class BruteForceBench {
   var numberLength = 7
 
   @Benchmark
-  def test(): Int = {
+  def test(): Int =
     BruteForce.solve(List(Guess("1234567", 3 << 4)), 0)
-  }
 }
 
-case class Guess(guess: String, v : Int)
+case class Guess(guess: String, v: Int)
 
 trait BullsAndCows {
   def solve(guesses: List[Guess], from: Int): Int
@@ -34,22 +33,22 @@ object BruteForce extends BullsAndCows {
     .permutationsSB8(('0' to '9').toList, 7)
 
   override def solve(guesses: List[Guess], from: Int): Int =
-    candidates.indexWhere( {candidate =>
-      guesses.forall(guess => evaluate(candidate, guess.guess) == guess.v)},
-      from)
-
+    candidates.indexWhere(
+      candidate => guesses.forall(guess => evaluate(candidate, guess.guess) == guess.v),
+      from
+    )
 
   private def evaluate(sol: Array[Char], guess: String): Int = {
     // Find bulls
     var bulls = 0
-    var cows = 0
+    var cows  = 0
     // populate the state for the algo
 
     //val state = Array.ofDim[Boolean](10)
     var state = 0
 
     //mutable.Map[Char, Int]()
-    var i = 0
+    var i   = 0
     val len = guess.length
     while (i < len) {
       val s = sol(i)
@@ -81,12 +80,12 @@ object Combinatorics extends App {
   def permutationsSB8(l: List[Char], k: Int): ArrayBuffer[Array[Char]] = {
     // dfs
     val count = (10 until 10 - k by -1).product
-    val b = new mutable.ArrayBuffer[Array[Char]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](k)
+    val b     = new mutable.ArrayBuffer[Array[Char]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](k)
     _permutationsSB8(0)
 
-    def _permutationsSB8(depth: Int): Unit = {
+    def _permutationsSB8(depth: Int): Unit =
       if (depth == k) {
         if (cur.head != '0') {
           b += cur.clone()
@@ -104,7 +103,6 @@ object Combinatorics extends App {
           }
         }
       }
-    }
     b
   }
 

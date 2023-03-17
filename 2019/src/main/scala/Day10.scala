@@ -1,6 +1,6 @@
 object Day10 extends MultiPuzzle[Int, Int] {
-  override def part1(lines: Iterator[String]) : Int = 42
-/*
+  override def part1(lines: Iterator[String]): Int = 42
+  /*
     override def part1(lines: Iterator[String]) : Int = {
       val line: Iterator[String] = """.#..#
                                      |.....
@@ -42,11 +42,10 @@ object Day10 extends MultiPuzzle[Int, Int] {
         ret
       }.max
     }
-*/
+   */
 
-  def gcd(a: Int, b: Int): Int = {
+  def gcd(a: Int, b: Int): Int =
     if (b == 0) a else gcd(b, a % b)
-  }
 
-  override def part2(lines: Iterator[String]) : Int = 42
+  override def part2(lines: Iterator[String]): Int = 42
 }

@@ -21,16 +21,16 @@ object Day11 extends MultiPuzzle[Int, Int] {
 
   private def applyRules(neighbors: Int => Array[Int], limit: Int)(grid: Grid[Char]): Grid[Char] =
     Grid1D.tabulate(grid.dim) { index =>
-        grid(index) match {
-          case '.' => '.'
-          case 'L' if neighbors(index).count(p => grid(p) == '#') == 0 => '#'
-          case '#' if neighbors(index).count(p => grid(p) == '#') >= limit => 'L'
-          case _ => grid(index)
-        }
+      grid(index) match {
+        case '.'                                                         => '.'
+        case 'L' if neighbors(index).count(p => grid(p) == '#') == 0     => '#'
+        case '#' if neighbors(index).count(p => grid(p) == '#') >= limit => 'L'
+        case _                                                           => grid(index)
       }
+    }
 
   private def nextVisible(grid: Grid1D[Char], start: Int, dir: Direction): Option[Int] =
     Iterator
-      .unfold(start)(p => grid.dim.moveS(p, dir).map(x => (x,x)))
+      .unfold(start)(p => grid.dim.moveS(p, dir).map(x => (x, x)))
       .find(p => grid(p) != '.')
 }

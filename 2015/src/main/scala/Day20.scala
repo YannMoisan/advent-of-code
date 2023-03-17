@@ -8,7 +8,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val Limit = 1000000
 
-    val houses = Array.ofDim[Int](Limit+1)
+    val houses = Array.ofDim[Int](Limit + 1)
     for {
       elf <- 1 until Limit
       inc <- elf until Limit by elf

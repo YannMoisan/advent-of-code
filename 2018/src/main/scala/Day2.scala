@@ -1,25 +1,23 @@
 object Day2 extends MultiPuzzle[Int, String] {
 
-  override def part1(iter: Iterator[String]) : Int = {
+  override def part1(iter: Iterator[String]): Int = {
     val lines = iter.toArray
     val countByLine = lines
       .flatMap(
         _.groupBy(identity)
           .map { case (_, s) => s.length }
-          .filter { count =>
-            count == 2 || count == 3
-          }
+          .filter(count => count == 2 || count == 3)
           .toSet
       )
     countByLine.count(_ == 2) * countByLine.count(_ == 3)
   }
 
-  override def part2(iter: Iterator[String]) : String = {
+  override def part2(iter: Iterator[String]): String = {
     val lines = iter.toArray
     (for {
       s1 <- lines
       s2 <- lines
-      if (countDifferingChar(s1, s2) == 1)
+      if countDifferingChar(s1, s2) == 1
     } yield removeDifferingChar(s1, s2)).head
   }
 

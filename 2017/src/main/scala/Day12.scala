@@ -14,38 +14,34 @@ object Day12 extends MultiPuzzle[Int, Int] {
       */
     def breadth_first_traverse[Node](
         node: Node,
-        f: Node => Seq[Node]): Stream[(Node, Seq[Node])] = {
-      def recurse(q: Queue[(Node, Seq[Node])],
-                  cache: Set[Node]): Stream[(Node, Seq[Node])] = {
+        f: Node => Seq[Node]
+    ): Stream[(Node, Seq[Node])] = {
+      def recurse(q: Queue[(Node, Seq[Node])], cache: Set[Node]): Stream[(Node, Seq[Node])] =
         if (q.isEmpty) {
           Stream.Empty
         } else {
           val ((node, i), tail) = q.dequeue
-          val nodes = f(node).filterNot(cache.contains)
-          (node, i) #:: recurse(tail ++ nodes.map(n => (n, n +: i)),
-                                cache ++ nodes)
+          val nodes             = f(node).filterNot(cache.contains)
+          (node, i) #:: recurse(tail ++ nodes.map(n => (n, n +: i)), cache ++ nodes)
         }
-      }
 
       (node, Seq(node)) #:: recurse(
         Queue.empty[(Node, Seq[Node])] ++ f(node).map(n => (n, Seq(n, node))),
-        Set.empty)
+        Set.empty
+      )
     }
   }
 
-  override def part1(lines: Iterator[String]) : Int = {
+  override def part1(lines: Iterator[String]): Int = {
     val arr = lines
       .map(_.split(" <-> "))
       .map { case Array(a, b) => (a, b.split(", ").toSeq) }
     val m: Map[String, Seq[String]] = arr.toMap
-    val stream = BFS.breadth_first_traverse(
-      "0",
-      (s: String) => m.getOrElse(s, Seq.empty[String]))
+    val stream                      = BFS.breadth_first_traverse("0", (s: String) => m.getOrElse(s, Seq.empty[String]))
     stream.take(10).foreach(println(_))
     0
   }
 
-  override def part2(lines: Iterator[String]) : Int = {
+  override def part2(lines: Iterator[String]): Int =
     0
-  }
 }

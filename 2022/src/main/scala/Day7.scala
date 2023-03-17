@@ -30,7 +30,7 @@ object Day7 extends MultiPuzzle[Int, Int] {
     val m          = mutable.Map[String, Int]()
     input.foreach {
       _ match {
-        case s"$$ cd /" => workingDir = "/root"
+        case s"$$ cd /"  => workingDir = "/root"
         case s"$$ cd .." => workingDir = workingDir.substring(0, workingDir.lastIndexOf("/"))
         case s"$$ cd $dir" =>
           val _ = m.updateWith(workingDir)(i => Some(i.getOrElse(0)))

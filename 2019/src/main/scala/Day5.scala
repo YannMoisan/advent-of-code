@@ -3,12 +3,12 @@ import ParameterMode.{Immediate, Position}
 import scala.collection.mutable
 
 object Day5 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int = {
     val program = line.split(",").map(_.toInt)
     computeOutput(program, 1)
   }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int = {
     val program = line.split(",").map(_.toInt)
     computeOutput(program, 5)
   }

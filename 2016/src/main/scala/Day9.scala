@@ -1,9 +1,8 @@
-
 object Day9 extends SinglePuzzle[Int, Long] {
 
   override def part1(s: String): Int = parseA(s).length
 
-  override def part2(s: String): Long =  parseB(s)
+  override def part2(s: String): Long = parseB(s)
 
   val regex = """(?:\((\d+)x(\d+)\))?(.*)""".r
 

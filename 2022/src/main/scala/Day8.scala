@@ -1,7 +1,7 @@
 import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
-object Day8 extends MultiPuzzle[Int, Int]{
+object Day8 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val grid = Grid1D(input.toArray)
     grid.dim.indices.filter(p => isVisible(grid, p)).size
@@ -12,7 +12,7 @@ object Day8 extends MultiPuzzle[Int, Int]{
     (for {
       x <- 1 until grid.dim.width - 1
       y <- 1 until grid.dim.height - 1
-    } yield score(grid, Pos(x,y)(grid.dim).index)).max
+    } yield score(grid, Pos(x, y)(grid.dim).index)).max
   }
 
   private def isVisible(grid: Grid[Char], p: Int) =
@@ -28,9 +28,8 @@ object Day8 extends MultiPuzzle[Int, Int]{
     )
   }
 
-  private def score(grid: Grid[Char], p: Int) = {
-    views(grid, p)
-      .map { xs => math.min(xs.length, xs.takeWhile { pos => grid(pos.index) < grid(p) }.length + 1) }
-      .product
-  }
+  private def score(grid: Grid[Char], p: Int) =
+    views(grid, p).map { xs =>
+      math.min(xs.length, xs.takeWhile(pos => grid(pos.index) < grid(p)).length + 1)
+    }.product
 }

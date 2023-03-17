@@ -35,7 +35,7 @@ object Day9 extends MultiPuzzle[Int, Int] {
         case List(a, b) =>
           distances.find(d => (d._1 == a && d._2 == b) || (d._2 == a && d._1 == b)) match {
             case Some(dist) => dist._3
-            case None => throw new IllegalStateException(s"$a => $b")
+            case None       => throw new IllegalStateException(s"$a => $b")
           }
         case _ => -1
       }

@@ -1,10 +1,10 @@
 object Day2 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int = {
     val program = line.split(",").map(_.toInt)
     computeOutput(program, 12, 2)
   }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int = {
     val program = line.split(",").map(_.toInt)
     val outputs: Iterator[((Int, Int), Int)] = for {
       noun <- (0 to 99).iterator

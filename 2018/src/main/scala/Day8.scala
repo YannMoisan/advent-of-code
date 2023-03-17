@@ -3,19 +3,19 @@ import scala.collection.mutable.ArrayBuffer
 
 object Day8 extends SinglePuzzle[Int, Int] {
   case class Node(
-    val nbChild: Int,
-    val nbMeta: Int,
-    val child: ArrayBuffer[Node] = ArrayBuffer.empty[Node],
-    val meta: ArrayBuffer[Int] = ArrayBuffer.empty[Int]
+      val nbChild: Int,
+      val nbMeta: Int,
+      val child: ArrayBuffer[Node] = ArrayBuffer.empty[Node],
+      val meta: ArrayBuffer[Int] = ArrayBuffer.empty[Int]
   )
 
-  override def part1(s: String) : Int = {
+  override def part1(s: String): Int = {
     val numbers: Array[Int] = s.split(" ").map(_.toInt)
 
-    var sum = 0
-    var i = 2
+    var sum   = 0
+    var i     = 2
     val stack = new mutable.Stack[Node]()
-    val root = Node(numbers(0), numbers(1))
+    val root  = Node(numbers(0), numbers(1))
     stack.push(root)
 
     // DFS, iterative
@@ -39,14 +39,14 @@ object Day8 extends SinglePuzzle[Int, Int] {
     sum
   }
 
-  override def part2(s: String) : Int = {
+  override def part2(s: String): Int = {
     //val s2 = "2 3 0 3 10 11 12 1 1 0 1 99 2 1 1 2"
     val numbers: Array[Int] = s.split(" ").map(_.toInt)
 
-    var sum = 0
-    var i = 2
+    var sum   = 0
+    var i     = 2
     val stack = new mutable.Stack[Node]()
-    val root = Node(numbers(0), numbers(1))
+    val root  = Node(numbers(0), numbers(1))
     stack.push(root)
 
     // DFS, iterative
@@ -73,9 +73,8 @@ object Day8 extends SinglePuzzle[Int, Int] {
     score(root)
   }
 
-  def score(n: Node) : Int = {
+  def score(n: Node): Int =
     if (n.nbChild == 0) n.meta.sum
-    else n.meta.filter(_ <= n.nbChild).map(v => score(n.child(v-1))).sum
+    else n.meta.filter(_ <= n.nbChild).map(v => score(n.child(v - 1))).sum
 
-  }
 }

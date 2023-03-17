@@ -6,7 +6,7 @@ object Rec extends App {
   //https://en.wikipedia.org/wiki/Caesar_cipher
   def shift1[A](s: Seq[A]): A => A = {
     val shifted = s.tail :+ s.head
-    val m = s.zip(shifted).toMap
+    val m       = s.zip(shifted).toMap
     a => m(a)
   }
 
@@ -25,12 +25,11 @@ object Rec extends App {
   println(loop(0)(_ + 1, _ >= 10))
   println(loop2(0)(_ + 1, _ >= 10))
 
-  def g[I, S](is: Seq[I], f: I => S => S, init: S): S = catsStdMonoidKForFunction1.algebra.combineAll(is.map(f))(init)
+  def g[I, S](is: Seq[I], f: I => S => S, init: S): S =
+    catsStdMonoidKForFunction1.algebra.combineAll(is.map(f))(init)
 
   val g2 = g(List("a", "b", "c"), (i: String) => (s: String) => s + i, "foo")
 
   println(g2)
 
-
 }
-

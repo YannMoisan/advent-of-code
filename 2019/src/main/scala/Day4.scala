@@ -1,5 +1,5 @@
 object Day4 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int =
     (137683 to 596253)
       .map(_.toString.toArray.sliding(2).toArray)
       .filter(
@@ -9,13 +9,10 @@ object Day4 extends SinglePuzzle[Int, Int] {
         _.exists { case Array(a, b) => a == b }
       )
       .size
-  }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int =
     (137683 to 596253)
-      .filter { i =>
-        i.toString.toArray.sliding(2).toArray.forall { case Array(a, b) => a <= b }
-      }
+      .filter(i => i.toString.toArray.sliding(2).toArray.forall { case Array(a, b) => a <= b })
       .filter { i =>
         val s = i.toString
         (0 until 5).exists { i =>
@@ -23,5 +20,4 @@ object Day4 extends SinglePuzzle[Int, Int] {
         }
       }
       .size
-  }
 }

@@ -1,5 +1,5 @@
 object Day11 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int = {
     val m = Map("ne" -> 0, "n" -> 0, "nw" -> 0)
     val allMaps: Array[Map[String, Int]] = line.split(",").scanLeft(m) {
       case (m, dir) =>
@@ -23,7 +23,6 @@ object Day11 extends SinglePuzzle[Int, Int] {
     }.max
   }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int =
     0
-  }
 }

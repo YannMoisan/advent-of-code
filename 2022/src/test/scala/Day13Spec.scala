@@ -99,4 +99,3 @@ class Day13Spec extends AnyFlatSpec with Matchers {
     Day13.compare("[1,[2,[3,[4,[5,6,7]]]],8,9]", "[[]]") shouldBe 1
   }
 }
-

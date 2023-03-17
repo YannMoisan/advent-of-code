@@ -56,7 +56,7 @@ class IntervalSpec extends AnyFlatSpec with Matchers {
   it should "merge overlapped intervals" in {
     val a = Interval(2, 10)
     val b = Interval(5, 15)
-    Interval.merge(a, b) shouldEqual Seq(Interval(2,15))
+    Interval.merge(a, b) shouldEqual Seq(Interval(2, 15))
   }
 
   it should "merge overlapped intervals (switch)" in {
@@ -76,8 +76,8 @@ class IntervalSpec extends AnyFlatSpec with Matchers {
     Interval(3409991, 4071379)
     Interval(3409991, 4091997)
 
-    Interval.merge(List(a,b,c)) shouldEqual Seq(Interval(2,12))
-    Interval.merge(List(a,c,b)) shouldEqual Seq(Interval(2,12))
+    Interval.merge(List(a, b, c)) shouldEqual Seq(Interval(2, 12))
+    Interval.merge(List(a, c, b)) shouldEqual Seq(Interval(2, 12))
     Interval.merge(List(b, a, c)) shouldEqual Seq(Interval(2, 12))
     Interval.merge(List(b, c, a)) shouldEqual Seq(Interval(2, 12))
     Interval.merge(List(c, a, b)) shouldEqual Seq(Interval(2, 12))

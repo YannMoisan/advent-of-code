@@ -1,6 +1,8 @@
 import com.yannmoisan.util.grid.{Dimension, Direction, Grid, Grid1D, Pos}
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps","org.wartremover.warts.OptionPartial"))
+@SuppressWarnings(
+  Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.OptionPartial")
+)
 object Day14 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
@@ -39,7 +41,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
   }
 
   private def makeGrid(input: Iterator[String]): Grid1D[Char] = {
-    def parse(s: String): Array[(Int,Int)] =
+    def parse(s: String): Array[(Int, Int)] =
       s.split(" -> ").map { seg =>
         val Array(x, y) = seg.split(",").map(_.toInt)
         (x, y)
@@ -52,14 +54,16 @@ object Day14 extends MultiPuzzle[Int, Int] {
         (start.x to end.x by math.signum(end.x - start.x)).map(x => Pos(x, start.y)(dim))
       }
 
-    val paths: Seq[Array[(Int, Int)]]   = input.map(parse).toList
-    val maxY                     = paths.flatten.maxBy(t => t._2)._2
-    val grid = Grid1D.fill(1000, maxY + 3)('.')
+    val paths: Seq[Array[(Int, Int)]] = input.map(parse).toList
+    val maxY                          = paths.flatten.maxBy(t => t._2)._2
+    val grid                          = Grid1D.fill(1000, maxY + 3)('.')
 
     // add paths on the grid
     paths.foreach { path =>
       path.sliding(2).foreach {
-        case Array(start, end) => allPositions(Pos(start._1, start._2)(grid.dim), Pos(end._1, end._2)(grid.dim), grid.dim).foreach(pos => grid(pos.index) = '#')
+        case Array(start, end) =>
+          allPositions(Pos(start._1, start._2)(grid.dim), Pos(end._1, end._2)(grid.dim), grid.dim)
+            .foreach(pos => grid(pos.index) = '#')
       }
     }
     grid

@@ -43,20 +43,21 @@ object Day23 extends MultiPuzzle[Int, Int] {
     }
 
   // 2 designs : methods on Instruction or a global one
-  private def applyInstruction(i: Instruction, s: State) : State = {
+  private def applyInstruction(i: Instruction, s: State): State =
     i match {
-      case Half(reg) => State(s.registers.+((reg, s.registers(reg) / 2)), s.position + 1)
-      case Triple(reg) => State(s.registers.+((reg, s.registers(reg) * 3)), s.position + 1)
+      case Half(reg)      => State(s.registers.+((reg, s.registers(reg) / 2)), s.position + 1)
+      case Triple(reg)    => State(s.registers.+((reg, s.registers(reg) * 3)), s.position + 1)
       case Increment(reg) => State(s.registers.+((reg, s.registers(reg) + 1)), s.position + 1)
-      case Jump(offset) => State(s.registers, s.position + offset)
-      case JumpIfEven(reg, offset) => if (s.registers(reg) % 2 == 0)
-        State(s.registers, s.position + offset)
-      else
-        State(s.registers, s.position + 1)
-      case JumpIfOne(reg, offset) => if (s.registers(reg) == 1)
-        State(s.registers, s.position + offset)
-      else
-        State(s.registers, s.position + 1)
+      case Jump(offset)   => State(s.registers, s.position + offset)
+      case JumpIfEven(reg, offset) =>
+        if (s.registers(reg) % 2 == 0)
+          State(s.registers, s.position + offset)
+        else
+          State(s.registers, s.position + 1)
+      case JumpIfOne(reg, offset) =>
+        if (s.registers(reg) == 1)
+          State(s.registers, s.position + offset)
+        else
+          State(s.registers, s.position + 1)
     }
-  }
 }

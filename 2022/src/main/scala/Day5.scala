@@ -17,7 +17,7 @@ object Day5 extends MultiPuzzle[String, String] {
     mutable.Stack.apply("L", "D", "G", "C", "P", "Z", "F"),
     mutable.Stack.apply("S", "P", "F"),
     mutable.Stack.apply("L", "R", "W", "F", "D", "H"),
-    mutable.Stack.apply("C", "D","N", "Z"),
+    mutable.Stack.apply("C", "D", "N", "Z"),
     mutable.Stack.apply("Q", "J", "S", "V", "F", "R", "N", "W"),
     mutable.Stack.apply("V", "W", "Z", "G", "S", "M", "R")
   )
@@ -35,25 +35,22 @@ object Day5 extends MultiPuzzle[String, String] {
   )
 
   override def part1(input: Iterator[String]): String = {
-    input.drop(10).foreach { s=>
+    input.drop(10).foreach { s =>
       val s"move $count from $from to $to" = s
-      (1 to count.toInt).foreach {
-        _ =>
-          val e = arr(from.toInt - 1).pop()
-          arr(to.toInt - 1).push(e)
+      (1 to count.toInt).foreach { _ =>
+        val e = arr(from.toInt - 1).pop()
+        arr(to.toInt - 1).push(e)
       }
     }
-    (1 to 9).map{ i => arr(i-1).pop()}.mkString
+    (1 to 9).map(i => arr(i - 1).pop()).mkString
   }
 
   override def part2(input: Iterator[String]): String = {
     input.drop(10).foreach { s =>
       val s"move $count from $from to $to" = s
-      val l: Seq[String] = (1 to count.toInt).map {
-        _ => arr2(from.toInt - 1).pop()
-      }
+      val l: Seq[String]                   = (1 to count.toInt).map(_ => arr2(from.toInt - 1).pop())
       l.reverse.foreach(arr2(to.toInt - 1).push(_))
     }
-    (1 to 9).map { i => arr2(i - 1).pop() }.mkString
+    (1 to 9).map(i => arr2(i - 1).pop()).mkString
   }
 }

@@ -1,7 +1,7 @@
 object Day6 extends SinglePuzzle[Int, Int] {
 
   def nextBank(s: IndexedSeq[Int]): IndexedSeq[Int] = {
-    val max = s.max
+    val max   = s.max
     val index = s.indexOf(max)
 
     (1 to max).foldLeft(s.updated(index, 0)) {
@@ -20,11 +20,10 @@ object Day6 extends SinglePuzzle[Int, Int] {
     z.filter { case (_, v) => v.size > 1 }.values.minBy(a => a(1)._2)
   }
 
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int =
     realloc(line)(1)._2
-  }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int = {
     val t = realloc(line)
     t(1)._2 - t(0)._2
   }

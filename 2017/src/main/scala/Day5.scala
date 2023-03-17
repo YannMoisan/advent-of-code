@@ -14,12 +14,12 @@ object Day5 extends MultiPuzzle[Int, Int] {
 
   def stop: State => Boolean = s => s.pos < 0 || s.pos >= s.instr.length
 
-  override def part1(lines: Iterator[String]) : Int = {
+  override def part1(lines: Iterator[String]): Int = {
     val state0 = State(lines.map(_.toInt).toIndexedSeq, 0, 0)
     loop(state0)(next(_ => 1), stop).count
   }
 
-  override def part2(lines: Iterator[String]) : Int = {
+  override def part2(lines: Iterator[String]): Int = {
     val state0 = State(lines.map(_.toInt).toIndexedSeq, 0, 0)
     loop(state0)(next(i => if (i >= 3) -1 else 1), stop).count
   }

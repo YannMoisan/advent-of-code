@@ -5,9 +5,9 @@ object Day9 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = common(input, 10)
 
   private def common(input: Iterator[String], size: Int): Int = {
-    val nodes = Array.fill(size)((0, 0))
+    val nodes   = Array.fill(size)((0, 0))
     val visited = mutable.Set[(Int, Int)]()
-    val _ = visited.add(nodes(size-1))
+    val _       = visited.add(nodes(size - 1))
     input.foreach { s =>
       val s"$dir $step" = s
       val vec = dir match {

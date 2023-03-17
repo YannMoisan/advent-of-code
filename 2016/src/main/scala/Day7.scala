@@ -1,4 +1,3 @@
-
 object Day7 extends MultiPuzzle[Int, Int] {
   override def part1(lines: Iterator[String]): Int = lines.count(isTLS)
 
@@ -25,7 +24,7 @@ object Day7 extends MultiPuzzle[Int, Int] {
 
   def isSSL(s: String) = {
     val (outsides, insides) = partitionByIndex(split(s))
-    val abas = outsides.flatMap(abas2)
+    val abas                = outsides.flatMap(abas2)
     if (abas.isEmpty) false else insides.exists(s => containsBAB(s, abas.map(BAB)))
   }
 

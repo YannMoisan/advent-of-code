@@ -1,16 +1,13 @@
 import scala.collection.mutable.ArrayBuffer
 @SuppressWarnings(
   Array(
-    "org.wartremover.warts.TraversableOps",
+    "org.wartremover.warts.TraversableOps"
   )
 )
 object Day19 extends MultiPuzzle[Int, Int] {
 
   // List(A,B,C) A => C,D
   // List(A,B,C)
-
-
-
 
   // 662 possibilities ou 738 possibilities ?
   override def part1(input: Iterator[String]): Int = {
@@ -19,41 +16,38 @@ object Day19 extends MultiPuzzle[Int, Int] {
       case s"$src => $dst" => (src, dst)
     }
     val molecule = list.last
-    val split = splitCamelCase(molecule)
+    val split    = splitCamelCase(molecule)
     println(split.mkString(","))
-    val _ = split.foldLeft(0L) { case (acc, token) =>
-      //println(token)
-      //println(acc)
-      val occ = transfo.count(x => x._1 == token)
-      acc + occ
+    val _ = split.foldLeft(0L) {
+      case (acc, token) =>
+        //println(token)
+        //println(acc)
+        val occ = transfo.count(x => x._1 == token)
+        acc + occ
     }
 
     val replacements: Seq[Array[String]] = oneReplace(split.toArray, transfo)
     println(replacements.size)
     replacements.take(10).foreach(a => println(a.mkString))
     replacements.map(_.mkString).toSet.size
-
-
 //    println(splitCamelCase2("FooBaaaarBCDBaz"))
 //    println(splitCamelCase2("FooBaaaarBCD"))
 //    println(molecule)
 //    println(transfo)
   }
 
-  override def part2(input: Iterator[String]): Int = {
+  override def part2(input: Iterator[String]): Int =
     42
-  }
 
   // TODO Generalize to split any list given a predicate
-  def splitCamelCase2(s: String): Seq[String] = {
+  def splitCamelCase2(s: String): Seq[String] =
     s.split("(?<!^)(?=[A-Z])").toList
-  }
 
-    // TODO Generalize to split any list given a predicate
-  def splitCamelCase(s: String) : Seq[String] = {
+  // TODO Generalize to split any list given a predicate
+  def splitCamelCase(s: String): Seq[String] = {
     var candidate = s(0).toString
-    val res = ArrayBuffer[String]()
-    var pos=1
+    val res       = ArrayBuffer[String]()
+    var pos       = 1
     while (pos < s.length) {
       if (s(pos).isLower) {
         candidate += s(pos)
@@ -69,17 +63,15 @@ object Day19 extends MultiPuzzle[Int, Int] {
     res.toList
   }
 
-  def oneReplace[A](l: Array[A], replacements: Seq[(A, A)]) : Seq[Array[A]] = {
+  def oneReplace[A](l: Array[A], replacements: Seq[(A, A)]): Seq[Array[A]] =
     (0 until l.size).flatMap { i =>
       if (replacements.exists(x => x._1 == l(i))) {
-        val t: Seq[Array[A]] = replacements.filter(x => x._1 == l(i)).map {
-          x =>
-            val res = l.clone()
-            res(i) = x._2
-            res
+        val t: Seq[Array[A]] = replacements.filter(x => x._1 == l(i)).map { x =>
+          val res = l.clone()
+          res(i) = x._2
+          res
         }
         t
       } else Seq()
     }
-  }
 }

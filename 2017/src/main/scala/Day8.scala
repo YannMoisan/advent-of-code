@@ -32,16 +32,15 @@ object Day8 extends MultiPuzzle[Int, Int] {
       state
   }
 
-  def parse(line: String): Instr = {
+  def parse(line: String): Instr =
     line match {
       case instruct(a, b, c, d, e, f) =>
         Instr(a, b, Integer.parseInt(c), Condition(d, e, Integer.parseInt(f)))
     }
-  }
 
-  override def part1(lines: Iterator[String]) : Int = {
+  override def part1(lines: Iterator[String]): Int = {
     val instructions = lines.map(parse)
-    val state0 = State(Map.empty[String, Int])
+    val state0       = State(Map.empty[String, Int])
     val allStates = instructions.scanLeft(state0) {
       case (s, instr) => execute(instr, s)
     }
@@ -49,9 +48,9 @@ object Day8 extends MultiPuzzle[Int, Int] {
 
   }
 
-  override def part2(lines: Iterator[String]) : Int = {
+  override def part2(lines: Iterator[String]): Int = {
     val instructions = lines.map(parse)
-    val state0 = State(Map.empty[String, Int])
+    val state0       = State(Map.empty[String, Int])
     val allStates = instructions.scanLeft(state0) {
       case (s, instr) => execute(instr, s)
     }

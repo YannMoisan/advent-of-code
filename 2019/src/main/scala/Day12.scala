@@ -1,7 +1,7 @@
 import scala.collection.mutable
 
 object Day12 extends MultiPuzzle[Int, Long] {
-  override def part1(lines: Iterator[String]) : Int = {
+  override def part1(lines: Iterator[String]): Int = {
     val vel0 = Position(0, 0, 0)
 
 //    val moons = Array(
@@ -34,7 +34,7 @@ object Day12 extends MultiPuzzle[Int, Long] {
     end.map(_.energy).sum
   }
 
-  override def part2(lines: Iterator[String]) : Long = {
+  override def part2(lines: Iterator[String]): Long = {
     val vel0 = Position(0, 0, 0)
 
 //    val moons = Array(
@@ -104,11 +104,10 @@ object Day12 extends MultiPuzzle[Int, Long] {
     }
   }
 
-  def add(pos: Position, vel: Position): Position = {
+  def add(pos: Position, vel: Position): Position =
     Position(pos.x + vel.x, pos.y + vel.y, pos.z + vel.z)
-  }
 
-  def gravity(moons: Array[Moon]): Array[Position] = {
+  def gravity(moons: Array[Moon]): Array[Position] =
     indexes.map { i =>
       val others = otherz(i)
       val dx     = sumBy(others, (j: Int) => g(moons(i).pos.x, moons(j).pos.x))
@@ -129,7 +128,6 @@ object Day12 extends MultiPuzzle[Int, Long] {
 //      }.sum
       Position(dx, dy, dz)
     }
-  }
 
   def sumBy[A](a: Array[A], f: A => Int): Int = {
     var i   = 0
@@ -141,21 +139,17 @@ object Day12 extends MultiPuzzle[Int, Long] {
     sum
   }
 
-  def g(a: Int, b: Int): Int = {
+  def g(a: Int, b: Int): Int =
     if (a == b) 0 else if (a > b) -1 else 1
-  }
 
-  val indexes = Array(0, 1, 2, 3)
-  val otherz: Array[Array[Int]] = indexes.map { i =>
-    indexes.filter(_ != i)
-  }
+  val indexes                   = Array(0, 1, 2, 3)
+  val otherz: Array[Array[Int]] = indexes.map(i => indexes.filter(_ != i))
 
-  def move(moons: Array[Moon]): Array[Moon] = {
+  def move(moons: Array[Moon]): Array[Moon] =
     indexes.map { i =>
       val gravities = gravity(moons)
       val newVel    = add(moons(i).vel, gravities(i))
       Moon(add(moons(i).pos, newVel), newVel)
     }
-  }
 
 }

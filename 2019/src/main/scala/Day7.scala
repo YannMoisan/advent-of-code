@@ -1,7 +1,7 @@
 import scala.collection.mutable
 
 object Day7 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int = {
     val program = line.split(",").map(_.toInt)
 
     val combs = (0 to 4).permutations.toArray
@@ -18,7 +18,7 @@ object Day7 extends SinglePuzzle[Int, Int] {
 
   class State(var p: Array[Int], var ptr: Int, var iptr: Int, var inputs: mutable.Buffer[Int])
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int = {
     val program = line.split(",").map(_.toInt)
 
     val combs: Array[IndexedSeq[Int]] = (5 to 9).permutations.toArray

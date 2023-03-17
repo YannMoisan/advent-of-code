@@ -1,4 +1,3 @@
-
 object Day18 extends MultiPuzzle[Int, Int] {
 
   def isTrap(s: String) = s match {
@@ -6,7 +5,7 @@ object Day18 extends MultiPuzzle[Int, Int] {
     case ".^^" => '^'
     case "..^" => '^'
     case "^.." => '^'
-    case _ => '.'
+    case _     => '.'
   }
 
   def newLine(line: String) = s".$line.".sliding(3).map(isTrap).mkString

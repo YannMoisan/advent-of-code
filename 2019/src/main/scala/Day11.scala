@@ -3,7 +3,7 @@ import Day11.ParameterMode.{Immediate, Position, Relative}
 import scala.collection.mutable
 
 object Day11 extends SinglePuzzle[Int, Int] {
-  override def part1(line: String) : Int = {
+  override def part1(line: String): Int = {
     val program = line.split(",").map(_.toLong)
 
     computeOutput(
@@ -11,7 +11,7 @@ object Day11 extends SinglePuzzle[Int, Int] {
     )
   }
 
-  override def part2(line: String) : Int = {
+  override def part2(line: String): Int = {
     val program = line.split(",").map(_.toLong)
 
     computeOutput(Memory(program, mutable.Map.empty[Long, Long]))
@@ -174,9 +174,8 @@ object Day11 extends SinglePuzzle[Int, Int] {
   }
 
   case class Memory(p: Array[Long], extraMemory: mutable.Map[Long, Long]) {
-    def read(adr: Long): Long = {
+    def read(adr: Long): Long =
       if (adr < p.length) p(adr.toInt) else extraMemory.getOrElse(adr, 0L)
-    }
 
     def write(adr: Long, value: Long) =
       if (adr < p.length) p(adr.toInt) = value else extraMemory.put(adr, value)

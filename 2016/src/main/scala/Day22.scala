@@ -1,4 +1,3 @@
-
 object Day22 extends MultiPuzzle[Int, String] {
   val node = """/dev/grid/node-x(\d+)-y(\d+)\s+(\d+)T\s+(\d+)T\s+(\d+)T\s+(\d+)%""".r
 
@@ -15,9 +14,9 @@ object Day22 extends MultiPuzzle[Int, String] {
     (for {
       n1 <- nodes
       n2 <- nodes
-      if (n1.pos != n2.pos)
-      if (n1.used <= n2.avail)
-      if (n1.used != 0)
+      if n1.pos != n2.pos
+      if n1.used <= n2.avail
+      if n1.used != 0
     } yield 1).sum
   }
 

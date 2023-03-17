@@ -1,5 +1,5 @@
 object Day6 extends MultiPuzzle[Int, Int] {
-  override def part1(iter: Iterator[String]) : Int = {
+  override def part1(iter: Iterator[String]): Int = {
     val lines  = iter.toArray
     val pat    = """(\d+), (\d+)""".r
     val points = lines.map { case pat(x, y) => (x.toInt, y.toInt) }
@@ -37,7 +37,7 @@ object Day6 extends MultiPuzzle[Int, Int] {
   def dist(x1: Int, y1: Int, x2: Int, y2: Int): Int =
     math.abs(x1 - x2) + math.abs(y1 - y2)
 
-  override def part2(iter: Iterator[String]) : Int = {
+  override def part2(iter: Iterator[String]): Int = {
     val lines  = iter.toArray
     val pat    = """(\d+), (\d+)""".r
     val points = lines.map { case pat(x, y) => (x.toInt, y.toInt) }

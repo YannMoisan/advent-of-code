@@ -5,16 +5,17 @@ object Day1 extends MultiPuzzle[Int, Int] {
 
   override def part2(input: Iterator[String]): Int = common(input, 3)
 
-  private def common(input: Iterator[String], k: Int): Int = split(input.toList, "")
-    .map(_.map(_.toInt).sum)
-    .sorted
-    .takeRight(k)
-    .sum
+  private def common(input: Iterator[String], k: Int): Int =
+    split(input.toList, "")
+      .map(_.map(_.toInt).sum)
+      .sorted
+      .takeRight(k)
+      .sum
 
-  private def split[A](l: List[A], sep: A) : List[List[A]] = {
-    val buf = new ListBuffer[List[A]]()
-    var current : List[A] = Nil
-    val it = l.iterator
+  private def split[A](l: List[A], sep: A): List[List[A]] = {
+    val buf              = new ListBuffer[List[A]]()
+    var current: List[A] = Nil
+    val it               = l.iterator
     while (it.hasNext) {
       val line = it.next()
       if (line == sep) {

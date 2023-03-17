@@ -17,140 +17,118 @@ class BullsAndCowsGenerateBench {
   var numberLength = 10
 
   //@Benchmark
-  def perm2(): List[String] = {
+  def perm2(): List[String] =
     permutations2(('0' to '9').toList, numberLength)
       .map(xs => new String(xs.toArray))
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def perm3(): List[String] = {
+  def perm3(): List[String] =
     permutations3(('0' to '9').toList, numberLength)
       .map(xs => new String(xs.toArray))
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def perm4(): List[String] = {
+  def perm4(): List[String] =
     permutations3(('0' to '9').toList, numberLength)
       .map(xs => xs.mkString)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB(): List[String] = {
+  def permSB(): List[String] =
     permutationsSB(('0' to '9').toList, numberLength)
-    .filter(_.head != '0')
-  }
+      .filter(_.head != '0')
 
   //@Benchmark
-  def permSB2(): List[String] = {
+  def permSB2(): List[String] =
     permutationsSB2(('0' to '9').toList, numberLength)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB3(): List[String] = {
+  def permSB3(): List[String] =
     permutationsSB3(('0' to '9').toList, numberLength)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB4(): List[String] = {
+  def permSB4(): List[String] =
     permutationsSB4(('0' to '9').toList, numberLength)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB5(): List[String] = {
+  def permSB5(): List[String] =
     permutationsSB5(('0' to '9').toList, numberLength)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB6(): ArrayBuffer[String] = {
+  def permSB6(): ArrayBuffer[String] =
     permutationsSB6(('0' to '9').toList, numberLength)
       .filter(_.head != '0')
-  }
 
   //@Benchmark
-  def permSB7(): ArrayBuffer[String] = {
+  def permSB7(): ArrayBuffer[String] =
     permutationsSB7(('0' to '9').toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB8(): ArrayBuffer[Array[Char]] = {
+  def permSB8(): ArrayBuffer[Array[Char]] =
     permutationsSB8(('0' to '9').toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9(): ArrayBuffer[Array[Char]] = {
+  def permSB9(): ArrayBuffer[Array[Char]] =
     permutationsSB9(('0' to '9').toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9bis(): ArrayBuffer[Array[Char]] = {
+  def permSB9bis(): ArrayBuffer[Array[Char]] =
     permutationsSB9bis(('0' to '9').toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9ter(): Array[Array[Char]] = {
+  def permSB9ter(): Array[Array[Char]] =
     permutationsSB9ter(('0' to '9').toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB10(): ArrayBuffer[Array[Byte]] = {
+  def permSB10(): ArrayBuffer[Array[Byte]] =
     permutationsSB10((0 to 9).map(_.toByte).toList, numberLength)
-  }
 
   @Benchmark
-  def permSB9flat(): Array[Char] = {
+  def permSB9flat(): Array[Char] =
     permutationsSB9flat(('0' to '9').toList, numberLength)
-  }
 
   @Benchmark
-  def permSB9flatNoLambda(): Array[Char] = {
+  def permSB9flatNoLambda(): Array[Char] =
     permutationsSB9flatNoLambda(numberLength)
-  }
 
   //@Benchmark
-  def permSB9flatByte(): Array[Byte] = {
+  def permSB9flatByte(): Array[Byte] =
     permutationsSB9flatByte((0 to 9).map(_.toByte).toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9flatByte2(): Array[Byte] = {
+  def permSB9flatByte2(): Array[Byte] =
     permutationsSB9flatByte2((0 to 9).map(_.toByte).toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9flatByte3(): Array[Byte] = {
+  def permSB9flatByte3(): Array[Byte] =
     permutationsSB9flatByte3((0 to 9).map(_.toByte).toList, numberLength)
-  }
 
   //@Benchmark
-  def permSB9flatByte4(): Array[Byte] = {
+  def permSB9flatByte4(): Array[Byte] =
     permutationsSB9flatByte4((0 to 9).map(_.toByte).toList, numberLength)
-  }
 
   def permutations2[A](l: List[A], k: Int): List[List[A]] = {
     // dfs
     val b = mutable.Buffer[List[A]]()
     _permutations2(Nil, Set(), 0)
 
-    def _permutations2(cur: List[A], used: Set[A], depth: Int): Unit = {
+    def _permutations2(cur: List[A], used: Set[A], depth: Int): Unit =
       if (depth == k) {
         b += cur
       } else {
         for {
           e <- l
-          if (!used.contains(e))
+          if !used.contains(e)
         } {
           _permutations2(e :: cur, used + e, depth + 1)
           // backtrack
         }
       }
-    }
 
     b.toList
 
@@ -158,17 +136,17 @@ class BullsAndCowsGenerateBench {
 
   def permutations3(l: List[Char], k: Int): List[List[Char]] = {
     // dfs
-    val b = mutable.Buffer[List[Char]]()
+    val b    = mutable.Buffer[List[Char]]()
     val used = Array.ofDim[Boolean](10)
     _permutations3(Nil, 0)
 
-    def _permutations3(cur: List[Char], depth: Int): Unit = {
+    def _permutations3(cur: List[Char], depth: Int): Unit =
       if (depth == k) {
         b += cur
       } else {
         for {
           e <- l
-          if (!used(e - '0'))
+          if !used(e - '0')
         } {
           val idx = e - '0'
           used(idx) = true
@@ -177,7 +155,6 @@ class BullsAndCowsGenerateBench {
           used(idx) = false
         }
       }
-    }
 
     b.toList
 
@@ -185,17 +162,17 @@ class BullsAndCowsGenerateBench {
 
   def permutationsSB(l: List[Char], k: Int): List[String] = {
     // dfs
-    val b = mutable.Buffer[String]()
+    val b    = mutable.Buffer[String]()
     val used = Array.ofDim[Boolean](10)
     _permutationsSB(new StringBuilder(), 0)
 
-    def _permutationsSB(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
         for {
           e <- l
-          if (!used(e - '0'))
+          if !used(e - '0')
         } {
           val idx = e - '0'
           used(idx) = true
@@ -205,7 +182,6 @@ class BullsAndCowsGenerateBench {
           used(idx) = false
         }
       }
-    }
 
     b.toList
 
@@ -213,17 +189,17 @@ class BullsAndCowsGenerateBench {
 
   def permutationsSB2(l: List[Char], k: Int): List[String] = {
     // dfs
-    val b = mutable.Buffer[String]()
+    val b    = mutable.Buffer[String]()
     val used = Array.ofDim[Boolean](10)
     _permutationsSB2(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB2(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB2(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
         for {
           e <- l
-          if (!used(e - '0'))
+          if !used(e - '0')
         } {
           val idx = e - '0'
           used(idx) = true
@@ -233,7 +209,6 @@ class BullsAndCowsGenerateBench {
           used(idx) = false
         }
       }
-    }
 
     b.toList
 
@@ -241,17 +216,17 @@ class BullsAndCowsGenerateBench {
 
   def permutationsSB3(l: List[Char], k: Int): List[String] = {
     // dfs
-    val b = mutable.Buffer[String]()
+    val b    = mutable.Buffer[String]()
     val used = Array.ofDim[Boolean](10)
     _permutationsSB3(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB3(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB3(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
         for {
           e <- l
-          if (!used(e - '0'))
+          if !used(e - '0')
         } {
           val idx = e - '0'
           used(idx) = true
@@ -261,7 +236,6 @@ class BullsAndCowsGenerateBench {
           used(idx) = false
         }
       }
-    }
 
     b.toList
 
@@ -270,17 +244,17 @@ class BullsAndCowsGenerateBench {
   def permutationsSB4(l: List[Char], k: Int): List[String] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[String](count)
-    val used = Array.ofDim[Boolean](10)
+    val b     = new mutable.ArrayBuffer[String](count)
+    val used  = Array.ofDim[Boolean](10)
     _permutationsSB4(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB4(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB4(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
         for {
           e <- l
-          if (!used(e - '0'))
+          if !used(e - '0')
         } {
           val idx = e - '0'
           used(idx) = true
@@ -290,7 +264,6 @@ class BullsAndCowsGenerateBench {
           used(idx) = false
         }
       }
-    }
 
     b.toList
   }
@@ -298,11 +271,11 @@ class BullsAndCowsGenerateBench {
   def permutationsSB5(l: List[Char], k: Int): List[String] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[String](count)
-    val used = Array.ofDim[Boolean](10)
+    val b     = new mutable.ArrayBuffer[String](count)
+    val used  = Array.ofDim[Boolean](10)
     _permutationsSB5(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB5(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB5(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
@@ -317,7 +290,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b.toList
   }
@@ -325,11 +297,11 @@ class BullsAndCowsGenerateBench {
   def permutationsSB6(l: List[Char], k: Int): ArrayBuffer[String] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[String](count)
-    val used = Array.ofDim[Boolean](10)
+    val b     = new mutable.ArrayBuffer[String](count)
+    val used  = Array.ofDim[Boolean](10)
     _permutationsSB6(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB6(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB6(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         b += cur.result()
       } else {
@@ -344,7 +316,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -352,11 +323,11 @@ class BullsAndCowsGenerateBench {
   def permutationsSB7(l: List[Char], k: Int): ArrayBuffer[String] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[String](count)
-    val used = Array.ofDim[Boolean](10)
+    val b     = new mutable.ArrayBuffer[String](count)
+    val used  = Array.ofDim[Boolean](10)
     _permutationsSB7(new StringBuilder(numberLength), 0)
 
-    def _permutationsSB7(cur: StringBuilder, depth: Int): Unit = {
+    def _permutationsSB7(cur: StringBuilder, depth: Int): Unit =
       if (depth == k) {
         if (cur.head != '0') {
           b += cur.result()
@@ -373,19 +344,18 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
     b
   }
 
   def permutationsSB8(l: List[Char], k: Int): ArrayBuffer[Array[Char]] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[Array[Char]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
+    val b     = new mutable.ArrayBuffer[Array[Char]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
     _permutationsSB8(0)
 
-    def _permutationsSB8(depth: Int): Unit = {
+    def _permutationsSB8(depth: Int): Unit =
       if (depth == k) {
         if (cur.head != '0') {
           b += cur.clone()
@@ -403,7 +373,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -411,15 +380,15 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9(l: List[Char], k: Int): ArrayBuffer[Array[Char]] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[Array[Char]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
+    val b     = new mutable.ArrayBuffer[Array[Char]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
 //        if (cur.head != '0') {
-          b += cur.clone()
+        b += cur.clone()
 //        }
       } else {
         (if (depth == 0) '1' to '9' else l).foreach { e =>
@@ -434,19 +403,18 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
     b
   }
 
   def permutationsSB9bis(l: List[Char], k: Int): ArrayBuffer[Array[Char]] = {
     // dfs
-    val count = List(9,9,8,7,6,5,4,3,2,1).take(numberLength).product
-    val b = new mutable.ArrayBuffer[Array[Char]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
+    val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
+    val b     = new mutable.ArrayBuffer[Array[Char]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         b += cur.clone()
@@ -464,7 +432,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -472,13 +439,13 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9ter(l: List[Char], k: Int): Array[Array[Char]] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    var c = 0
-    val b = Array.ofDim[Array[Char]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
+    var c     = 0
+    val b     = Array.ofDim[Array[Char]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         b(c) = cur.clone()
@@ -497,7 +464,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -505,16 +471,16 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9flat(l: List[Char], k: Int): Array[Char] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    var c = 0
-    val b = Array.ofDim[Char](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
+    var c     = 0
+    val b     = Array.ofDim[Char](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
-        System.arraycopy(cur,0,b,c*numberLength,numberLength)
+        System.arraycopy(cur, 0, b, c * numberLength, numberLength)
         //cur.clone()
         c += 1
         //        }
@@ -531,7 +497,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -539,15 +504,15 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9flatNoLambda(k: Int): Array[Char] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    var c = 0
-    val b = Array.ofDim[Char](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Char](numberLength)
-    val l0 = ('1' to '9').toArray
-    val ln = ('0' to '9').toArray
+    var c     = 0
+    val b     = Array.ofDim[Char](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Char](numberLength)
+    val l0    = ('1' to '9').toArray
+    val ln    = ('0' to '9').toArray
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         System.arraycopy(cur, 0, b, c * numberLength, numberLength)
@@ -555,10 +520,10 @@ class BullsAndCowsGenerateBench {
         c += 1
         //        }
       } else {
-        val ll = if (depth == 0) l0 else ln
+        val ll      = if (depth == 0) l0 else ln
         var llCount = 0
         while (llCount < ll.length) {
-          val e = ll(llCount)
+          val e   = ll(llCount)
           val idx = e - '0'
           if (!used(idx)) {
             used(idx) = true
@@ -571,7 +536,6 @@ class BullsAndCowsGenerateBench {
           llCount += 1
         }
       }
-    }
 
     b
   }
@@ -579,13 +543,13 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9flatByte(l: List[Byte], k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    var c = 0
-    val b = Array.ofDim[Byte](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](numberLength)
+    var c     = 0
+    val b     = Array.ofDim[Byte](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         System.arraycopy(cur, 0, b, c * numberLength, numberLength)
@@ -605,7 +569,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -613,13 +576,13 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9flatByte2(l: List[Byte], k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    var c = 0
-    val b = Array.ofDim[Byte](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](numberLength)
+    var c     = 0
+    val b     = Array.ofDim[Byte](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         System.arraycopy(cur, 0, b, c * numberLength, numberLength)
@@ -639,25 +602,24 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
 
   class WrappedInt(var v: Int) {
-    def inc(): Unit = { v += 1 }
-    def get(): Int = v
+    def inc(): Unit = v += 1
+    def get(): Int  = v
   }
   def permutationsSB9flatByte3(l: List[Byte], k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    val wi = new WrappedInt(0)
-    val b = Array.ofDim[Byte](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](numberLength)
+    val wi    = new WrappedInt(0)
+    val b     = Array.ofDim[Byte](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](numberLength)
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         System.arraycopy(cur, 0, b, wi.get * numberLength, numberLength)
@@ -677,7 +639,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }
@@ -685,19 +646,27 @@ class BullsAndCowsGenerateBench {
   def permutationsSB9flatByte4(l: List[Byte], k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
-    val wi = new WrappedInt(0)
-    val b = Array.ofDim[Byte](count * numberLength)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](numberLength)
-    val l0 = (1 to 9).map(_.toByte).toArray
-    val ln = (0 to 9).map(_.toByte).toArray
+    val wi    = new WrappedInt(0)
+    val b     = Array.ofDim[Byte](count * numberLength)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](numberLength)
+    val l0    = (1 to 9).map(_.toByte).toArray
+    val ln    = (0 to 9).map(_.toByte).toArray
     _permutationsSB94(k, cur, b, wi, used, l0, ln, 0)
-
 
     b
   }
 
-  def _permutationsSB94(k:Int, cur: Array[Byte], b: Array[Byte], wi: WrappedInt, used: Array[Boolean], l0: Array[Byte], ln: Array[Byte], depth: Int): Unit = {
+  def _permutationsSB94(
+      k: Int,
+      cur: Array[Byte],
+      b: Array[Byte],
+      wi: WrappedInt,
+      used: Array[Boolean],
+      l0: Array[Byte],
+      ln: Array[Byte],
+      depth: Int
+  ): Unit =
     if (depth == k) {
       //        if (cur.head != '0') {
       System.arraycopy(cur, 0, b, wi.get * numberLength, numberLength)
@@ -706,7 +675,7 @@ class BullsAndCowsGenerateBench {
       //        }
     } else {
       val ll = if (depth == 0) l0 else ln
-      var a = 0
+      var a  = 0
       while (a < ll.length) {
         val idx = ll(a)
         if (!used(idx)) {
@@ -717,20 +686,19 @@ class BullsAndCowsGenerateBench {
           //cur.setLength(depth)
           used(idx) = false
         }
-        a+=1
+        a += 1
       }
     }
-  }
 
   def permutationsSB10(l: List[Byte], k: Int): ArrayBuffer[Array[Byte]] = {
     // dfs
     val count = (10 until 10 - numberLength by -1).product
-    val b = new mutable.ArrayBuffer[Array[Byte]](count)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](numberLength)
+    val b     = new mutable.ArrayBuffer[Array[Byte]](count)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](numberLength)
     _permutationsSB10(0)
 
-    def _permutationsSB10(depth: Int): Unit = {
+    def _permutationsSB10(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         b += cur.clone()
@@ -748,7 +716,6 @@ class BullsAndCowsGenerateBench {
           }
         }
       }
-    }
 
     b
   }

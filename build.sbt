@@ -36,12 +36,12 @@ lazy val `advent-of-code-2016` = (project in file("2016"))
     scalacOptions += "-Ymacro-annotations",
     libraryDependencies += scalaTest % Test,
     // Change this to another test framework if you prefer
-    libraryDependencies += "org.typelevel" %% "cats-core"      % "2.0.0",
+    libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0",
     libraryDependencies ++= Seq(
       "com.github.julien-truffaut" %% "monocle-core"  % monocleVersion,
       "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
       "com.github.julien-truffaut" %% "monocle-law"   % monocleVersion % "test"
-    ),
+    )
   )
 
 lazy val `advent-of-code-2017` = (project in file("2017"))
@@ -78,9 +78,9 @@ lazy val `advent-of-code-2021` = (project in file("2021"))
 
 lazy val `advent-of-code-2022` = (project in file("2022"))
   .dependsOn(core).settings(
-  wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
-  libraryDependencies += scalaTest % Test
-)
+    wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
+    libraryDependencies += scalaTest % Test
+  )
 
 lazy val `core` = (project in file("core")).settings(
   libraryDependencies += scalaTest,
@@ -91,9 +91,7 @@ lazy val `benchmark-2018` = project
   .enablePlugins(JmhPlugin)
   .settings(
     scalacOptions --= Seq("-Xfatal-warnings")
-  ).dependsOn(core,     `advent-of-code-2021`)
-
-
+  ).dependsOn(core, `advent-of-code-2021`)
 //lazy val root = (project in file("."))
 //  .settings(
 //    name := "advent-of-code",

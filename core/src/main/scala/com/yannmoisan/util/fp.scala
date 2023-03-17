@@ -25,4 +25,14 @@ object IteratorApp extends App {
 
   // get the nth element of an iterator : .drop(n-1).next()
   println(powersOf2.drop(3).next())
+
+  def fib: Iterator[Int] = Iterator.unfold((0, 1)) {
+    case (a, b) =>
+       Some((a, (b, a + b))) // generate next element
+  }
+
+  println(fib.drop(4).next())
+
+
+
 }

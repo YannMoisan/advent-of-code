@@ -1,3 +1,4 @@
+import com.yannmoisan.util.fp.loop
 import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 // grids are represented as 2d mutable array
@@ -47,10 +48,5 @@ object Day4 extends MultiPuzzle[Int, Int] {
     val value = state.numbers(state.index)
     state.grids.foreach(grid => grid.dim.indices.filter(p => grid(p) == value).foreach(p => grid(p) = 0))
     state.copy(index = state.index + 1)
-  }
-
-  private def loop[S](init: S)(f: S => S, isEnd: S => Boolean): S = {
-    val next = f(init)
-    if (isEnd(next)) next else loop(next)(f, isEnd)
   }
 }

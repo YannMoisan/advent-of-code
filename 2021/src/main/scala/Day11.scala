@@ -9,7 +9,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
 
   override def part2(input: Iterator[String]): Int = {
     val grid = Grid1D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)
-    Iterator.continually(flash(grid)).zipWithIndex.find(_._1 == 100).get._2 + 1
+    Iterator.continually(flash(grid)).indexOf(100) + 1
   }
 
   def flash(g: Grid[Int]): Int = {

@@ -1,3 +1,4 @@
+import com.yannmoisan.util.fp.loop
 import monocle.function.Index.index
 import monocle.macros.Lenses
 
@@ -55,7 +56,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
   def part(mem: Map[String, Int]) = { lines: Seq[String] =>
     val instructions = lines.map(parse)
     val init = State(mem, 0)
-    val fs = Rec.loop(init)(processInstruction(instructions), _.pointer == instructions.size)
+    val fs = loop(init)(processInstruction(instructions), _.pointer == instructions.size)
     fs.mem("a")
   }
 

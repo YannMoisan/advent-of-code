@@ -1,3 +1,4 @@
+import com.yannmoisan.util.fp.loop
 
 object Day19 extends SinglePuzzle[Int, Int] {
 
@@ -41,7 +42,7 @@ object Day19 extends SinglePuzzle[Int, Int] {
 
   override def part1(s: String) : Int = {
     val init = State((1 to 3014603).toList)
-    val last = Rec.loop(init)(next, _.l.size == 1)
+    val last = loop(init)(next, _.l.size == 1)
     last.l.head
   }
 }

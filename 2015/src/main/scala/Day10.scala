@@ -8,12 +8,12 @@ object Day10 extends SinglePuzzle[Int, Int] {
   //               1709308ms
   override def part1(input: String): Int = {
     val input = "1321131112"
-    Iterator.iterate(input)(lookAndSay).take(41).toList.last.length
+    Iterator.iterate(input)(lookAndSay).drop(40).next().length
   }
 
   override def part2(input: String): Int = {
     val input = "1321131112"
-    Iterator.iterate(input)(lookAndSay).take(51).toList.last.length
+    Iterator.iterate(input)(lookAndSay).drop(50).next().length
   }
 
   def lookAndSay(s: String): String = {

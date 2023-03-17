@@ -1,3 +1,5 @@
+import com.yannmoisan.util.fp.loop
+
 object Day8 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val program: Array[Instruction] = input.map(Parser.parse).toArray
@@ -42,11 +44,6 @@ object Day8 extends MultiPuzzle[Int, Int] {
       case Acc(v) => State(state.acc + v, state.ptr + 1, newVisited)
       case Jmp(v) => State(state.acc, state.ptr + v, newVisited)
     }
-  }
-
-  def loop[A](s: A)(f: A => A, stop: A => Boolean): A = {
-    val newS = f(s)
-    if (stop(newS)) newS else loop(newS)(f, stop)
   }
 }
 

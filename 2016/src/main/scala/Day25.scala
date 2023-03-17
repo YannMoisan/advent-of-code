@@ -1,3 +1,4 @@
+import com.yannmoisan.util.fp.loop
 
 object Day25 extends MultiPuzzle[Int, Int] {
 
@@ -101,7 +102,7 @@ object Day25 extends MultiPuzzle[Int, Int] {
 
   def part(instructions: Seq[Instruction], mem: Map[String, Int]) = {
     val init = State(mem, instructions, 0, List[Int]())
-    val fs = Rec.loop(init)(processInstruction, s => s.pointer == s.instructions.size || s.outputs.size == 10)
+    val fs = loop(init)(processInstruction, s => s.pointer == s.instructions.size || s.outputs.size == 10)
     fs.outputs.mkString("")
   }
 

@@ -33,14 +33,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
 
 //    println(value(Array("...", "#..", ".#."), 1, 1))
 
-    var end = withBorder
-    (0 until 50).foreach(_ => end = next(algorithm)(end))
-
-//    val step1 = next(algorithm)(withBorder)
-//    val end   = next(algorithm)(step1)
-
-    //val end = Iterator.iterate(withBorder)(next(algorithm)).take(1).toArray.last
-    //println(s"size=${end.head.length}/${end.size}")
+    val end = Iterator.iterate(withBorder)(next(algorithm)).drop(50).next()
 
     end.foreach(r => println(r))
 

@@ -1,3 +1,5 @@
+import com.yannmoisan.util.fp.loop
+
 object Day3 extends MultiPuzzle[Int, Int] {
   case class State(numbers: Array[String], pos: Int)
 
@@ -56,9 +58,4 @@ object Day3 extends MultiPuzzle[Int, Int] {
     }
 
   private def parseBinaryString(s: String): Int = Integer.parseInt(s, 2)
-
-  private def loop[S](init: S)(f: S => S, isEnd: S => Boolean): S = {
-    val next = f(init)
-    if (isEnd(next)) next else loop(next)(f, isEnd)
-  }
 }

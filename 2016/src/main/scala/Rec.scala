@@ -1,16 +1,7 @@
 import cats.instances.all._
+import com.yannmoisan.util.fp.{loop, loop2}
 
 object Rec extends App {
-
-  def loop[A](s: A)(f: A => A, stop: A => Boolean): A = {
-    val newS = f(s)
-    if (stop(newS)) newS else loop(newS)(f, stop)
-  }
-
-  // alternative impl with Iterator
-  def loop2[A](s: A)(f: A => A, stop: A => Boolean): A = {
-    Iterator.iterate(s)(f).find(stop).get
-  }
 
   //https://en.wikipedia.org/wiki/Caesar_cipher
   def shift1[A](s: Seq[A]): A => A = {

@@ -129,15 +129,8 @@ object Day12 extends MultiPuzzle[Int, Long] {
       Position(dx, dy, dz)
     }
 
-  def sumBy[A](a: Array[A], f: A => Int): Int = {
-    var i   = 0
-    var sum = 0
-    while (i < a.length) {
-      sum += f(a(i))
-      i += 1
-    }
-    sum
-  }
+  def sumBy[A](a: Array[A], f: A => Int): Int =
+    a.foldLeft(0) { case (acc, e) => acc + f(e) }
 
   def g(a: Int, b: Int): Int =
     if (a == b) 0 else if (a > b) -1 else 1

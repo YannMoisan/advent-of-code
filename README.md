@@ -1,19 +1,5 @@
 # Advent of code
 
-## Useful commands
-
-Run all days
-
-```
-advent-of-code-2020/runMain PuzzlesApp
-```
-
-Run a single day
-
-```
-advent-of-code-2020/runMain PuzzlesApp 1
-```
-
 ## Others
 
 ```
@@ -25,10 +11,29 @@ curl https://adventofcode.com/2015/day/2/input -o /Users/yannmoisan/projects/per
 - [ ] configure travis CI
 - [ ] scapegoat
 - [ ] test arguments -oDF ?
+- [ ] check MD5
+- [ ] article combinaison scala
+- [ ] article combinaison scala 2015
+- [ ] 2015 - enlever les while => foldLeft, scanLeft (si cond d'arret)
 - [X] Puzzles should take the day to run as parameters
 - [X] Puzzles should time the execution
 - [X] Puzzles should have a mode to run all tests
 - [X] Puzzles part1 should not return a function
+
+## Stats
+
+```
+[2022]    
+[2021] 50*
+[2020] 46*
+[2019] 21*
+[2018] 16*
+[2017] 24*
+[2016] 50*
+[2015] 44*
+
+Total stars: 251*
+```
 
 ## 2019
 
@@ -152,10 +157,63 @@ https://www.redblobgames.com/grids/hexagons/
 
 ## 2015
 
-### Day 7
+### Day 1
+extract common code
 
+### Day 3
+extract common code
+
+### Day 4
+MD5
+
+### Day 6
+Parsing with string interpolator
+
+### Day 7
 Unsigned 16 bits operation => use Char
 
 ### Day 8
+String, regex, Master escaping
 
-Master escaping
+### Day 9
+Combi + brute force
+
+### Day 10
+Look-and-say sequence : https://www.youtube.com/watch?v=ea7lJkEhytA
+
+Brute force with string manipulation
+
+### Day 13
+Combi + brute force
+
+### Day 14
+Math
+
+### Day 15
+Math, brute force
+
+### Day 16
+Math, combi
+
+### Day 17
+Math, combi
+
+### Day 18
+Grid
+
+Conway game of life
+
+### Day 19
+String manipulation
+
+### Day 20
+Brute force
+
+### Day 21
+Generation - combi - Brute force
+
+### Day 23
+Turing
+
+### Day 24
+Combi

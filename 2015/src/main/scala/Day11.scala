@@ -1,4 +1,5 @@
 // label: String, base26
+@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends SinglePuzzle[String, String] {
   private val alphabetToBase26Mapping = ('a' to 'z').zip(('0' to '9') ++ ('a' to 'p')).toMap
   private val base26ToAlphabetMapping =
@@ -10,28 +11,17 @@ object Day11 extends SinglePuzzle[String, String] {
   }
   private val allDouble: Seq[String] = ('a' to 'z').map(ch => Seq(ch, ch).mkString)
 
-  override def part1(input: String): String = {
-    var found   = false
-    var current = input
-    while (!found) {
-      current = next(current)
-      if (includeIncreasingStraight(current) && notContainsIOL(current) && doubleLetters(current))
-        found = true
-    }
-    current
-  }
+  override def part1(input: String): String =
+    Iterator
+      .iterate(input)(next).find(s =>
+        includeIncreasingStraight(s) && notContainsIOL(s) && doubleLetters(s)
+      ).get
 
-  override def part2(input: String): String = {
-    var found   = false
-    var current = "vzbxxyzz"
-    while (!found) {
-      current = next(current)
-      if (includeIncreasingStraight(current) && notContainsIOL(current) && doubleLetters(current))
-        found = true
-    }
-    current
-
-  }
+  override def part2(input: String): String =
+    Iterator
+      .iterate("vzbxxyzz")(next).drop(1).find(s =>
+        includeIncreasingStraight(s) && notContainsIOL(s) && doubleLetters(s)
+      ).get
 
   def alphabetToBase26(s: String): String =
     s.map(alphabetToBase26Mapping)

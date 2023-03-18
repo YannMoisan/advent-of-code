@@ -7,9 +7,9 @@ sealed abstract case class Direction(
 )
 
 object Direction {
-  object Up extends Direction("UP", (0, -1), 0)
-  object Down extends Direction("DOWN", (0, 1), 1)
-  object Left extends Direction("LEFT", (-1, 0), 2)
+  object Up    extends Direction("UP", (0, -1), 0)
+  object Down  extends Direction("DOWN", (0, 1), 1)
+  object Left  extends Direction("LEFT", (-1, 0), 2)
   object Right extends Direction("RIGHT", (1, 0), 3)
 
   object NW extends Direction("NW", (-1, -1), 4)
@@ -17,7 +17,8 @@ object Direction {
   object SW extends Direction("SW", (-1, 1), 6)
   object SE extends Direction("SE", (1, 1), 7)
 
-  def all4 = Seq(Up, Down, Left, Right)
-  def all8 = all4 ++ Seq(NW, NE, SW, SE)
+  // clockwise
+  def all4                               = Seq(Up, Right, Down, Left)
+  def all8                               = all4 ++ Seq(NW, NE, SW, SE)
   def find(delta: (Int, Int)): Direction = all4.find(_.delta == delta).get
 }

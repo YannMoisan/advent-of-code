@@ -1,4 +1,6 @@
 import Day11.ParameterMode.{Immediate, Position, Relative}
+import com.yannmoisan.util.collection.{next, prev}
+import com.yannmoisan.util.grid.Direction
 
 import scala.collection.mutable
 
@@ -53,9 +55,11 @@ object Day11 extends SinglePuzzle[Int, Int] {
             panel.put((posx, posy), instr.read(1).toInt)
           } else {
             // move
-            dir = Direction.next(dir, instr.read(1) != 0L)
-            posx = posx + dir.dx
-            posy = posy + dir.dy
+            dir =
+              if (instr.read(1) != 0L) next(dir, Direction.all4)
+              else prev(dir, Direction.all4)
+            posx = posx + dir.delta._1
+            posy = posy + dir.delta._2
           }
           outputCount += 1
           outputs.addOne(instr.read(1))
@@ -220,30 +224,6 @@ object Day11 extends SinglePuzzle[Int, Int] {
       val opcode         = rawInstruction.toString.takeRight(2).toInt
       val modes          = rawInstruction.toString.dropRight(2).toArray
       Instruction(program, pointer, opcode, modes.map(ParameterMode.from), relativeBase)
-    }
-  }
-
-  sealed abstract class Direction(val dx: Int, val dy: Int) extends Product with Serializable
-
-  object Direction {
-
-    case object Up extends Direction(0, -1)
-
-    case object Down extends Direction(0, 1)
-
-    case object Left extends Direction(-1, 0)
-
-    case object Right extends Direction(1, 0)
-
-    val all: Array[Direction] = Array(Up, Right, Down, Left)
-
-    def next(d: Direction, clockWise: Boolean): Direction = {
-      val nextIndex = all.indexOf(d) + (if (clockWise) 1 else -1) match {
-        case -1 => 3
-        case 4  => 0
-        case i  => i
-      }
-      all(nextIndex)
     }
   }
 }

@@ -1,8 +1,4 @@
-case class Pos(x: Int, y: Int)
-
-object Pos {
-  def manhattan(a: Pos, b: Pos): Int = math.abs(a.x - b.x) + math.abs(a.y - b.y)
-}
+import com.yannmoisan.util.geo.Position
 
 case class Interval(inf: Int, sup: Int)
 
@@ -35,10 +31,10 @@ object Day15 extends MultiPuzzle[Int, Long] {
   private def makeIntervals(input: List[String], y: Int) =
     input.flatMap {
       case s"Sensor at x=${sx}, y=${sy}: closest beacon is at x=${bx}, y=${by}" =>
-        val s  = Pos(sx.toInt, sy.toInt)
-        val b  = Pos(bx.toInt, by.toInt)
-        val d  = Pos.manhattan(s, b)
-        val d2 = Pos.manhattan(s, Pos(s.x, y))
+        val s  = Position(sx.toInt, sy.toInt)
+        val b  = Position(bx.toInt, by.toInt)
+        val d  = Position.manhattan(s, b)
+        val d2 = Position.manhattan(s, Position(s.x, y))
         if (d2 <= d) {
           val inf = s.x - (d - d2)
           val sup = s.x + (d - d2)

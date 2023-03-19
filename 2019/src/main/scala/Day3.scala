@@ -1,3 +1,5 @@
+import com.yannmoisan.util.grid.Direction
+
 import scala.collection.Iterator
 
 object Day3 extends MultiPuzzle[Int, Int] {
@@ -27,16 +29,15 @@ object Day3 extends MultiPuzzle[Int, Int] {
     val state = path.foldLeft(init) {
       case (state, move) =>
         val range = (1 to move.length)
-        val newPath = move.direction match {
-          case 'D' =>
-            range.map(i => Pos(state.pos.x, state.pos.y - i))
-          case 'U' =>
-            range.map(i => Pos(state.pos.x, state.pos.y + i))
-          case 'R' =>
-            range.map(i => Pos(state.pos.x + i, state.pos.y))
-          case 'L' =>
-            range.map(i => Pos(state.pos.x - i, state.pos.y))
+        val dir = move.direction match {
+          case 'D' => Direction.Down
+          case 'U' => Direction.Up
+          case 'R' => Direction.Right
+          case 'L' => Direction.Left
         }
+        val newPath =
+          range.map(i => Pos(state.pos.x + i * dir.delta._1, state.pos.y + i * dir.delta._2))
+
         State(newPath.last, state.fullPath ++ newPath)
     }
     state.fullPath

@@ -1,16 +1,13 @@
 import cats.data.State
 import cats.instances.all._
 import cats.syntax.traverse._
+import com.yannmoisan.util.collection.{next, prev}
+import com.yannmoisan.util.geo.Position
 import com.yannmoisan.util.grid.Direction
 
 object Day1 extends SinglePuzzle[Int, Int] {
 
-  val clockwiseDirections        = Seq(Direction.Up, Direction.Right, Direction.Down, Direction.Left)
-  val counterclockwiseDirections = clockwiseDirections.reverse
-
-  case class Pos(x: Int, y: Int)
-
-  case class PosAndDir(pos: Pos, dir: Direction)
+  case class PositionAndDir(pos: Position, dir: Direction)
 
   trait Instruction
   case object TurnLeft  extends Instruction
@@ -29,35 +26,32 @@ object Day1 extends SinglePuzzle[Int, Int] {
       .flatMap(toInstructions)
   }
 
-  val left  = Rec.shift1(counterclockwiseDirections)
-  val right = Rec.shift1(clockwiseDirections)
-
-  def update(i: Instruction): PosAndDir => PosAndDir =
+  def update(i: Instruction): PositionAndDir => PositionAndDir =
     pad =>
       i match {
-        case TurnLeft  => pad.copy(dir = left(pad.dir))
-        case TurnRight => pad.copy(dir = right(pad.dir))
+        case TurnLeft  => pad.copy(dir = prev(pad.dir, Direction.all4))
+        case TurnRight => pad.copy(dir = next(pad.dir, Direction.all4))
         case Walk      => pad.copy(pos = move(pad))
       }
 
-  def update2(i: Instruction): State[PosAndDir, Option[Pos]] =
+  def update2(i: Instruction): State[PositionAndDir, Option[Position]] =
     State.modify(update(i)).inspect(pad => if (i == Walk) Some(pad.pos) else None)
 
-  def move(pad: PosAndDir): Pos =
-    Pos(pad.pos.x + pad.dir.delta._1, pad.pos.y + pad.dir.delta._2)
+  def move(pad: PositionAndDir): Position =
+    Position.move(pad.pos, pad.dir)
 
   override def part1(lines: String): Int = {
     val instructions = parse(lines)
-    val state: State[PosAndDir, List[Unit]] =
+    val state: State[PositionAndDir, List[Unit]] =
       instructions.map(i => State.modify(update(i))).toList.sequence
-    val finalState = state.runS(PosAndDir(Pos(0, 0), Direction.Up)).value
+    val finalState = state.runS(PositionAndDir(Position(0, 0), Direction.Up)).value
     math.abs(finalState.pos.x) + math.abs(finalState.pos.y)
   }
 
   override def part2(lines: String): Int = {
     val instructions = parse(lines).toStream
     val state        = instructions.map(update2).sequence
-    val positions    = state.runA(PosAndDir(Pos(0, 0), Direction.Up)).value.flatten
+    val positions    = state.runA(PositionAndDir(Position(0, 0), Direction.Up)).value.flatten
     val p            = firstDuplicate(positions).get
     math.abs(p.x) + math.abs(p.y)
   }

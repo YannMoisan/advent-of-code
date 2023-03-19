@@ -1,5 +1,6 @@
 import Day11.ParameterMode.{Immediate, Position, Relative}
 import com.yannmoisan.util.collection.{next, prev}
+import com.yannmoisan.util.geo.{Position => GeoPosition}
 import com.yannmoisan.util.grid.Direction
 
 import scala.collection.mutable
@@ -25,12 +26,11 @@ object Day11 extends SinglePuzzle[Int, Int] {
     var continue       = true
     val outputs        = mutable.Buffer[Long]()
     var relativeBase   = 0L
-    var posx           = 0
-    var posy           = 0
+    var pos            = GeoPosition(0, 0)
     var dir: Direction = Direction.Up
     var outputCount    = 0
-    val panel          = mutable.Map.empty[(Int, Int), Int]
-    panel.put((0, 0), 1)
+    val panel          = mutable.Map.empty[GeoPosition, Int]
+    panel.put(GeoPosition(0, 0), 1)
     while (continue) {
       val instr = Instruction.from(program, pointer, relativeBase)
       //println(instr)
@@ -42,7 +42,7 @@ object Day11 extends SinglePuzzle[Int, Int] {
           instr.write(3, instr.read(1) * instr.read(2))
           pointer += 4
         case 3 =>
-          val input = panel.getOrElse((posx, posy), 0)
+          val input = panel.getOrElse(pos, 0)
 
           println("input=" + input)
           instr.write(1, input.toLong)
@@ -52,14 +52,13 @@ object Day11 extends SinglePuzzle[Int, Int] {
           println("output=" + instr.read(1))
           if (outputCount % 2 == 0) {
             // paint
-            panel.put((posx, posy), instr.read(1).toInt)
+            panel.put(pos, instr.read(1).toInt)
           } else {
             // move
             dir =
               if (instr.read(1) != 0L) next(dir, Direction.all4)
               else prev(dir, Direction.all4)
-            posx = posx + dir.delta._1
-            posy = posy + dir.delta._2
+            pos = com.yannmoisan.util.geo.Position.move(pos, dir)
           }
           outputCount += 1
           outputs.addOne(instr.read(1))
@@ -94,17 +93,29 @@ object Day11 extends SinglePuzzle[Int, Int] {
       }
     }
     //println(panel.toMap.keys.maxBy())
-    println("max x:" + panel.maxBy(_._1._1))
-    println("min x:" + panel.minBy(_._1._1))
-    println("max y:" + panel.maxBy(_._1._2))
-    println("min y:" + panel.minBy(_._1._2))
+    println("max x:" + panel.maxBy(_._1.x))
+    println("min x:" + panel.minBy(_._1.x))
+    println("max y:" + panel.maxBy(_._1.y))
+    println("min y:" + panel.minBy(_._1.y))
 
-    println((0 to 42).map(x => if (panel.getOrElse((x, 0), 0) == 1) '*' else ' ').mkString)
-    println((0 to 42).map(x => if (panel.getOrElse((x, 1), 0) == 1) '*' else ' ').mkString)
-    println((0 to 42).map(x => if (panel.getOrElse((x, 2), 0) == 1) '*' else ' ').mkString)
-    println((0 to 42).map(x => if (panel.getOrElse((x, 3), 0) == 1) '*' else ' ').mkString)
-    println((0 to 42).map(x => if (panel.getOrElse((x, 4), 0) == 1) '*' else ' ').mkString)
-    println((0 to 42).map(x => if (panel.getOrElse((x, 5), 0) == 1) '*' else ' ').mkString)
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 0), 0) == 1) '*' else ' ').mkString
+    )
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 1), 0) == 1) '*' else ' ').mkString
+    )
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 2), 0) == 1) '*' else ' ').mkString
+    )
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 3), 0) == 1) '*' else ' ').mkString
+    )
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 4), 0) == 1) '*' else ' ').mkString
+    )
+    println(
+      (0 to 42).map(x => if (panel.getOrElse(GeoPosition(x, 5), 0) == 1) '*' else ' ').mkString
+    )
 
     //  .maxBy{x => x._1}
     panel.size

@@ -15,7 +15,7 @@ object Day4 extends MultiPuzzle[Int, String] {
     s match {
       case room(name, id, checksum) =>
         val chk = name
-          .replace("-", "").groupBy(identity).mapValues(_.length).toList.sortBy {
+          .replace("-", "").groupBy(identity).view.mapValues(_.length).toList.sortBy {
             case (c, i) => -(i * 100 - c.toInt)
           }.map(_._1).take(5).mkString("")
         if (checksum == chk) id.toInt else 0

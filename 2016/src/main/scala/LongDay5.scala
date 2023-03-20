@@ -3,7 +3,7 @@
 object LongDay5 extends SinglePuzzle[String, String] {
 
   override def part1(s: String): String =
-    Stream
+    LazyList
       .from(1)
       .map(i => MD5.md5(s"uqwqemis$i"))
       .filter(_.startsWith("00000"))

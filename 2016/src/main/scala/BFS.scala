@@ -11,10 +11,13 @@ object BFS {
     * @tparam Node
     * @return a stream of tuples : the current node and its ancestors
     */
-  def breadth_first_traverse[Node](node: Node, f: Node => Seq[Node]): Stream[(Node, Seq[Node])] = {
-    def recurse(q: Queue[(Node, Seq[Node])], cache: Set[Node]): Stream[(Node, Seq[Node])] =
+  def breadth_first_traverse[Node](
+      node: Node,
+      f: Node => Seq[Node]
+  ): LazyList[(Node, Seq[Node])] = {
+    def recurse(q: Queue[(Node, Seq[Node])], cache: Set[Node]): LazyList[(Node, Seq[Node])] =
       if (q.isEmpty) {
-        Stream.Empty
+        LazyList.empty
       } else {
         val ((node, i), tail) = q.dequeue
         val nodes             = f(node).filterNot(cache.contains)

@@ -4,12 +4,12 @@ object Day1 extends MultiPuzzle[Int, Int] {
   override def part1(iter: Iterator[String]): Int =
     iter.toArray.map(_.toInt).sum
 
-  /** Stream approach */
+  /** LazyList approach */
   override def part2(iter: Iterator[String]): Int = part2_stream(iter)
 
   def part2_stream: Iterator[String] => Int = { iter =>
     val frequencies = iter.toArray.map(_.toInt)
-    Stream
+    LazyList
       .continually(frequencies)
       .flatten
       .scanLeft((0, Set.empty[Int])) {

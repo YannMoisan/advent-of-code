@@ -11,11 +11,11 @@ object Day14 extends SinglePuzzle[Int, Int] {
       .find(s => s(0) == s(1) && s(1) == s(2))
       .map(s => (s.head, e._2))
 
-  def contains5(stream: Stream[(String, Int)], index: Int, c: Char) =
+  def contains5(stream: LazyList[(String, Int)], index: Int, c: Char) =
     !stream.drop(index).take(1000).filter(_._1.contains(c.toString * 5)).isEmpty
 
   def part(f: String => String) = { (_: String) =>
-    val s: Stream[(String, Int)] = Stream
+    val s: LazyList[(String, Int)] = LazyList
       .from(0)
       .map(i => f(s"cuanljph$i"))
       .zipWithIndex

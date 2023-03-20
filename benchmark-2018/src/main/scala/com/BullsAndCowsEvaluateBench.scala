@@ -217,7 +217,7 @@ class BullsAndCowsEvaluateBench {
     var bulls = 0
     var cows  = 0
     // populate the state for the algo
-    var state = Array.ofDim[Boolean](10)
+    val state = Array.ofDim[Boolean](10)
     //mutable.Map[Char, Int]()
     var i   = 0
     val len = guess.length
@@ -246,7 +246,7 @@ class BullsAndCowsEvaluateBench {
     var bulls = 0
     var cows  = 0
     // populate the state for the algo
-    var state = Array.ofDim[Boolean](10)
+    val state = Array.ofDim[Boolean](10)
     //mutable.Map[Char, Int]()
     var i   = 0
     val len = guess.length
@@ -275,7 +275,7 @@ class BullsAndCowsEvaluateBench {
     var bulls = 0
     var cows  = 0
     // populate the state for the algo
-    var state = Array.ofDim[Boolean](10)
+    val state = Array.ofDim[Boolean](10)
     //mutable.Map[Char, Int]()
     var i   = 0
     val len = bguess.length

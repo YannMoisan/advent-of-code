@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Direction, Grid, Grid1D}
+import com.yannmoisan.util.grid.{Direction4, Grid, Grid1D}
 import fp.Functional
 
 // Double buffering
@@ -14,7 +14,7 @@ object Day25 extends MultiPuzzle[Int, Int] {
   def `next>`(g: Grid[Char]): Grid[Char] = {
     val n = g.copy()
     g.dim.indices.foreach { p =>
-      val pn = g.dim.move(p, Direction.Right).get
+      val pn = g.dim.move(p, Direction4.Right).get
       if (g(p) == '>' && g(pn) == '.') {
         n(p) = '.'
         n(pn) = '>'
@@ -26,7 +26,7 @@ object Day25 extends MultiPuzzle[Int, Int] {
   def `nextv`(g: Grid[Char]): Grid[Char] = {
     val n = g.copy()
     g.dim.indices.foreach { p =>
-      val pn = g.dim.move(p, Direction.Down).get
+      val pn = g.dim.move(p, Direction4.Down).get
       if (g(p) == 'v' && g(pn) == '.') {
         n(p) = '.'
         n(pn) = 'v'

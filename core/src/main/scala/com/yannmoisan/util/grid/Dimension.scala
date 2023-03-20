@@ -10,25 +10,25 @@ sealed abstract case class Dimension(width: Int, height: Int) {
     x <- 0 until width
   } yield Pos(x, y)(this)).toArray
 
-  val indices = 0 until width * height
+  val indices     = 0 until width * height
   def pos(i: Int) = positions(i)
 
   private val neighbors4_ =
-    new PrecomputedNeighbors(new StandardMove(this) {}, Direction.all4)
+    new PrecomputedNeighbors(new StandardMove(this) {}, Direction4.all)
   def neighbors4(p: Int): Array[Int] = neighbors4_.neighbors(p)
 
   private val neighbors4Torus_ =
-    new PrecomputedNeighbors(new TorusShapedMove(this) {}, Direction.all4)
+    new PrecomputedNeighbors(new TorusShapedMove(this) {}, Direction4.all)
   def neighbors4Torus(p: Int): Array[Int] = neighbors4Torus_.neighbors(p)
 
   private val neighbors8_ =
-    new PrecomputedNeighbors(new StandardMove(this) {}, Direction.all8)
+    new PrecomputedNeighbors(new StandardMove(this) {}, Direction8.all)
   def neighbors8(p: Int): Array[Int] = neighbors8_.neighbors(p)
 
-  private val move_ = new PrecomputedMove(new TorusShapedMove(this) {})
+  private val move_                                 = new PrecomputedMove(new TorusShapedMove(this) {})
   def move(index: Int, dir: Direction): Option[Int] = move_.move(index, dir)
 
-  private val moveS_ = new PrecomputedMove(new StandardMove(this) {})
+  private val moveS_                                 = new PrecomputedMove(new StandardMove(this) {})
   def moveS(index: Int, dir: Direction): Option[Int] = moveS_.move(index, dir)
 }
 
@@ -36,7 +36,6 @@ sealed abstract case class Dimension(width: Int, height: Int) {
 object Dimension {
   private val cache = mutable.Map[(Int, Int), Dimension]()
 
-  def apply(width: Int, height: Int): Dimension = {
+  def apply(width: Int, height: Int): Dimension =
     cache.getOrElseUpdate((width, height), new Dimension(width, height) {})
-  }
 }

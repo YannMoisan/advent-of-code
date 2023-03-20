@@ -1,6 +1,6 @@
 import com.yannmoisan.util.collection.{next, prev}
 import com.yannmoisan.util.geo.Position
-import com.yannmoisan.util.grid.Direction
+import com.yannmoisan.util.grid.{Direction, Direction4}
 
 object Day1 extends SinglePuzzle[Int, Int] {
 
@@ -25,21 +25,21 @@ object Day1 extends SinglePuzzle[Int, Int] {
 
   def update(pad: PositionAndDir, i: Instruction): PositionAndDir =
     i match {
-      case TurnLeft  => pad.copy(dir = prev(pad.dir, Direction.all4))
-      case TurnRight => pad.copy(dir = next(pad.dir, Direction.all4))
+      case TurnLeft  => pad.copy(dir = prev(pad.dir, Direction4.all))
+      case TurnRight => pad.copy(dir = next(pad.dir, Direction4.all))
       case Walk      => pad.copy(pos = Position.move(pad.pos, pad.dir))
     }
 
   override def part1(lines: String): Int = {
     val instructions = parse(lines)
-    val start        = PositionAndDir(Position(0, 0), Direction.Up)
+    val start        = PositionAndDir(Position(0, 0), Direction4.Up)
     val finalState   = instructions.foldLeft(start)(update)
     Position.manhattan(finalState.pos, Position(0, 0))
   }
 
   override def part2(lines: String): Int = {
     val instructions = parse(lines)
-    val start        = PositionAndDir(Position(0, 0), Direction.Up)
+    val start        = PositionAndDir(Position(0, 0), Direction4.Up)
     val positions    = instructions.scanLeft(start)(update).map(_.pos).toVector
     val cleanedPositions = positions.zipWithIndex.collect {
       case (p, i) if i == positions.size - 1 || positions(i) != positions(i + 1) => p

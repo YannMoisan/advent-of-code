@@ -1,7 +1,7 @@
 import Day11.ParameterMode.{Immediate, Position, Relative}
 import com.yannmoisan.util.collection.{next, prev}
 import com.yannmoisan.util.geo.{Position => GeoPosition}
-import com.yannmoisan.util.grid.Direction
+import com.yannmoisan.util.grid.{Direction, Direction4}
 
 import scala.collection.mutable
 
@@ -27,7 +27,7 @@ object Day11 extends SinglePuzzle[Int, Int] {
     val outputs        = mutable.Buffer[Long]()
     var relativeBase   = 0L
     var pos            = GeoPosition(0, 0)
-    var dir: Direction = Direction.Up
+    var dir: Direction = Direction4.Up
     var outputCount    = 0
     val panel          = mutable.Map.empty[GeoPosition, Int]
     panel.put(GeoPosition(0, 0), 1)
@@ -56,8 +56,8 @@ object Day11 extends SinglePuzzle[Int, Int] {
           } else {
             // move
             dir =
-              if (instr.read(1) != 0L) next(dir, Direction.all4)
-              else prev(dir, Direction.all4)
+              if (instr.read(1) != 0L) next(dir, Direction4.all)
+              else prev(dir, Direction4.all)
             pos = com.yannmoisan.util.geo.Position.move(pos, dir)
           }
           outputCount += 1

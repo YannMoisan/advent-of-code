@@ -36,7 +36,6 @@ lazy val `advent-of-code-2016` = (project in file("2016"))
     scalacOptions += "-Ymacro-annotations",
     libraryDependencies += scalaTest % Test,
     // Change this to another test framework if you prefer
-    libraryDependencies += "org.typelevel" %% "cats-core" % "2.0.0",
     libraryDependencies ++= Seq(
       "com.github.julien-truffaut" %% "monocle-core"  % monocleVersion,
       "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,

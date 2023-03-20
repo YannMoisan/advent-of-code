@@ -1,9 +1,9 @@
-import com.yannmoisan.util.grid.{Dimension, Direction, Pos}
+import com.yannmoisan.util.grid.{Dimension, Direction, Direction4, Pos}
 
 object Day17 extends SinglePuzzle[String, Int] {
   val opened = "bcdef"
 
-  def possibleMoves(s: String): Seq[Direction] =
+  def possibleMoves(s: String): Seq[Direction4] =
     MD5
       .md5(s).take(4).map(c => opened.contains(c)).zip(
         Seq(Direction.Up, Direction.Down, Direction.Left, Direction.Right)
@@ -11,7 +11,7 @@ object Day17 extends SinglePuzzle[String, Int] {
         _._2
       )
 
-  def dirToString(d: Direction) = d match {
+  def dirToString(d: Direction4) = d match {
     case Direction.Up    => "U"
     case Direction.Down  => "D"
     case Direction.Right => "R"
@@ -27,8 +27,8 @@ object Day17 extends SinglePuzzle[String, Int] {
             State(Dimension(4, 4).moveS(s.p, d).get, s.history :+ d)
         }
 
-  // TODO State S => (S, Direction)
-  case class State(p: Int, history: Seq[Direction])
+  // TODO State S => (S, Direction4)
+  case class State(p: Int, history: Seq[Direction4])
 
   override def part1(s: String): String = {
     val init  = State(Pos(0, 0)(Dimension(4, 4)).index, Seq())

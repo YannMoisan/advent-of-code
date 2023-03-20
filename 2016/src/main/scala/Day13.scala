@@ -3,11 +3,11 @@ import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 object Day13 extends SinglePuzzle[Int, Int] {
 
   def moves(grid: Grid[Char]): Int => Seq[Int] = { i =>
-    grid.dim.neighbors4(i).filter(grid(_) == '.')
+    grid.dim.neighbors4(i).filter(grid(_) == '.').toIndexedSeq
   }
 
   def generateMaze(w: Int, h: Int, fav: Int): Grid[Char] =
-    Grid1D(Array.tabulate(100, 100) { case (y, x) => isNumber(x, y, fav) })
+    Grid1D(Array.tabulate(w, h) { case (y, x) => isNumber(x.toLong, y.toLong, fav.toLong) })
 
   def isNumber(x: Long, y: Long, fav: Long): Char =
     if ((x * x + 3 * x + 2 * x * y + y + y * y + fav).toBinaryString.count(_ == '1') % 2 == 0) '.'

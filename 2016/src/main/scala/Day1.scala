@@ -11,7 +11,7 @@ object Day1 extends SinglePuzzle[Int, Int] {
   case object TurnRight extends Instruction
   case object Walk      extends Instruction
 
-  def parse(lines: String): Seq[Instruction] = {
+  def parse(lines: String): Array[Instruction] = {
     def toInstructions(s: String): Seq[Instruction] = s match {
       case "L" => Seq(TurnLeft)
       case "R" => Seq(TurnRight)
@@ -44,13 +44,13 @@ object Day1 extends SinglePuzzle[Int, Int] {
     val cleanedPositions = positions.zipWithIndex.collect {
       case (p, i) if i == positions.size - 1 || positions(i) != positions(i + 1) => p
     }
-    val p = firstDuplicate(cleanedPositions.toStream).get
+    val p = firstDuplicate(cleanedPositions.to(LazyList)).get
     Position.manhattan(p, Position(0, 0))
   }
 
-  def firstDuplicate[T](s: Stream[T], seen: Set[T] = Set.empty[T]): Option[T] = s match {
-    case head #:: tail if seen(head) => Some(head)
-    case head #:: tail               => firstDuplicate(tail, seen + head)
-    case _                           => None
+  def firstDuplicate[T](s: LazyList[T], seen: Set[T] = Set.empty[T]): Option[T] = s match {
+    case head #:: _ if seen(head) => Some(head)
+    case head #:: tail            => firstDuplicate(tail, seen + head)
+    case _                        => None
   }
 }

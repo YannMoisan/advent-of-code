@@ -19,7 +19,7 @@ class Day1Bench {
   @Benchmark
   def part2_stream: Int = {
     val frequencies = lines
-    Stream
+    LazyList
       .continually(frequencies)
       .flatten
       .scanLeft((0, Set.empty[Int])) {

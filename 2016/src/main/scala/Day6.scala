@@ -11,5 +11,5 @@ object Day6 extends MultiPuzzle[String, String] {
   }
 
   def orderedByFreq[A](s: Seq[A]): Seq[A] =
-    s.groupBy(identity).mapValues(_.size).toList.sortBy(-_._2).map(_._1)
+    s.groupBy(identity).view.mapValues(_.size).toList.sortBy(-_._2).map(_._1)
 }

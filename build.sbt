@@ -32,7 +32,6 @@ val monocleVersion = "2.0.5"
 lazy val `advent-of-code-2016` = (project in file("2016"))
   .dependsOn(core)
   .settings(
-    scalacOptions --= Seq("-Xfatal-warnings"),
     scalacOptions += "-Ymacro-annotations",
     libraryDependencies += scalaTest % Test,
     // Change this to another test framework if you prefer
@@ -46,14 +45,12 @@ lazy val `advent-of-code-2016` = (project in file("2016"))
 lazy val `advent-of-code-2017` = (project in file("2017"))
   .dependsOn(core)
   .settings(
-    scalacOptions --= Seq("-Xfatal-warnings"),
     libraryDependencies += scalaTest % Test
   )
 
 lazy val `advent-of-code-2018` = (project in file("2018"))
   .dependsOn(core)
   .settings(
-    scalacOptions --= Seq("-Xfatal-warnings"),
     libraryDependencies += scalaTest % Test
   )
 
@@ -89,8 +86,7 @@ lazy val `core` = (project in file("core")).settings(
 lazy val `benchmark-2018` = project
   .enablePlugins(JmhPlugin)
   .settings(
-    scalacOptions --= Seq("-Xfatal-warnings")
-  ).dependsOn(core, `advent-of-code-2021`)
+    ).dependsOn(core, `advent-of-code-2021`)
 //lazy val root = (project in file("."))
 //  .settings(
 //    name := "advent-of-code",

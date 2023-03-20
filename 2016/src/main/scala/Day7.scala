@@ -1,3 +1,5 @@
+import scala.collection.immutable.ArraySeq
+
 object Day7 extends MultiPuzzle[Int, Int] {
   override def part1(lines: Iterator[String]): Int = lines.count(isTLS)
 
@@ -14,7 +16,7 @@ object Day7 extends MultiPuzzle[Int, Int] {
   def split(s: String): Array[String] = s.split("""[\[\]]""")
 
   def isTLS(s: String) = {
-    val (outsides, insides) = partitionByIndex(split(s))
+    val (outsides, insides) = partitionByIndex(ArraySeq.unsafeWrapArray(split(s)))
     !insides.exists(containsABBA) && outsides.exists(containsABBA)
   }
 
@@ -23,7 +25,7 @@ object Day7 extends MultiPuzzle[Int, Int] {
   def BAB(s: String) = List(s(1), s(0), s(1)).mkString
 
   def isSSL(s: String) = {
-    val (outsides, insides) = partitionByIndex(split(s))
+    val (outsides, insides) = partitionByIndex(ArraySeq.unsafeWrapArray(split(s)))
     val abas                = outsides.flatMap(abas2)
     if (abas.isEmpty) false else insides.exists(s => containsBAB(s, abas.map(BAB)))
   }

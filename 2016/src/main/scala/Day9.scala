@@ -19,7 +19,9 @@ object Day9 extends SinglePuzzle[Int, Long] {
           case (None, None, s) =>
             val (prefix, suffix) = s.splitAt(s.indexOf('('))
             if (prefix.isEmpty) suffix else prefix + parseA(suffix)
+          case _ => throw new IllegalStateException()
         }
+      case _ => throw new IllegalStateException()
     }
   }
 
@@ -34,8 +36,10 @@ object Day9 extends SinglePuzzle[Int, Long] {
             nbRepeat.toInt * parseB(prefix) + parseB(suffix)
           case (None, None, s) =>
             val (prefix, suffix) = s.splitAt(s.indexOf('('))
-            if (prefix.isEmpty) suffix.length else prefix.length + parseB(suffix)
+            if (prefix.isEmpty) suffix.length.toLong else prefix.length + parseB(suffix)
+          case _ => throw new IllegalStateException()
         }
+      case _ => throw new IllegalStateException()
     }
   }
 

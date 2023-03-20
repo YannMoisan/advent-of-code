@@ -25,7 +25,7 @@ object Day4 extends MultiPuzzle[Int, Int] {
   override def part2(iter: Iterator[String]): Int = {
     val asleepByGuard = computeMinutesAsleepByGuard(iter)
     val tmp =
-      asleepByGuard.mapValues(_.groupBy(identity).toSeq.maxBy(_._2.length))
+      asleepByGuard.view.mapValues(_.groupBy(identity).toSeq.maxBy(_._2.length))
     val winner = tmp.toSeq.maxBy(_._2._2.length)
     winner._1 * winner._2._1
   }

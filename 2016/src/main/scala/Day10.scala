@@ -9,6 +9,8 @@ object Day10 extends MultiPuzzle[String, Int] {
       case Bot(_, None, None) => this.copy(low = Some(chipId))
       case Bot(_, Some(curChipId), None) =>
         this.copy(low = Some(min(chipId, curChipId)), high = Some(max(chipId, curChipId)))
+      case _ => throw new IllegalStateException()
+
     }
 
     def removeChips(): Bot = this.copy(low = None, high = None)
@@ -81,11 +83,11 @@ object Day10 extends MultiPuzzle[String, Int] {
   }
 
   def isValid(s: State, instr: Instruction) = instr match {
-    case GiveFromInput(chipId, botId) => true
-    case GiveFromBot(botId, lowBotId, highBotId) => {
+    case GiveFromInput(_, _) => true
+    case GiveFromBot(botId, _, _) => {
       // fromBot should have 2 chips
       s.bots.get(botId) match {
-        case Some(Bot(_, Some(x), Some(y))) => true
+        case Some(Bot(_, Some(_), Some(_))) => true
         case _                              => false
       }
     }

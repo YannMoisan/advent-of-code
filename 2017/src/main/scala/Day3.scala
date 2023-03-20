@@ -5,13 +5,13 @@ object Day3 extends SinglePuzzle[Int, Unit] {
 
     def values(circle: Int): Seq[Int] = {
       val step  = circle * 2
-      val first = math.pow(circle * 2 - 1, 2).toInt + (circle)
+      val first = math.pow(circle.toDouble * 2 - 1, 2).toInt + (circle)
 
       (0 to 3).map(i => first + (i * +step))
     }
 
     def circle(i: Int): Int = {
-      val sqrt = math.sqrt(i - 1).toInt
+      val sqrt = math.sqrt(i.toDouble - 1).toInt
       val tmp  = if (sqrt % 2 == 0) sqrt else sqrt + 1
       tmp / 2
     }

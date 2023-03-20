@@ -32,7 +32,6 @@ object BFS {
     val stream = breadth_first_traverse(init, next)
     val os     = stream.find(_._1 == 10)
     println(os)
-    os
   }
 
 }

@@ -24,7 +24,7 @@ object BFS {
     (node, Seq(node)) #:: recurse(Queue.empty ++ f(node).map(n => (n, Seq(n, node))), Set.empty)
   }
 
-  def main(args: Array[String]) {
+  def main(args: Array[String]): Unit = {
     val init         = 0
     def next(i: Int) = List(i - 1, i + 1)
     def pred(i: Int) = i == 10

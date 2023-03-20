@@ -14,10 +14,8 @@ object Day22 extends MultiPuzzle[Int, String] {
     (for {
       n1 <- nodes
       n2 <- nodes
-      if n1.pos != n2.pos
-      if n1.used <= n2.avail
-      if n1.used != 0
-    } yield 1).sum
+      if n1.pos != n2.pos && n1.used <= n2.avail && n1.used != 0
+    } yield n2).size
   }
 
   override def part2(lines: Iterator[String]): String = {

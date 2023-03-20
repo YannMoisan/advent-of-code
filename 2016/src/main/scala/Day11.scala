@@ -94,7 +94,7 @@ object Day11 extends MultiPuzzle[String, String] {
   val queue = collection.mutable.Queue[(State, Int)]()
   var found = false
 
-  def part(init: State, finalS: State) = { lines: Seq[String] =>
+  def part(init: State, finalS: State) = { _: Seq[String] =>
     moves(init).foreach(s => queue += s -> 0)
     while (!queue.isEmpty && !found) {
       val (next, i) = queue.dequeue()

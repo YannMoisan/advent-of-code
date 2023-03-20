@@ -110,7 +110,7 @@ class BullsAndCowsGenerateBench {
 
   //@Benchmark
   def permSB9flatByte4(): Array[Byte] =
-    permutationsSB9flatByte4((0 to 9).map(_.toByte).toList, numberLength)
+    permutationsSB9flatByte4(numberLength)
 
   def permutations2[A](l: List[A], k: Int): List[List[A]] = {
     // dfs
@@ -643,7 +643,7 @@ class BullsAndCowsGenerateBench {
     b
   }
 
-  def permutationsSB9flatByte4(l: List[Byte], k: Int): Array[Byte] = {
+  def permutationsSB9flatByte4(k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(numberLength).product
     val wi    = new WrappedInt(0)

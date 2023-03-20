@@ -21,7 +21,7 @@ object Day24 extends MultiPuzzle[Int, Int] {
 
   type Path = Seq[(Int, Int)]
 
-  def pathDist(grid: Grid[Char], path: Path, dists: Dists): Int = path.map(dists).sum
+  def pathDist(path: Path, dists: Dists): Int = path.map(dists).sum
 
   def paths(mapping: Map[Int, Int], shouldReturn: Boolean): Seq[Path] = {
     val startBy0 = (0 to 7)
@@ -50,7 +50,7 @@ object Day24 extends MultiPuzzle[Int, Int] {
     val grid                   = Grid1D(lines)
     val numbers: Map[Int, Int] = findNumbers(grid).toMap
     val dists                  = computeDists(grid, numbers)
-    paths(numbers, shouldReturn).map(p => pathDist(grid, p, dists)).min
+    paths(numbers, shouldReturn).map(p => pathDist(p, dists)).min
   }
 
   override def part1(lines: Iterator[String]) = part(false)(lines.toArray)

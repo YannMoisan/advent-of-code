@@ -111,7 +111,7 @@ class Y2015D18Bench {
   //@Benchmark
   def l_no_lambda_call(): Unit = {
     val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_no_lambda_call(acc, neighborIndices_cache)
+      case (acc, _) => nextState_no_lambda_call(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -119,7 +119,7 @@ class Y2015D18Bench {
   //@Benchmark
   def m_no_method_call(): Unit = {
     val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_no_method_call(acc, neighborIndices_cache)
+      case (acc, _) => nextState_no_method_call(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -127,7 +127,7 @@ class Y2015D18Bench {
   //@Benchmark
   def n_vector_array(): Unit = {
     val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_vector_array(acc, neighborIndices_cache)
+      case (acc, _) => nextState_vector_array(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -135,7 +135,7 @@ class Y2015D18Bench {
   //@Benchmark
   def o_inline3_colbased(): Unit = {
     val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_inline3_colbased(acc, neighborIndices_cache)
+      case (acc, _) => nextState_inline3_colbased(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -244,10 +244,7 @@ class Y2015D18Bench {
     newState
   }
 
-  def nextState_no_lambda_call(
-      grid: Array[Array[Char]],
-      neighborIndices: (Int, Int) => Seq[(Int, Int)]
-  ): Array[Array[Char]] = {
+  def nextState_no_lambda_call(grid: Array[Array[Char]]): Array[Array[Char]] = {
     val newState = Array.ofDim[Char](grid.size, grid.head.size)
 
     for {
@@ -273,10 +270,7 @@ class Y2015D18Bench {
     newState
   }
 
-  def nextState_no_method_call(
-      grid: Array[Array[Char]],
-      neighborIndices: (Int, Int) => Seq[(Int, Int)]
-  ): Array[Array[Char]] = {
+  def nextState_no_method_call(grid: Array[Array[Char]]): Array[Array[Char]] = {
     val newState = Array.ofDim[Char](grid.size, grid.head.size)
 
     for {
@@ -302,10 +296,7 @@ class Y2015D18Bench {
     newState
   }
 
-  def nextState_vector_array(
-      grid: Array[Array[Char]],
-      neighborIndices: (Int, Int) => Seq[(Int, Int)]
-  ): Array[Array[Char]] = {
+  def nextState_vector_array(grid: Array[Array[Char]]): Array[Array[Char]] = {
     val newState = Array.ofDim[Char](grid.size, grid.head.size)
 
     for {
@@ -429,10 +420,7 @@ class Y2015D18Bench {
     newState
   }
 
-  def nextState_inline3_colbased(
-      grid: Array[Array[Char]],
-      neighborIndices: (Int, Int) => Seq[(Int, Int)]
-  ): Array[Array[Char]] = {
+  def nextState_inline3_colbased(grid: Array[Array[Char]]): Array[Array[Char]] = {
     val newState = Array.ofDim[Char](grid.size, grid.head.size)
 
     for {

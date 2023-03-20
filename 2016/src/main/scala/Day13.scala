@@ -7,7 +7,7 @@ object Day13 extends SinglePuzzle[Int, Int] {
   }
 
   def generateMaze(w: Int, h: Int, fav: Int): Grid[Char] =
-    Grid1D(Array.tabulate(100, 100) { case (y, x) => isNumber(x, y, fav) })
+    Grid1D(Array.tabulate(w, h) { case (y, x) => isNumber(x, y, fav) })
 
   def isNumber(x: Long, y: Long, fav: Long): Char =
     if ((x * x + 3 * x + 2 * x * y + y + y * y + fav).toBinaryString.count(_ == '1') % 2 == 0) '.'

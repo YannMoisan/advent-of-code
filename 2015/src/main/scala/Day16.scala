@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day16 extends MultiPuzzle[Int, Int] {
   private val scam = Map(
     "children"    -> 3,

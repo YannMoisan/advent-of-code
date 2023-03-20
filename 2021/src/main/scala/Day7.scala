@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day7 extends SinglePuzzle[Int, Int] {
   override def part1(input: String): Int = {
     val arr = input.split(",").map(_.toInt)

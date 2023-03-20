@@ -1,6 +1,3 @@
-@SuppressWarnings(
-  Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.OptionPartial")
-)
 object Day8 extends MultiPuzzle[Int, Int] {
   val sevenDigits = Map(
     Set('a', 'b', 'c', 'e', 'f', 'g')      -> '0',

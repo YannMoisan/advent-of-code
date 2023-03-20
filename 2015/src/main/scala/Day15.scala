@@ -1,5 +1,4 @@
 // brute force ?
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day15 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val tmp = for {

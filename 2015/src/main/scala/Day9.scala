@@ -1,13 +1,6 @@
 import scala.collection.Iterator
 
 // 9 and 13 are similar
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.Throw",
-    "org.wartremover.warts.OptionPartial"
-  )
-)
 object Day9 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = allDistances(input).min
 

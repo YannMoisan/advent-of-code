@@ -7,7 +7,6 @@ object Day6 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int =
     run(input, _.intersect(_))
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   private def run(input: Iterator[String], op: (Set[Char], Set[Char]) => Set[Char]): Int =
     split(input.toList, "")
       .map(lines => lines.map(_.toSet).reduce(op).size)

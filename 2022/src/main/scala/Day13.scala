@@ -6,7 +6,6 @@ case class I(i: Int) extends Element
 
 case class L(l: mutable.Buffer[Element]) extends Element
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.Any"))
 object Day13 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
     input

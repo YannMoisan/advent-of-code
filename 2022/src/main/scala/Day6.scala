@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day6 extends SinglePuzzle[Int, Int] {
   override def part1(input: String): Int =
     Iterator

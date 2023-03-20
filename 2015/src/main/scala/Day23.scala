@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day23 extends MultiPuzzle[Int, Int] {
   trait Instruction                               extends Product with Serializable
   case class Half(reg: String)                    extends Instruction

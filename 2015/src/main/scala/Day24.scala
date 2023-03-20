@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day24 extends MultiPuzzle[Long, Long] {
   override def part1(input: Iterator[String]): Long = common(input, 3)
 

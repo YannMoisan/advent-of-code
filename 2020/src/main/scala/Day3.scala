@@ -4,7 +4,6 @@ object Day3 extends MultiPuzzle[Long, Long] {
     countTrees(grid, 3, 1)
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   override def part2(input: Iterator[String]): Long = {
     val grid = input.toArray
     List((1, 1), (3, 1), (5, 1), (7, 1), (1, 2))

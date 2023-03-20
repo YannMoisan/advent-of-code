@@ -1,10 +1,3 @@
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.Null",
-    "org.wartremover.warts.OptionPartial"
-  )
-)
 object Day18 extends MultiPuzzle[Int, Int] with App {
   trait Element
   case class Value(v: Int)                               extends Element

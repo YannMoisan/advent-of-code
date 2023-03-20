@@ -2,7 +2,6 @@ import com.yannmoisan.util.grid.{Grid, Grid1D}
 
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day15 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]) =
     dijkstra(Grid1D(input.toArray.map(_.toCharArray.map(_.asDigit))))

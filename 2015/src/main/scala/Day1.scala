@@ -1,6 +1,3 @@
-@SuppressWarnings(
-  Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.OptionPartial")
-)
 object Day1 extends SinglePuzzle[Int, Int] {
   override def part1(input: String): Int = floors(input).last
 

@@ -1,9 +1,3 @@
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.AsInstanceOf",
-    "org.wartremover.warts.TraversableOps"
-  )
-)
 object Day21 extends MultiPuzzle[Int, Int] {
   case class Item(cost: Int, damage: Int, armor: Int)
 

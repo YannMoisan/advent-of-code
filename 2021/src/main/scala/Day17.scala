@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day17 extends MultiPuzzle[Int, Int] {
 
   override def part1(input: Iterator[String]): Int = {

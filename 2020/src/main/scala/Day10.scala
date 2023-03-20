@@ -8,7 +8,6 @@ object Day10 extends MultiPuzzle[Int, Long] {
     grouped(1).size * (grouped(3).size + 1)
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   override def part2(input: Iterator[String]): Long = {
     val l  = (0 :: input.map(_.toInt).toList).sorted
     val l2 = l :+ (l.last + 3)

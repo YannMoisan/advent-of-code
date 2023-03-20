@@ -1,6 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day10 extends SinglePuzzle[Int, Int] {
   // conclusion 1 : ArrayBuffer > ListBuffer
 

@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day17 extends MultiPuzzle[Int, Int] {
   case class Position3D(x: Int, y: Int, z: Int)
   case class Grid3D(actives: Set[Position3D]) {

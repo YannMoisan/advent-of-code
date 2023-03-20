@@ -1,9 +1,5 @@
 import scala.collection.mutable.ArrayBuffer
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.TraversableOps"
-  )
-)
+
 object Day19 extends MultiPuzzle[Int, Int] {
 
   // List(A,B,C) A => C,D

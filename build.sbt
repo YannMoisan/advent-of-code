@@ -23,7 +23,6 @@ lazy val root = (project in file("."))
 
 lazy val `advent-of-code-2015` = (project in file("2015"))
   .dependsOn(core).settings(
-    wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
     libraryDependencies += scalaTest % Test
   )
 
@@ -61,20 +60,17 @@ lazy val `advent-of-code-2019` = (project in file("2019"))
 
 lazy val `advent-of-code-2020` = (project in file("2020"))
   .dependsOn(core).settings(
-    wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
     libraryDependencies += scalaTest     % Test,
     libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.2.2"
   )
 
 lazy val `advent-of-code-2021` = (project in file("2021"))
   .dependsOn(core).settings(
-    wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
     libraryDependencies += scalaTest % Test
   )
 
 lazy val `advent-of-code-2022` = (project in file("2022"))
   .dependsOn(core).settings(
-    wartremoverErrors ++= Warts.unsafe.diff(Seq(Wart.Var, Wart.StringPlusAny)),
     libraryDependencies += scalaTest % Test
   )
 

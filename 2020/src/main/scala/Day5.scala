@@ -2,7 +2,6 @@ object Day5 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
     input.map(Binary.id).max
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   override def part2(input: Iterator[String]): Int = {
     val ids = input.map(Binary.id).toSet
     val max = ids.max

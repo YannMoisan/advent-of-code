@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day21 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val foods: List[(Set[String], Set[String])] = input.map { line =>

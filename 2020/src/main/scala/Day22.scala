@@ -1,6 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day22 extends MultiPuzzle[Int, Int] {
   case class State(p1: List[Int], p2: List[Int])
 

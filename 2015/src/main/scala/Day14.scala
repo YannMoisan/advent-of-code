@@ -1,7 +1,6 @@
 import scala.collection.mutable
 
 // label: division
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps", "org.wartremover.warts.Any"))
 object Day14 extends MultiPuzzle[Int, Int] {
   case class Reindeer(name: String, speed: Int, flyDuration: Int, restDuration: Int)
 

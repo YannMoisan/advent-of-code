@@ -1,8 +1,3 @@
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.OptionPartial"
-  )
-)
 object Day20 extends MultiPuzzle[Int, Int] {
   // TODO is there a clever solution ?
   override def part1(input: Iterator[String]): Int = {

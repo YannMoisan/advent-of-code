@@ -44,12 +44,12 @@ object Day23 extends MultiPuzzle[Int, Int] {
   }
 
   def toggle(i: Instruction): Instruction = i match {
-    case Inc(r)         => Dec(r)
-    case Dec(r)         => Inc(r)
-    case Jnz(r, v)      => NoOp
-    case JnzReg(v, r)   => CpyInt(v, r)
-    case CpyInt(v, r)   => JnzReg(v, r)
-    case CpyReg(r1, r2) => NoOp
+    case Inc(r)       => Dec(r)
+    case Dec(r)       => Inc(r)
+    case Jnz(_, _)    => NoOp
+    case JnzReg(v, r) => CpyInt(v, r)
+    case CpyInt(v, r) => JnzReg(v, r)
+    case CpyReg(_, _) => NoOp
   }
 
   def processInstruction(s: State): State =

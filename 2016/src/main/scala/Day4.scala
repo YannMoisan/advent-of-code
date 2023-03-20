@@ -5,7 +5,7 @@ object Day4 extends MultiPuzzle[Int, String] {
   def computeRoom2(s: String): (String, String) = {
     val room = """(.*)-(\d+)\[(.*)\]""".r
     s match {
-      case room(name, id, checksum) =>
+      case room(name, id, _) =>
         (shiftS(name, id.toInt), id)
     }
   }

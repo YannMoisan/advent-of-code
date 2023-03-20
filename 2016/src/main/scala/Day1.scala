@@ -49,8 +49,8 @@ object Day1 extends SinglePuzzle[Int, Int] {
   }
 
   def firstDuplicate[T](s: Stream[T], seen: Set[T] = Set.empty[T]): Option[T] = s match {
-    case head #:: tail if seen(head) => Some(head)
-    case head #:: tail               => firstDuplicate(tail, seen + head)
-    case _                           => None
+    case head #:: _ if seen(head) => Some(head)
+    case head #:: tail            => firstDuplicate(tail, seen + head)
+    case _                        => None
   }
 }

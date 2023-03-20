@@ -622,7 +622,7 @@ class BullsAndCowsGenerateBench {
     def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
-        System.arraycopy(cur, 0, b, wi.get * numberLength, numberLength)
+        System.arraycopy(cur, 0, b, wi.get() * numberLength, numberLength)
         //cur.clone()
         wi.inc()
         //        }
@@ -669,7 +669,7 @@ class BullsAndCowsGenerateBench {
   ): Unit =
     if (depth == k) {
       //        if (cur.head != '0') {
-      System.arraycopy(cur, 0, b, wi.get * numberLength, numberLength)
+      System.arraycopy(cur, 0, b, wi.get() * numberLength, numberLength)
       //cur.clone()
       wi.inc()
       //        }

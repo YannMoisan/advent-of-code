@@ -27,7 +27,6 @@ object BFS {
   def main(args: Array[String]): Unit = {
     val init         = 0
     def next(i: Int) = List(i - 1, i + 1)
-    def pred(i: Int) = i == 10
 
     val stream = breadth_first_traverse(init, next)
     val os     = stream.find(_._1 == 10)

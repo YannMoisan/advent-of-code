@@ -3,7 +3,7 @@ import com.yannmoisan.util.grid.{Grid, Grid1D}
 object Day24 extends MultiPuzzle[Int, Int] {
 
   def moves: State => Seq[State] =
-    s => s.grid.dim.neighbors4(s.p).filter(s.grid(_) != '#').map(p => State(s.grid, p))
+    s => s.grid.dim.neighbors4(s.p).filter(s.grid(_) != '#').map(p => State(s.grid, p)).toIndexedSeq
 
   case class State(grid: Grid[Char], p: Int)
 

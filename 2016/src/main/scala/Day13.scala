@@ -3,7 +3,7 @@ import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 object Day13 extends SinglePuzzle[Int, Int] {
 
   def moves(grid: Grid[Char]): Int => Seq[Int] = { i =>
-    grid.dim.neighbors4(i).filter(grid(_) == '.')
+    grid.dim.neighbors4(i).filter(grid(_) == '.').toIndexedSeq
   }
 
   def generateMaze(w: Int, h: Int, fav: Int): Grid[Char] =

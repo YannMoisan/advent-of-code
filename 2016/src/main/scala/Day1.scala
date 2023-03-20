@@ -11,7 +11,7 @@ object Day1 extends SinglePuzzle[Int, Int] {
   case object TurnRight extends Instruction
   case object Walk      extends Instruction
 
-  def parse(lines: String): Seq[Instruction] = {
+  def parse(lines: String): Array[Instruction] = {
     def toInstructions(s: String): Seq[Instruction] = s match {
       case "L" => Seq(TurnLeft)
       case "R" => Seq(TurnRight)

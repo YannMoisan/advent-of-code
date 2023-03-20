@@ -1,5 +1,5 @@
 import com.yannmoisan.util.geo.Position
-import com.yannmoisan.util.grid.Direction
+import com.yannmoisan.util.grid.{Direction, Direction4}
 
 object Day3 extends MultiPuzzle[Int, Int] {
   override def part1(lines: Iterator[String]): Int = {
@@ -22,10 +22,10 @@ object Day3 extends MultiPuzzle[Int, Int] {
 
   def parseLine(l: String): Array[Move] = l.split(",").map { s =>
     val dir = s.head match {
-      case 'D' => Direction.Down
-      case 'U' => Direction.Up
-      case 'R' => Direction.Right
-      case 'L' => Direction.Left
+      case 'D' => Direction4.Down
+      case 'U' => Direction4.Up
+      case 'R' => Direction4.Right
+      case 'L' => Direction4.Left
     }
     Move(dir, s.tail.toInt)
   }

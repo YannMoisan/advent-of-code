@@ -6,7 +6,7 @@ case class Position(x: Int, y: Int)
 
 object Position {
   def move(pos: Position, dir: Direction): Position =
-    Position(pos.x + dir.delta._1, pos.y + dir.delta._2)
+    Position(pos.x + dir.dx, pos.y + dir.dy)
 
   def dist(a: Position, b: Position): Double =
     math.sqrt(dist2(a, b).toDouble)

@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Direction, Grid, Grid1D}
+import com.yannmoisan.util.grid.{Direction, Direction8, Grid, Grid1D}
 
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
@@ -8,7 +8,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
 
   override def part2(input: Iterator[String]): Int = {
     val grid = Grid1D(input.toArray)
-    run(grid, pos => Direction.all8.flatMap(dir => nextVisible(grid, pos, dir)).toArray, 5)
+    run(grid, pos => Direction8.all.flatMap(dir => nextVisible(grid, pos, dir)).toArray, 5)
   }
 
   private def run(grid: Grid[Char], neighbors: Int => Array[Int], limit: Int): Int =

@@ -9,7 +9,7 @@ abstract class AbsMove(val dim: Dimension) extends Move
 abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
   override def move(index: Int, dir: Direction): Option[Int] = {
     val pos = dim.positions(index)
-    val dst = Pos(pos.x + dir.delta._1, pos.y + dir.delta._2)(dim)
+    val dst = Pos(pos.x + dir.dx, pos.y + dir.dy)(dim)
     Option.when(isInRange(dst))(dst.index)
   }
 
@@ -18,13 +18,12 @@ abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
 
 }
 
-abstract class TorusShapedMove(override val dim: Dimension)
-    extends AbsMove(dim) {
+abstract class TorusShapedMove(override val dim: Dimension) extends AbsMove(dim) {
   override def move(index: Int, dir: Direction): Option[Int] = {
     val pos = dim.positions(index)
     val dst = Pos(
-      (pos.x + dir.delta._1 + dim.width) % dim.width,
-      (pos.y + dir.delta._2 + dim.height) % dim.height
+      (pos.x + dir.dx + dim.width)  % dim.width,
+      (pos.y + dir.dy + dim.height) % dim.height
     )(dim)
     Some(dst.index)
   }
@@ -40,8 +39,8 @@ class PrecomputedMove(underlying: AbsMove) extends Move {
     val arr =
       Array.ofDim[Option[Int]](8 * underlying.dim.width * underlying.dim.height)
     for {
-      dir <- Direction.all8
-      p <- underlying.dim.positions
+      dir <- Direction8.all
+      p   <- underlying.dim.positions
     } {
       arr(dir.value + 8 * p.index) = underlying.move(p.index, dir)
     }
@@ -52,16 +51,16 @@ class PrecomputedMove(underlying: AbsMove) extends Move {
 object Test extends App {
   val classic = new PrecomputedMove(new StandardMove(Dimension(2, 3)) {})
 
-  println(classic.move(0, Direction.Up))
-  println(classic.move(0, Direction.Down))
-  println(classic.move(0, Direction.Left))
-  println(classic.move(0, Direction.Right))
+  println(classic.move(0, Direction4.Up))
+  println(classic.move(0, Direction4.Down))
+  println(classic.move(0, Direction4.Left))
+  println(classic.move(0, Direction4.Right))
 
   val torus = new PrecomputedMove(new TorusShapedMove(Dimension(2, 3)) {})
 
-  println(torus.move(0, Direction.Up))
-  println(torus.move(0, Direction.Down))
-  println(torus.move(0, Direction.Left))
-  println(torus.move(0, Direction.Right))
+  println(torus.move(0, Direction4.Up))
+  println(torus.move(0, Direction4.Down))
+  println(torus.move(0, Direction4.Left))
+  println(torus.move(0, Direction4.Right))
 
 }

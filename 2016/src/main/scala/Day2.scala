@@ -1,12 +1,12 @@
-import com.yannmoisan.util.grid.{Direction, Grid, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Direction, Direction4, Grid, Grid1D, Pos}
 
 object Day2 extends MultiPuzzle[String, String] {
 
   def parse(c: Char) = c match {
-    case 'U' => Direction.Up
-    case 'D' => Direction.Down
-    case 'L' => Direction.Left
-    case 'R' => Direction.Right
+    case 'U' => Direction4.Up
+    case 'D' => Direction4.Down
+    case 'L' => Direction4.Left
+    case 'R' => Direction4.Right
   }
 
   val keypad1 = Grid1D(Array("123", "456", "789"))

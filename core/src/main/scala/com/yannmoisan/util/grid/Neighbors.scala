@@ -21,13 +21,13 @@ class PrecomputedNeighbors(move: AbsMove, directions: Seq[Direction])
 object NeighborsApp extends App {
   val classic = new PrecomputedNeighbors(
     new StandardMove(Dimension(2, 3)) {},
-    Direction.all4
+    Direction4.all
   )
   println(classic.neighbors(0).mkString(","))
 
   val torus = new PrecomputedNeighbors(
     new TorusShapedMove(Dimension(2, 3)) {},
-    Direction.all4
+    Direction4.all
   )
   println(torus.neighbors(0).mkString(","))
 }

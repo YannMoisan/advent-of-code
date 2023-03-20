@@ -1,7 +1,6 @@
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-@SuppressWarnings(Array("org.wartremover.warts.NonUnitStatements"))
 class IntervalSpec extends AnyFlatSpec with Matchers {
   behavior of "merge two intervals"
 

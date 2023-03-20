@@ -10,7 +10,6 @@ object Day9 extends MultiPuzzle[Long, Long] {
     numbers(i - 1)
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   override def part2(input: Iterator[String]): Long = {
     var i       = 0
     var j       = 0

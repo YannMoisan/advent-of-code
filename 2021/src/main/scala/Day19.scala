@@ -1,12 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.TraversableOps",
-    "org.wartremover.warts.AsInstanceOf",
-    "org.wartremover.warts.Throw"
-  )
-)
 object Day19 extends MultiPuzzle[Int, Int] {
   case class Scanner(pos: Set[Pos])
   case class Pos(c: (Int, Int, Int))

@@ -1,6 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day7 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val paths = parse(input)

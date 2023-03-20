@@ -3,7 +3,6 @@ import fp.Functional
 
 // Double buffering
 // reuse array
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day25 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val cur = Grid1D(input.toArray.map(_.toCharArray))

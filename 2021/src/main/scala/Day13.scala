@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day13 extends MultiPuzzle[Int, Int] {
 
   def makeGrid(lines: Array[String]): Array[Array[Char]] = {

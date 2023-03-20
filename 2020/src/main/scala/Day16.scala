@@ -11,7 +11,6 @@ object Day16 extends MultiPuzzle[Int, Long] {
     tickets.map(ticket => ticket.filter(!isValid(rules)(_)).sum).sum
   }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   override def part2(input: Iterator[String]): Long = {
     val (rules, myTicket, tickets) = parse(input)
 
@@ -33,7 +32,6 @@ object Day16 extends MultiPuzzle[Int, Long] {
   private def isValid(rules: Array[Rule])(v: Int): Boolean =
     rules.exists(_.check(v))
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   private def resolve(possibleRules: Seq[Set[Rule]]): Option[((Int, Rule), Seq[Set[Rule]])] =
     possibleRules.indices
       .find(fieldId => possibleRules(fieldId).size == 1)
@@ -43,7 +41,6 @@ object Day16 extends MultiPuzzle[Int, Long] {
         ((fieldId, rule), updatedRules)
       }
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   private def parse(input: Iterator[String]): (Array[Rule], Array[Int], List[Array[Int]]) = {
     val inputList = input.toList
 

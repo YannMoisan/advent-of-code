@@ -1,6 +1,5 @@
 import org.scalatest.prop.TableDrivenPropertyChecks._
 
-@SuppressWarnings(Array("org.wartremover.warts.Any"))
 class NonRegressionSpec
     extends AllPuzzlesSpec(
       Table(

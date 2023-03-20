@@ -1,5 +1,4 @@
 // label: String, base26
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends SinglePuzzle[String, String] {
   private val alphabetToBase26Mapping = ('a' to 'z').zip(('0' to '9') ++ ('a' to 'p')).toMap
   private val base26ToAlphabetMapping =

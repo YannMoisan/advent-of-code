@@ -1,6 +1,5 @@
 import com.yannmoisan.util.grid.{Grid, Grid1D}
 
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val grid = Grid1D(input.map(_.toCharArray.map(_.toString.toInt)).toArray)

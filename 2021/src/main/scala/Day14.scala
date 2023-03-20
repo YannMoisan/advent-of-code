@@ -1,6 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day14 extends MultiPuzzle[Int, Long] {
   override def part1(input: Iterator[String]): Int =
     compute(input, 10).toInt

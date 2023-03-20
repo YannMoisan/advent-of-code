@@ -4,7 +4,6 @@ trait Packet
 case class ValuePacket(version: Int, typeId: Int, v: Long)           extends Packet
 case class OpPacket(version: Int, typeId: Int, packets: Seq[Packet]) extends Packet
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day16 extends SinglePuzzle[Int, Long] {
   // do the conversion manually to keep leading zeros
   val hexaToFourBits = Map(

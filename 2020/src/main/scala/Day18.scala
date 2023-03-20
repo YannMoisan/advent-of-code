@@ -1,12 +1,5 @@
 import fastparse._, NoWhitespace._
 
-@SuppressWarnings(
-  Array(
-    "org.wartremover.warts.Any",
-    "org.wartremover.warts.NonUnitStatements",
-    "org.wartremover.warts.Null"
-  )
-)
 object Day18 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     def number[_: P]: P[Int]      = P(CharIn("0-9").rep(1).!.map(_.toInt))

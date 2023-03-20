@@ -2,7 +2,6 @@ import com.yannmoisan.util.geo.Position
 
 case class Interval(inf: Int, sup: Int)
 
-@SuppressWarnings(Array("org.wartremover.warts.Throw"))
 object Interval {
   def merge(a: Interval, b: Interval): Seq[Interval] = {
     val (min, max) = if (a.inf < b.inf) (a, b) else (b, a)

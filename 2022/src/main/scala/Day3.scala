@@ -1,4 +1,3 @@
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day3 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
     input.map(s => common(s).map(value).sum).sum

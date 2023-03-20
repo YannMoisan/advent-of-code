@@ -1,6 +1,5 @@
 // combination
 // Learning : combination doestn't work with duplicates
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day17 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = combinations(input).length
 

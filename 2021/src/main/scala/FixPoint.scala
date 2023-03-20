@@ -25,7 +25,6 @@ class Iterative[A] extends FixPoint[A] {
   }
 }
 
-@SuppressWarnings(Array("org.wartremover.warts.OptionPartial"))
 class Functional[A] extends FixPoint[A] {
   override def convergesIn(f: A => A, start: A, pred: (A, A) => Boolean): Int =
     Iterator

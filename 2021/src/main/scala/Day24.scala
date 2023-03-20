@@ -1,6 +1,5 @@
 import scala.collection.mutable
 
-@SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
 object Day24 extends MultiPuzzle[Int, Int] {
   // 99911993949684
 

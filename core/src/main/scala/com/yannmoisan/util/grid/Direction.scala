@@ -1,16 +1,22 @@
 package com.yannmoisan.util.grid
 
-sealed abstract case class Direction(
-    name: String,
-    delta: (Int, Int),
-    value: Int
+sealed abstract class Direction(
+    val name: String,
+    val delta: (Int, Int),
+    val value: Int
 )
 
+sealed abstract case class Direction4(
+    override val name: String,
+    override val delta: (Int, Int),
+    override val value: Int
+) extends Direction(name, delta, value)
+
 object Direction {
-  object Up    extends Direction("UP", (0, -1), 0)
-  object Down  extends Direction("DOWN", (0, 1), 1)
-  object Left  extends Direction("LEFT", (-1, 0), 2)
-  object Right extends Direction("RIGHT", (1, 0), 3)
+  object Up    extends Direction4("UP", (0, -1), 0)
+  object Down  extends Direction4("DOWN", (0, 1), 1)
+  object Left  extends Direction4("LEFT", (-1, 0), 2)
+  object Right extends Direction4("RIGHT", (1, 0), 3)
 
   object NW extends Direction("NW", (-1, -1), 4)
   object NE extends Direction("NE", (1, -1), 5)

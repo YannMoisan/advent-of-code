@@ -9,6 +9,8 @@ object Day10 extends MultiPuzzle[String, Int] {
       case Bot(_, None, None) => this.copy(low = Some(chipId))
       case Bot(_, Some(curChipId), None) =>
         this.copy(low = Some(min(chipId, curChipId)), high = Some(max(chipId, curChipId)))
+      case _ => throw new IllegalStateException()
+
     }
 
     def removeChips(): Bot = this.copy(low = None, high = None)

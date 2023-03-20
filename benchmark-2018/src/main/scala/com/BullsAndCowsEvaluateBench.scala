@@ -285,12 +285,12 @@ class BullsAndCowsEvaluateBench {
       if (s == g) {
         bulls += 1
       } else {
-        if (state(s))
+        if (state(s.toInt))
           cows += 1
-        if (state(g))
+        if (state(g.toInt))
           cows += 1
-        state(s) = true
-        state(g) = true
+        state(s.toInt) = true
+        state(g.toInt) = true
       }
       i += 1
     }
@@ -314,12 +314,12 @@ class BullsAndCowsEvaluateBench {
       if (s == g) {
         bulls += 1
       } else {
-        if ((state & 1 << s) > 0)
+        if ((state & 1 << s.toInt) > 0)
           cows += 1
-        if ((state & 1 << g) > 0)
+        if ((state & 1 << g.toInt) > 0)
           cows += 1
-        state |= 1 << s
-        state |= 1 << g
+        state |= 1 << s.toInt
+        state |= 1 << g.toInt
       }
       i += 1
     }

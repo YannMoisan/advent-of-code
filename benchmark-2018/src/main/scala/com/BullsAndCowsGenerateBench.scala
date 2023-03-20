@@ -592,13 +592,13 @@ class BullsAndCowsGenerateBench {
       } else {
         (if (depth == 0) (1 to 9).map(_.toByte) else l).foreach { e =>
           val idx = e
-          if (!used(idx)) {
-            used(idx) = true
+          if (!used(idx.toInt)) {
+            used(idx.toInt) = true
             cur(depth) = e
             _permutationsSB9(depth + 1)
             // backtrack
             //cur.setLength(depth)
-            used(idx) = false
+            used(idx.toInt) = false
           }
         }
       }
@@ -629,13 +629,13 @@ class BullsAndCowsGenerateBench {
       } else {
         (if (depth == 0) (1 to 9).map(_.toByte) else l).foreach { e =>
           val idx = e
-          if (!used(idx)) {
-            used(idx) = true
+          if (!used(idx.toInt)) {
+            used(idx.toInt) = true
             cur(depth) = e
             _permutationsSB9(depth + 1)
             // backtrack
             //cur.setLength(depth)
-            used(idx) = false
+            used(idx.toInt) = false
           }
         }
       }
@@ -678,13 +678,13 @@ class BullsAndCowsGenerateBench {
       var a  = 0
       while (a < ll.length) {
         val idx = ll(a)
-        if (!used(idx)) {
-          used(idx) = true
+        if (!used(idx.toInt)) {
+          used(idx.toInt) = true
           cur(depth) = idx
           _permutationsSB94(k, cur, b, wi, used, l0, ln, depth + 1)
           // backtrack
           //cur.setLength(depth)
-          used(idx) = false
+          used(idx.toInt) = false
         }
         a += 1
       }
@@ -706,13 +706,13 @@ class BullsAndCowsGenerateBench {
       } else {
         (if (depth == 0) (1 to 9).map(_.toByte) else l).foreach { e =>
           //val idx = e - '0'
-          if (!used(e)) {
-            used(e) = true
+          if (!used(e.toInt)) {
+            used(e.toInt) = true
             cur(depth) = e
             _permutationsSB10(depth + 1)
             // backtrack
             //cur.setLength(depth)
-            used(e) = false
+            used(e.toInt) = false
           }
         }
       }

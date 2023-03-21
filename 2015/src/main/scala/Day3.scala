@@ -1,3 +1,6 @@
+import com.yannmoisan.util.geo.Position
+import com.yannmoisan.util.grid.Direction4
+
 object Day3 extends SinglePuzzle[Int, Int] {
   override def part1(input: String): Int = positions(input).size
 
@@ -5,13 +8,16 @@ object Day3 extends SinglePuzzle[Int, Int] {
     (positions(input.sliding(1, 2).mkString) ++
       positions(input.tail.sliding(1, 2).mkString)).size
 
-  private def positions(input: String): Set[(Int, Int)] =
+  private def positions(input: String): Set[Position] =
     input
-      .scanLeft((0, 0)) {
-        case (pos, '^') => (pos._1, pos._2 - 1)
-        case (pos, 'v') => (pos._1, pos._2 + 1)
-        case (pos, '<') => (pos._1 - 1, pos._2)
-        case (pos, '>') => (pos._1 + 1, pos._2)
+      .scanLeft(Position(0, 0)) { (pos, ch) =>
+        val dir = ch match {
+          case '^' => Direction4.Up
+          case 'v' => Direction4.Down
+          case '<' => Direction4.Left
+          case '>' => Direction4.Right
+        }
+        Position.move(pos, dir)
       }.toSet
 }
 

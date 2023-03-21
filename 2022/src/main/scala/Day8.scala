@@ -2,12 +2,12 @@ import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 object Day8 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
-    val grid = Grid1D(input.toArray)
+    val grid = Grid1D(input)
     grid.dim.indices.filter(p => isVisible(grid, p)).size
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid = Grid1D(input.toArray)
+    val grid = Grid1D(input)
     (for {
       x <- 1 until grid.dim.width - 1
       y <- 1 until grid.dim.height - 1

@@ -2,12 +2,12 @@ import com.yannmoisan.util.grid.{Direction, Direction8, Grid, Grid1D}
 
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
-    val grid = Grid1D(input.toArray)
+    val grid = Grid1D(input)
     run(grid, pos => grid.dim.neighbors8(pos), 4)
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid = Grid1D(input.toArray)
+    val grid = Grid1D(input)
     run(grid, pos => Direction8.all.flatMap(dir => nextVisible(grid, pos, dir)).toArray, 5)
   }
 

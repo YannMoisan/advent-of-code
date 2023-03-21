@@ -18,14 +18,13 @@ class Grid1D[@specialized(Int, Char, Boolean) A](
   def debug(): Unit =
     grid.grouped(dim.width).foreach(line => Console.err.println(line.mkString))
 
-  def copy(): Grid[A] = {
+  def copy(): Grid[A] =
     new Grid1D(grid.clone(), width, height)
-  }
 
   override def equals(obj: Any): Boolean =
     obj match {
       case other: Grid1D[_] =>
-        var i = 0
+        var i   = 0
         var ret = true
         while (ret && i < dim.positions.length) {
           val p = dim.positions(i)
@@ -47,15 +46,17 @@ object Grid1D {
 
   def apply[@specialized(Int, Char, Boolean) A: ClassTag](
       grid: Array[Array[A]]
-  ): Grid1D[A] = {
+  ): Grid1D[A] =
     new Grid1D(grid.flatten, grid.head.length, grid.length)
+
+  def apply(grid: Iterator[String]): Grid1D[Char] = {
+    val arr = grid.toArray
+    new Grid1D(arr.flatten, arr.head.length, arr.length)
   }
 
-  def apply(grid: Array[String]): Grid1D[Char] = {
-    new Grid1D(grid.flatten, grid.head.length, grid.length)
-  }
-
-  def tabulate[@specialized(Int, Char, Boolean) A: ClassTag](dim: Dimension)(f: Int => A): Grid1D[A] = {
+  def tabulate[@specialized(Int, Char, Boolean) A: ClassTag](
+      dim: Dimension
+  )(f: Int => A): Grid1D[A] = {
     val arr = Array.tabulate(dim.width * dim.height)(f)
     new Grid1D(arr, dim.width, dim.height)
   }

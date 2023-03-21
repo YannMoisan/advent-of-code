@@ -11,19 +11,19 @@ object Day14 extends SinglePuzzle[Int, Int] {
       .find(s => s(0) == s(1) && s(1) == s(2))
       .map(s => (s.head, e._2))
 
-  def contains5(stream: LazyList[(String, Int)], index: Int, c: Char) =
+  def contains5(stream: Iterator[(String, Int)], index: Int, c: Char) =
     !stream.drop(index).take(1000).filter(_._1.contains(c.toString * 5)).isEmpty
 
   def part(f: String => String) = { (_: String) =>
-    val s: LazyList[(String, Int)] = LazyList
+    val s: Iterator[(String, Int)] = Iterator
       .from(0)
       .map(i => f(s"cuanljph$i"))
       .zipWithIndex
 
     s.flatMap(contains3dups)
       .filter(e => contains5(s, e._2 + 1, e._1))
-      .take(64)
-      .last
+      .drop(63)
+      .next()
       ._2
   }
 

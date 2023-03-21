@@ -2,13 +2,13 @@ import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 object Day18 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
-    val grid: Grid[Char] = Grid1D(input.toArray)
+    val grid: Grid[Char] = Grid1D(input)
     val end              = (1 to 100).foldLeft(grid) { case (acc, _) => next(acc) }
     end.count(_ == '#')
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid: Grid[Char] = Grid1D(input.toArray)
+    val grid: Grid[Char] = Grid1D(input)
     val coins =
       List(Pos(0, 0)(grid.dim), Pos(0, 99)(grid.dim), Pos(99, 0)(grid.dim), Pos(99, 99)(grid.dim))
     coins.foreach(p => grid(p.index) = '#')

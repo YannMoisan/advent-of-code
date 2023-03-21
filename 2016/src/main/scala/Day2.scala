@@ -9,8 +9,8 @@ object Day2 extends MultiPuzzle[String, String] {
     case 'R' => Direction4.Right
   }
 
-  val keypad1 = Grid1D(Array("123", "456", "789"))
-  val keypad2 = Grid1D(Array("  1  ", " 234 ", "56789", " ABC ", "  D  "))
+  val keypad1 = Grid1D(Iterator("123", "456", "789"))
+  val keypad2 = Grid1D(Iterator("  1  ", " 234 ", "56789", " ABC ", "  D  "))
 
   def validMove(keypad: Grid[Char])(d: Direction): Int => Int =
     from => keypad.dim.moveS(from, d).filter(keypad(_) != ' ').getOrElse(from)

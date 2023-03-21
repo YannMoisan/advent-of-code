@@ -46,14 +46,14 @@ object Day24 extends MultiPuzzle[Int, Int] {
     ds ++ ds.toList.map { case (t, d) => ((t._2, t._1), d) }.toMap
   }
 
-  def part(shouldReturn: Boolean) = { lines: Array[String] =>
+  def part(shouldReturn: Boolean) = { lines: Iterator[String] =>
     val grid                   = Grid1D(lines)
     val numbers: Map[Int, Int] = findNumbers(grid).toMap
     val dists                  = computeDists(grid, numbers)
     paths(numbers, shouldReturn).map(p => pathDist(p, dists)).min
   }
 
-  override def part1(lines: Iterator[String]) = part(false)(lines.toArray)
+  override def part1(lines: Iterator[String]) = part(false)(lines)
 
-  override def part2(lines: Iterator[String]) = part(true)(lines.toArray)
+  override def part2(lines: Iterator[String]) = part(true)(lines)
 }

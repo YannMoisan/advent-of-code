@@ -1,3 +1,4 @@
+import com.yannmoisan.util.graph.BFS
 import com.yannmoisan.util.grid.{Dimension, Direction4, Pos}
 
 object Day17 extends SinglePuzzle[String, Int] {

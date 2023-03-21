@@ -1,8 +1,10 @@
+import com.yannmoisan.util.grid.{Grid1D, Pos}
+
 object Day6 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     //println(input.map(parse).take(5).mkString(","))
 
-    val grid = Array.fill(1000)(Array.fill(1000)(0))
+    val grid = Grid1D.fill(1000, 1000)(0)
 
     input.foreach { s =>
       val action = parse(s)
@@ -11,28 +13,21 @@ object Day6 extends MultiPuzzle[Int, Int] {
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = 1
+          } grid(Pos(x, y)(grid.dim).index) = 1
         case TurnOff(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = 0
+          } grid(Pos(x, y)(grid.dim).index) = 0
         case Toggle(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = if (grid(y)(x) == 1) 0 else 1
+          } grid(Pos(x, y)(grid.dim).index) = if (grid(Pos(x, y)(grid.dim).index) == 1) 0 else 1
       }
     }
 
-    var sum = 0
-
-    for {
-      x <- 0 to 999
-      y <- 0 to 999
-    } if (grid(y)(x) == 1) sum += 1
-
-    sum
+    grid.count(_ == 1)
   }
 
   // Starting Scala 2.13, as an alternative to regex solutions,
@@ -46,7 +41,7 @@ object Day6 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = {
     //println(input.map(parse).take(5).mkString(","))
 
-    val grid = Array.fill(1000)(Array.fill(1000)(0))
+    val grid = Grid1D.fill(1000, 1000)(0)
 
     input.foreach { s =>
       val action = parse(s)
@@ -55,28 +50,21 @@ object Day6 extends MultiPuzzle[Int, Int] {
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = grid(y)(x) + 1
+          } grid(Pos(x, y)(grid.dim).index) = grid(Pos(x, y)(grid.dim).index) + 1
         case TurnOff(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = math.max(0, grid(y)(x) - 1)
+          } grid(Pos(x, y)(grid.dim).index) = math.max(0, grid(Pos(x, y)(grid.dim).index) - 1)
         case Toggle(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(y)(x) = grid(y)(x) + 2
+          } grid(Pos(x, y)(grid.dim).index) = grid(Pos(x, y)(grid.dim).index) + 2
       }
     }
 
-    var sum = 0
-
-    for {
-      x <- 0 to 999
-      y <- 0 to 999
-    } sum += grid(y)(x)
-
-    sum
+    grid.dim.indices.foldLeft(0)(_ + grid(_))
   }
 
 }

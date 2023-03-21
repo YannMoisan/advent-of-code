@@ -12,11 +12,11 @@ object Day15 extends MultiPuzzle[Int, Int] {
 
   override def part1(lines: Iterator[String]) = {
     val discs = lines.map(parse)
-    LazyList.from(0).find(ok(discs.toList)).get
+    Iterator.from(0).find(ok(discs.toList)).get
   }
 
   override def part2(lines: Iterator[String]) = {
     val discs = lines.toList.map(parse) :+ Disc(11, 0)
-    LazyList.from(0).find(ok(discs)).get
+    Iterator.from(0).find(ok(discs)).get
   }
 }

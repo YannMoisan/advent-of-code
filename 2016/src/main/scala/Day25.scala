@@ -116,7 +116,7 @@ object Day25 extends MultiPuzzle[Int, Int] {
 
   override def part1(lines: Iterator[String]): Int = {
     val instructions = lines.map(parse).toList
-    val stream = LazyList
+    val stream = Iterator
       .from(0).map(i => (i, part(instructions, Map[String, Int]("a" -> i).withDefaultValue(0))))
     val o = stream.find(t => (t._2.startsWith("0101010101") || t._2.startsWith("1010101010")))
     o.get._1

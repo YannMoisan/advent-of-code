@@ -1,6 +1,20 @@
 package com.yannmoisan.util.grid
 
-abstract class Direction(val dx: Int, val dy: Int, val value: Int)
+abstract class Direction(val dx: Int, val dy: Int, val value: Int) {
+  def *(n: Int): Direction = new Direction(n * dx, n * dy, -1) {}
+
+  def +(other: Direction): Direction = new Direction(other.dx + dx, other.dy + dy, -1) {}
+
+  //https://en.wikipedia.org/wiki/Rotation_matrix
+  def rotate(angleInDegrees: Int): Direction = {
+    val angle = math.toRadians(angleInDegrees.toDouble)
+    new Direction(
+      dx * math.cos(angle).toInt - dy * math.sin(angle).toInt,
+      dx * math.sin(angle).toInt + dy * math.cos(angle).toInt,
+      -1
+    ) {}
+  }
+}
 
 sealed abstract case class Direction4(
     override val dx: Int,

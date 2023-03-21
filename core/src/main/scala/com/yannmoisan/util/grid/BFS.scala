@@ -9,13 +9,13 @@ object BFS {
       target: Char,
       isValid: (Int, Int) => Boolean
   ): Option[List[Int]] = {
-    val q = mutable.Queue[List[Int]]()
+    val q       = mutable.Queue[List[Int]]()
     val visited = Array.ofDim[Boolean](grid.dim.width * grid.dim.height)
     q.enqueue(start :: Nil)
     var targetedPath: Option[List[Int]] = None
     while (q.nonEmpty && targetedPath.isEmpty) {
       val path = q.dequeue()
-      val pos = path.head
+      val pos  = path.head
       if (grid(pos) == target) {
         targetedPath = Some(path.reverse)
       } else {
@@ -35,19 +35,35 @@ object BFS {
     targetedPath
   }
 
+  def floodFill(g: Grid[Int], start: Int): Int = {
+    val q       = mutable.Queue[Int]()
+    val visited = mutable.Set[Int]()
+    val _       = q.enqueue(start)
+    while (!q.isEmpty) {
+      val i = q.dequeue()
+      g.dim.neighbors4(i).foreach { j =>
+        if (g(j) > g(i) && g(j) < 9 && !visited.contains(j)) {
+          val _ = q.enqueue(j)
+          val _ = visited.add(j)
+        }
+      }
+    }
+    visited.size + 1
+  }
+
   def shortestPathTorus(
       grid: Grid[Char],
       start: Int,
       target: Char,
       isValid: (Int, Int) => Boolean
   ): Option[List[Int]] = {
-    val q = mutable.Queue[List[Int]]()
+    val q       = mutable.Queue[List[Int]]()
     val visited = Array.ofDim[Boolean](grid.dim.width * grid.dim.height)
     q.enqueue(start :: Nil)
     var targetedPath: Option[List[Int]] = None
     while (q.nonEmpty && targetedPath.isEmpty) {
       val path = q.dequeue()
-      val pos = path.head
+      val pos  = path.head
       if (grid(pos) == target) {
         targetedPath = Some(path.reverse)
       } else {

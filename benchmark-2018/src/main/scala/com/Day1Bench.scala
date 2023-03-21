@@ -30,6 +30,32 @@ class Day1Bench {
   }
 
   @Benchmark
+  def part2_iterator: Int = {
+    val frequencies = lines
+    Iterator
+      .continually(frequencies)
+      .flatten
+      .scanLeft((0, Set.empty[Int])) {
+        case ((sum, visited), freq) => (sum + freq, visited + sum)
+      }
+      .find { case (sum, visited) => visited.contains(sum) }
+      .get._1
+  }
+
+  @Benchmark
+  def part2_iterator_mutable: Int = {
+    val frequencies = lines
+    val it          = Iterator.continually(frequencies).flatten.scanLeft(0)(_ + _)
+    val visited     = mutable.Set[Int]()
+    while (it.hasNext) {
+      val cur = it.next()
+      if (visited.contains(cur)) return cur
+      visited.add(cur)
+    }
+    -1
+  }
+
+  @Benchmark
   def part2_recursive: Int = {
     def loop(lines: Array[Int], idx: Int, sum: Int, visited: Set[Int]): Int = {
       val v    = lines(idx % lines.length)
@@ -39,6 +65,22 @@ class Day1Bench {
     }
 
     loop(lines, 0, 0, Set.empty)
+  }
+
+  @Benchmark
+  def part2_recursive_mutable: Int = {
+    val visited = mutable.Set[Int]()
+    def loop(lines: Array[Int], idx: Int, sum: Int): Int = {
+      val v    = lines(idx % lines.length)
+      val sum2 = sum + v
+      if (visited.contains(sum2)) sum2
+      else {
+        visited.add(sum2)
+        loop(lines, idx + 1, sum2)
+      }
+    }
+
+    loop(lines, 0, 0)
   }
 
   @Benchmark

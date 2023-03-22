@@ -10,14 +10,14 @@ object BFS {
     *
     * @param node
     * @param f definition of the graph
-    * @tparam Node
+    * @tparam A
     * @return a stream of tuples : the current node and its ancestors
     */
-  def breadth_first_traverse[Node](
-      node: Node,
-      f: Node => Seq[Node]
-  ): LazyList[(Node, Seq[Node])] = {
-    def recurse(q: Queue[(Node, Seq[Node])], cache: Set[Node]): LazyList[(Node, Seq[Node])] =
+  def breadth_first_traverse[A](
+      node: A,
+      f: A => Seq[A]
+  ): LazyList[(A, Seq[A])] = {
+    def recurse(q: Queue[(A, Seq[A])], cache: Set[A]): LazyList[(A, Seq[A])] =
       if (q.isEmpty) {
         LazyList.empty
       } else {

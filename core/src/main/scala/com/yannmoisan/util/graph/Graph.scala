@@ -1,3 +1,5 @@
+package com.yannmoisan.util.graph
+
 import scala.collection.mutable
 // 0 -) 1 4 5
 // 1 4

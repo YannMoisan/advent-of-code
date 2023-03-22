@@ -1,4 +1,6 @@
-object Day11 extends MultiPuzzle[String, String] {
+import com.yannmoisan.util.graph.BFS
+
+object Day11 extends MultiPuzzle[Int, Int] {
   type Floor = Set[String]
 
   case class State(floors: Seq[Floor], currentFloor: Int)
@@ -8,14 +10,9 @@ object Day11 extends MultiPuzzle[String, String] {
   def moves(s: State): Seq[State] = {
     // all combination of one or two elem on the current floor
     val current = s.floors(s.currentFloor)
-    def possibleMoves(i: Int) =
-      if (i == 1) // up
-        current.subsets(2) ++ current.subsets(1)
-      else // down
-        current.filter(_(1) == 'M').subsets(1)
     for {
       f  <- possibleFloors(s.currentFloor)
-      m  <- possibleMoves(f - s.currentFloor)
+      m  <- current.subsets(2) ++ current.subsets(1)
       ns <- update(s, f, m)
     } yield ns
   }
@@ -37,7 +34,7 @@ object Day11 extends MultiPuzzle[String, String] {
     val grouped: Map[Char, Seq[String]] = f.toList.groupBy(_(0))
     val alone                           = grouped.filter { case (_, s) => s.size != 2 }
     val alone2                          = alone.values.flatten.toList
-    !alone2.exists(_(1) == 'M') || !alone2.exists(_(1) == 'G')
+    !alone2.exists(_(1) == 'M') || !f.exists(_(1) == 'G')
   }
 
   def init0 = State(
@@ -52,12 +49,12 @@ object Day11 extends MultiPuzzle[String, String] {
 
   def init2 = State(
     Seq(
-      Set("EM", "DM", "EG", "DG"),
+      Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM", "EM", "DM", "EG", "DG"),
+      Set("pM", "PM"),
       Set(),
-      Set(),
-      Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM", "pM", "PM")
+      Set()
     ),
-    3
+    0
   )
 
   def final0 = State(
@@ -90,30 +87,12 @@ object Day11 extends MultiPuzzle[String, String] {
     3
   )
 
-  var cache = collection.mutable.Set[State]()
-  val queue = collection.mutable.Queue[(State, Int)]()
-  var found = false
-
   def part(init: State, finalS: State) = { _: Seq[String] =>
-    moves(init).foreach(s => queue += s -> 0)
-    while (!queue.isEmpty && !found) {
-      val (next, i) = queue.dequeue()
-      if (!cache.contains(next)) {
-        cache.add(next)
-        if (next == finalS) {
-          found = true;
-          println(s"final = $i")
-        } else ()
-        moves(next).foreach(s => queue += s -> (i + 1))
-      }
-    }
-    "42"
+    BFS.breadth_first_traverse(init, moves).find(_._1 == finalS).get._2.size - 1
   }
 
-  override def part1(lines: Iterator[String]): String = part(init1, final1)(lines.toList)
+  override def part1(lines: Iterator[String]): Int = part(init1, final1)(lines.toList)
 
-  override def part2(lines: Iterator[String]): String = part(init2, final2)(lines.toList)
+  override def part2(lines: Iterator[String]): Int = part(init2, final2)(lines.toList)
 
-  //47
-  //71
 }

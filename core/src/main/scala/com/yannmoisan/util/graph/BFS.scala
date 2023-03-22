@@ -1,3 +1,5 @@
+package com.yannmoisan.util.graph
+
 import scala.collection.immutable.Queue
 
 object BFS {

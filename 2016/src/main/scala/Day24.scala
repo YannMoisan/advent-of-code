@@ -1,3 +1,4 @@
+import com.yannmoisan.util.graph.BFS
 import com.yannmoisan.util.grid.{Grid, Grid1D}
 
 object Day24 extends MultiPuzzle[Int, Int] {

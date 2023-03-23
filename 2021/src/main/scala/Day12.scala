@@ -1,4 +1,4 @@
-import scala.collection.mutable
+import com.yannmoisan.util.graph.BFS
 
 object Day12 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
@@ -7,56 +7,42 @@ object Day12 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int =
     bfsPart2(parseEdges(input.toArray))
 
-  def parseEdges(in: Array[String]): Seq[(String, String)] =
+  def parseEdges(in: Array[String]): Map[String, Array[String]] =
     in.flatMap { line =>
-      val Array(from, to) = line.split("-")
-      Seq((from, to), (to, from))
-    }.toSeq
+        val Array(from, to) = line.split("-")
+        Seq((from, to), (to, from))
+      }.groupMap(_._1)(_._2)
 
-  def bfsPart1(edges: Seq[(String, String)]): Int = {
-    // nodes to visit with the path to get there
-    var pathsCount = 0
+  case class State(cur: String, history: List[String])
 
-    val q = mutable.Queue[(String, List[String])]()
-    val _ = q.enqueue(("start", List("start")))
-    while (!q.isEmpty) {
-      val (toVisit, path) = q.dequeue()
-      // could be speed-up with adjacency list
-      edges.collect { case (from, to) if from == toVisit => to }.foreach { v =>
-        if ((v.toLowerCase == v) && path.contains(v)) {} else {
-          if (v == "end") {
-            pathsCount += 1
-          }
-          val _ = q.enqueue((v, v :: path))
-        }
-      }
-    }
-    pathsCount
+  def derive1(graph: String => Array[String]): State => Seq[State] = { s: State =>
+    graph(s.cur)
+      .filterNot(str => str.toLowerCase == str && s.history.contains(str))
+      .toIndexedSeq.map(next => State(next, next :: s.history))
   }
 
-  def bfsPart2(edges: Seq[(String, String)]): Int = {
-    // nodes to visit with the path to get there
-    var pathsCount = 0
-
-    val q = mutable.Queue[(String, List[String])]()
-    val _ = q.enqueue(("start", List("start")))
-    while (!q.isEmpty) {
-      val (toVisit, path) = q.dequeue()
-      // could be speed-up with adjacency list
-      edges.collect { case (from, to) if from == toVisit => to }.foreach { v =>
-        if ((v.toLowerCase == v) &&
-            (path.contains(v) && (
-              Seq("start", "end").contains(v) ||
-              path.filter(node => node.toLowerCase == node).groupBy(identity).exists(_._2.size > 1)
-            ))) // count small cave
-          {} else {
-          if (v == "end") {
-            pathsCount += 1
-          }
-          val _ = q.enqueue((v, v :: path))
-        }
-      }
-    }
-    pathsCount
+  def derive2(graph: String => Array[String]): State => Seq[State] = { s: State =>
+    graph(s.cur)
+      .filterNot(str =>
+        (str.toLowerCase == str) &&
+          (s.history.contains(str) && (
+            Seq("start", "end").contains(str) ||
+              s.history
+                .filter(node => node.toLowerCase == node).groupBy(identity).exists(_._2.size > 1)
+          ))
+      )
+      .toIndexedSeq.map(next => State(next, next :: s.history))
   }
+
+  def bfsPart1(edges: Map[String, Array[String]]): Int =
+    BFS
+      .breadth_first_traverse(State("start", List("start")), derive1(edges))
+      .filter(_._1.cur == "end")
+      .size
+
+  def bfsPart2(edges: Map[String, Array[String]]): Int =
+    BFS
+      .breadth_first_traverse(State("start", List("start")), derive2(edges))
+      .filter(_._1.cur == "end")
+      .size
 }

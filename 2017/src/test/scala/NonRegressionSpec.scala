@@ -27,6 +27,8 @@ class NonRegressionSpec
 //    (11, 1, 818),
 //    (11, 2, 1596),
         (13, 1, 1728),
-        (13, 2, 3946838)
+        (13, 2, 3946838),
+        (16, 1, "bijankplfgmeodhc"),
+        (16, 2, "bpjahknliomefdgc")
       )
     )

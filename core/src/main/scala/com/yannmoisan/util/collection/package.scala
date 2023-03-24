@@ -22,4 +22,15 @@ package object collection {
     }
     None
   }
+
+  def firstDuplicateIndex[T](it: Iterator[T]): Option[Int] = {
+    val it2     = it.zipWithIndex
+    val visited = mutable.Set[T]()
+    while (it2.hasNext) {
+      val (cur, idx) = it2.next()
+      if (visited.contains(cur)) return Some(idx)
+      visited.add(cur)
+    }
+    None
+  }
 }

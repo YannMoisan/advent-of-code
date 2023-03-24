@@ -36,6 +36,7 @@ class NonRegressionSpec
         (15, 2, 320),
         (16, 1, "bijankplfgmeodhc"),
         (16, 2, "bpjahknliomefdgc"),
+        (17, 1, 1561),
         (18, 1, 8600L)
       )
     )

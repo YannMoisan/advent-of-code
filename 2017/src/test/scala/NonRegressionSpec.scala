@@ -38,6 +38,7 @@ class NonRegressionSpec
         (16, 2, "bpjahknliomefdgc"),
         (17, 1, 1561),
         (18, 1, 8600L),
+        (23, 1, 8281),
         (24, 1, 1868),
         (24, 2, 1841)
       )

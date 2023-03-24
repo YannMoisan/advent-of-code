@@ -35,20 +35,21 @@ object BFS {
     targetedPath
   }
 
-  def floodFill(g: Grid[Int], start: Int): Int = {
+  def floodFill[A](g: Grid[A], isValid: (A, A) => Boolean, start: Int): mutable.Set[Int] = {
     val q       = mutable.Queue[Int]()
     val visited = mutable.Set[Int]()
     val _       = q.enqueue(start)
+    val _       = visited.add(start)
     while (!q.isEmpty) {
       val i = q.dequeue()
       g.dim.neighbors4(i).foreach { j =>
-        if (g(j) > g(i) && g(j) < 9 && !visited.contains(j)) {
+        if (isValid(g(i), g(j)) && !visited.contains(j)) {
           val _ = q.enqueue(j)
           val _ = visited.add(j)
         }
       }
     }
-    visited.size + 1
+    visited
   }
 
   def shortestPathTorus(

@@ -1,3 +1,5 @@
+import Day10.{next, State}
+
 object Day10 extends SinglePuzzle[Int, String] {
   final case class State(list: IndexedSeq[Int], pos: Int, skipSize: Int)
 
@@ -28,8 +30,15 @@ object Day10 extends SinglePuzzle[Int, String] {
     stateF.list(0) * stateF.list(1)
   }
 
-  override def part2(line: String): String = {
-    val lengths = line.map(_.toInt) ++ Seq(17, 31, 73, 47, 23)
+  override def part2(line: String): String =
+    KnotHash.hash(line)
+}
+
+object KnotHash {
+  def hash(s: String): String = {
+    val state0 = State(0 to 255, 0, 0)
+
+    val lengths = s.map(_.toInt) ++ Seq(17, 31, 73, 47, 23)
     val lengths64 = (0 until 63).foldLeft(lengths) {
       case (l, _) => l ++ lengths
     }
@@ -39,6 +48,9 @@ object Day10 extends SinglePuzzle[Int, String] {
       }
     val denseHash: Iterator[Int] =
       stateF.list.grouped(16).flatMap(_.reduceOption(_ ^ _).toList)
-    denseHash.map(_.toHexString).mkString
+    denseHash.map(s => String.format("%2s", s.toHexString).replace(' ', '0')).mkString
+    // Because each number in your dense hash will be between 0 and 255 (inclusive),
+    // always represent each number as two hexadecimal digits (including a leading zero as necessary)
   }
+
 }

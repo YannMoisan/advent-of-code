@@ -16,7 +16,10 @@ object Day9 extends MultiPuzzle[Int, Int] {
       grid.dim.neighbors4(i).forall(j => grid(j) > grid(i))
     }
 
-    lowPoints.map(BFS.floodFill(grid, _)).sortBy(x => -x).take(3).product
+    lowPoints
+      .map(BFS.floodFill(grid, (from: Int, to: Int) => to > from && to < 9, _).size).sortBy(x => -x).take(
+        3
+      ).product
   }
 
 }

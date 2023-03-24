@@ -1,47 +1,24 @@
-import scala.collection.immutable.Queue
+import com.yannmoisan.util.graph.BFS
 
 object Day12 extends MultiPuzzle[Int, Int] {
-  object BFS {
-
-    /**
-      * Breadth first traversal of a graph defined by a function `A => Seq[A]`.
-      * Each node is visited at most one time.
-      *
-      * @param node
-      * @param f definition of the graph
-      * @tparam Node
-      * @return a stream of tuples : the current node and its ancestors
-      */
-    def breadth_first_traverse[Node](
-        node: Node,
-        f: Node => Seq[Node]
-    ): LazyList[(Node, Seq[Node])] = {
-      def recurse(q: Queue[(Node, Seq[Node])], cache: Set[Node]): LazyList[(Node, Seq[Node])] =
-        if (q.isEmpty) {
-          LazyList.empty
-        } else {
-          val ((node, i), tail) = q.dequeue
-          val nodes             = f(node).filterNot(cache.contains)
-          (node, i) #:: recurse(tail ++ nodes.map(n => (n, n +: i)), cache ++ nodes)
-        }
-
-      (node, Seq(node)) #:: recurse(
-        Queue.empty[(Node, Seq[Node])] ++ f(node).map(n => (n, Seq(n, node))),
-        Set.empty
-      )
-    }
-  }
 
   override def part1(lines: Iterator[String]): Int = {
-    val arr = lines
-      .map(_.split(" <-> "))
-      .map { case Array(a, b) => (a, b.split(", ").toSeq) }
-    val m: Map[String, Seq[String]] = arr.toMap
-    val stream                      = BFS.breadth_first_traverse("0", (s: String) => m.getOrElse(s, Seq.empty[String]))
-    stream.take(10).foreach(println(_))
-    0
+    val graph  = parse(lines)
+    val stream = BFS.breadth_first_traverse("0", graph)
+    stream.map(_._1).distinct.size
   }
 
-  override def part2(lines: Iterator[String]): Int =
-    0
+  override def part2(lines: Iterator[String]): Int = {
+    val graph = parse(lines)
+    (0 until 2000)
+      .map(i => BFS.breadth_first_traverse(i.toString, graph).map(_._1).toSet)
+      .distinct.size
+  }
+
+  private def parse(lines: Iterator[String]): Map[String, Seq[String]] =
+    lines
+      .map(_.split(" <-> "))
+      .map { case Array(a, b) => (a, b.split(", ").toSeq) }
+      .toMap
+
 }

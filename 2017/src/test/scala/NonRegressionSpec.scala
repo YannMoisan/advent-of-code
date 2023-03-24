@@ -32,6 +32,8 @@ class NonRegressionSpec
         (13, 2, 3946838),
         (14, 1, 8074),
         (14, 2, 1212),
+        (15, 1, 592),
+        (15, 2, 320),
         (16, 1, "bijankplfgmeodhc"),
         (16, 2, "bpjahknliomefdgc")
       )

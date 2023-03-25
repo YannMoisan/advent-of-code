@@ -19,6 +19,7 @@ class NonRegressionSpec
 //    (7, 1, "BFLNGIRUSJXEHKQPVTYOCZDWMA"),
 //    (7, 2, 880),
         (8, 1, 48496),
-        (8, 2, 32850)
+        (8, 2, 32850),
+        (10, 2, 10905)
       )
     )

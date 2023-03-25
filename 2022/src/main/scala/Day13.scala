@@ -9,13 +9,14 @@ case class L(l: mutable.Buffer[Element]) extends Element
 object Day13 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int =
     input
+      .map(_.replace("10", "a"))
       .grouped(3).zipWithIndex.collect {
         case ((Seq(fst, snd, _), i)) if compare(fst, snd) == -1 => i + 1
         case ((Seq(fst, snd), i)) if compare(fst, snd) == -1    => i + 1
       }.sum
 
   override def part2(input: Iterator[String]): Int = {
-    val l      = input.toList.filter(_ != "").++(Seq("[[2]]", "[[6]]"))
+    val l      = input.map(_.replace("10", "a")).toList.filter(_ != "").++(Seq("[[2]]", "[[6]]"))
     val sorted = l.sortWith(compare(_, _) < 0)
     (1 + sorted.indexOf("[[2]]")) * (1 + sorted.indexOf("[[6]]"))
   }

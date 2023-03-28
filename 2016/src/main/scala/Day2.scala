@@ -25,7 +25,10 @@ object Day2 extends MultiPuzzle[String, String] {
 
   def part(init: Int, keypad: Grid[Char]) = { lines: Iterator[String] =>
     val parsed: Iterator[IndexedSeq[DirectionWithIndex]] = lines.map(_.map(parse))
-    val all                                              = parsed.scanLeft(init) { case (acc, dirs) => move(acc, dirs, keypad) }.toList
-    all.tail.map(p => keypad(p)).mkString("")
+    parsed
+      .scanLeft(init) { case (acc, dirs) => move(acc, dirs, keypad) }
+      .drop(1)
+      .map(keypad(_))
+      .mkString("")
   }
 }

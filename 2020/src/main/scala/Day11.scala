@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Direction, Direction8, Grid, Grid1D}
+import com.yannmoisan.util.grid.{Direction8, DirectionWithIndex, Grid, Grid1D}
 
 object Day11 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
@@ -29,7 +29,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       }
     }
 
-  private def nextVisible(grid: Grid1D[Char], start: Int, dir: Direction): Option[Int] =
+  private def nextVisible(grid: Grid1D[Char], start: Int, dir: DirectionWithIndex): Option[Int] =
     Iterator
       .unfold(start)(p => grid.dim.moveS(p, dir).map(x => (x, x)))
       .find(p => grid(p) != '.')

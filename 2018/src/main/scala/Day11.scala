@@ -56,7 +56,7 @@ object Day11 extends SinglePuzzle[String, String] {
           dx <- 0 until c._3
           dy <- 0 until c._3
         } yield {
-          grid(Pos(c._1 + dx - 1, c._2 + dy - 1)(grid.dim).index)
+          grid(Pos(c._1 + dx - 1, c._2 + dy - 1))
         }).sum
         (c, sum)
       }.maxBy(_._2)._1

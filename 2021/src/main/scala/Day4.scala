@@ -33,10 +33,10 @@ object Day4 extends MultiPuzzle[Int, Int] {
 
   private def hasCompleted(grid: Grid[Int]): Boolean = {
     def hasCompletedRow(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x, y)(grid.dim).index) == 0))
+      (0 until 5).exists(y => (0 until 5).forall(x => grid(Pos(x, y)) == 0))
 
     def hasCompletedCol(grid: Grid[Int]): Boolean =
-      (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x, y)(grid.dim).index) == 0))
+      (0 until 5).exists(x => (0 until 5).forall(y => grid(Pos(x, y)) == 0))
 
     hasCompletedRow(grid) || hasCompletedCol(grid)
   }

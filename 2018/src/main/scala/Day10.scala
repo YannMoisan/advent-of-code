@@ -11,9 +11,7 @@ object Day10 extends MultiPuzzle[Int, Int] {
     val cornerz = corners(pointsF)
 
     val grid = Grid1D.fill(dim(cornerz)._1, dim(cornerz)._2)(' ')
-    pointsF.foreach(p =>
-      grid(Pos(p.p.x - cornerz._1.x, p.p.y - cornerz._1.y)(grid.dim).index) = 'X'
-    )
+    pointsF.foreach(p => grid(Pos(p.p.x - cornerz._1.x, p.p.y - cornerz._1.y)) = 'X')
     grid.debug()
     // AJZNXHKE
     42

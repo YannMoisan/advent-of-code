@@ -13,17 +13,17 @@ object Day6 extends MultiPuzzle[Int, Int] {
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = 1
+          } grid(Pos(x, y)) = 1
         case TurnOff(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = 0
+          } grid(Pos(x, y)) = 0
         case Toggle(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = if (grid(Pos(x, y)(grid.dim).index) == 1) 0 else 1
+          } grid(Pos(x, y)) = if (grid(Pos(x, y)) == 1) 0 else 1
       }
     }
 
@@ -50,17 +50,17 @@ object Day6 extends MultiPuzzle[Int, Int] {
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = grid(Pos(x, y)(grid.dim).index) + 1
+          } grid(Pos(x, y)) = grid(Pos(x, y)) + 1
         case TurnOff(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = math.max(0, grid(Pos(x, y)(grid.dim).index) - 1)
+          } grid(Pos(x, y)) = math.max(0, grid(Pos(x, y)) - 1)
         case Toggle(xa, ya, xb, yb) =>
           for {
             x <- xa to xb
             y <- ya to yb
-          } grid(Pos(x, y)(grid.dim).index) = grid(Pos(x, y)(grid.dim).index) + 2
+          } grid(Pos(x, y)) = grid(Pos(x, y)) + 2
       }
     }
 

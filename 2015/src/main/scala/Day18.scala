@@ -10,13 +10,13 @@ object Day18 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = {
     val grid: Grid[Char] = Grid1D(input)
     val coins =
-      List(Pos(0, 0)(grid.dim), Pos(0, 99)(grid.dim), Pos(99, 0)(grid.dim), Pos(99, 99)(grid.dim))
-    coins.foreach(p => grid(p.index) = '#')
+      List(Pos(0, 0), Pos(0, 99), Pos(99, 0), Pos(99, 99))
+    coins.foreach(p => grid(p) = '#')
 
     val end = (1 to 100).foldLeft(grid) {
       case (acc, _) =>
         val res = next(acc)
-        coins.foreach(p => res(p.index) = '#')
+        coins.foreach(p => res(p) = '#')
         res
     }
 

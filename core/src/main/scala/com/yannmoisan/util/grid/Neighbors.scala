@@ -4,7 +4,7 @@ trait Neighbors {
   def neighbors(index: Int): Array[Int]
 }
 
-class PrecomputedNeighbors(move: AbsMove, directions: Seq[Direction])
+class PrecomputedNeighbors(move: AbsMove, directions: Seq[DirectionWithIndex])
     extends Neighbors {
   override def neighbors(index: Int): Array[Int] = cache(index)
 

@@ -26,10 +26,10 @@ sealed abstract case class Dimension(width: Int, height: Int) {
   def neighbors8(p: Int): Array[Int] = neighbors8_.neighbors(p)
 
   private val move_                                 = new PrecomputedMove(new TorusShapedMove(this) {})
-  def move(index: Int, dir: Direction): Option[Int] = move_.move(index, dir)
+  def move(index: Int, dir: DirectionWithIndex): Option[Int] = move_.move(index, dir)
 
   private val moveS_                                 = new PrecomputedMove(new StandardMove(this) {})
-  def moveS(index: Int, dir: Direction): Option[Int] = moveS_.move(index, dir)
+  def moveS(index: Int, dir: DirectionWithIndex): Option[Int] = moveS_.move(index, dir)
 }
 
 // Use only in a single-threaded context

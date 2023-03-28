@@ -41,7 +41,7 @@ object Day10 extends MultiPuzzle[Int, Int] {
       case s"position=<$px,$py> velocity=<$vx,$vy>" =>
         Point(
           Position(px.trim.toInt, py.trim.toInt),
-          new Direction(vx.trim.toInt, vy.trim.toInt, -1) {}
+          new Direction(vx.trim.toInt, vy.trim.toInt)
         )
     }.toArray
     Iterator

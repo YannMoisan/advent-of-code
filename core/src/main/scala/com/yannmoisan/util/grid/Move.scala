@@ -1,13 +1,13 @@
 package com.yannmoisan.util.grid
 
 trait Move {
-  def move(index: Int, dir: Direction): Option[Int]
+  def move(index: Int, dir: DirectionWithIndex): Option[Int]
 }
 
 abstract class AbsMove(val dim: Dimension) extends Move
 
 abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
-  override def move(index: Int, dir: Direction): Option[Int] = {
+  override def move(index: Int, dir: DirectionWithIndex): Option[Int] = {
     val pos = dim.positions(index)
     val dst = Pos(pos.x + dir.dx, pos.y + dir.dy)(dim)
     Option.when(isInRange(dst))(dst.index)
@@ -19,7 +19,7 @@ abstract class StandardMove(override val dim: Dimension) extends AbsMove(dim) {
 }
 
 abstract class TorusShapedMove(override val dim: Dimension) extends AbsMove(dim) {
-  override def move(index: Int, dir: Direction): Option[Int] = {
+  override def move(index: Int, dir: DirectionWithIndex): Option[Int] = {
     val pos = dim.positions(index)
     val dst = Pos(
       (pos.x + dir.dx + dim.width)  % dim.width,
@@ -30,7 +30,7 @@ abstract class TorusShapedMove(override val dim: Dimension) extends AbsMove(dim)
 }
 
 class PrecomputedMove(underlying: AbsMove) extends Move {
-  override def move(index: Int, dir: Direction): Option[Int] = {
+  override def move(index: Int, dir: DirectionWithIndex): Option[Int] = {
     val cacheIndex = dir.value + 8 * index
     cache(cacheIndex)
   }

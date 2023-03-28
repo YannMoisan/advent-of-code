@@ -21,7 +21,7 @@ object Day12 extends MultiPuzzle[Int, Int] {
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val end = input.foldLeft(State(Position(0, 0), new Direction(10, -1, -1) {})) { (acc, line) =>
+    val end = input.foldLeft(State(Position(0, 0), new Direction(10, -1))) { (acc, line) =>
       val value = line.tail.toInt
       line.head match {
         case 'N' => acc.copy(dir = acc.dir + (Direction4.Up * value))

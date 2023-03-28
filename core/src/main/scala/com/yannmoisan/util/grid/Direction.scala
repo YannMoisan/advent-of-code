@@ -1,32 +1,37 @@
 package com.yannmoisan.util.grid
 
-abstract class Direction(val dx: Int, val dy: Int, val value: Int) {
-  def *(n: Int): Direction = new Direction(n * dx, n * dy, -1) {}
+class Direction(val dx: Int, val dy: Int) {
+  def *(n: Int): Direction = new Direction(n * dx, n * dy)
 
-  def +(other: Direction): Direction = new Direction(other.dx + dx, other.dy + dy, -1) {}
+  def +(other: Direction): Direction = new Direction(other.dx + dx, other.dy + dy)
 
   //https://en.wikipedia.org/wiki/Rotation_matrix
   def rotate(angleInDegrees: Int): Direction = {
     val angle = math.toRadians(angleInDegrees.toDouble)
     new Direction(
       dx * math.cos(angle).toInt - dy * math.sin(angle).toInt,
-      dx * math.sin(angle).toInt + dy * math.cos(angle).toInt,
-      -1
-    ) {}
+      dx * math.sin(angle).toInt + dy * math.cos(angle).toInt
+    )
   }
 }
 
-sealed abstract case class Direction4(
+sealed abstract class DirectionWithIndex(
     override val dx: Int,
     override val dy: Int,
-    override val value: Int
-) extends Direction(dx, dy, value)
+    val value: Int
+) extends Direction(dx, dy)
 
-sealed abstract case class Direction8(
+sealed abstract class Direction4(
     override val dx: Int,
     override val dy: Int,
     override val value: Int
-) extends Direction(dx, dy, value)
+) extends DirectionWithIndex(dx, dy, value)
+
+sealed abstract class Direction8(
+    override val dx: Int,
+    override val dy: Int,
+    override val value: Int
+) extends DirectionWithIndex(dx, dy, value)
 
 object Direction4 {
   object Up    extends Direction4(0, -1, 0)

@@ -33,4 +33,8 @@ package object collection {
     }
     None
   }
+
+  def firstConsecutiveDuplicate[T](it: Iterator[T]): Option[T] =
+    it.sliding(2).find(seq => seq(0) == seq(1)).map(_.apply(0))
+
 }

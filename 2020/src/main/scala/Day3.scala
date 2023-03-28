@@ -18,6 +18,6 @@ object Day3 extends MultiPuzzle[Long, Long] {
     Iterator
       .iterate(Position(0, 0))(Position.move(_, dir))
       .takeWhile(_.y < grid.dim.height)
-      .count(p => grid(Pos(p.x % grid.dim.width, p.y)(grid.dim).index) == '#')
+      .count(p => grid(Pos(p.x % grid.dim.width, p.y)) == '#')
       .toLong
 }

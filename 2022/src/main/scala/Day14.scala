@@ -1,4 +1,4 @@
-import com.yannmoisan.util.grid.{Dimension, Direction4, Grid, Grid1D, Pos}
+import com.yannmoisan.util.grid.{Direction4, Grid, Grid1D, Pos}
 
 object Day14 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
@@ -10,7 +10,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
   override def part2(input: Iterator[String]): Int = {
     val grid = makeGrid(input)
     // add floor
-    (0 until grid.dim.width).foreach(x => grid(Pos(x, grid.dim.height - 1)(grid.dim).index) = '#')
+    (0 until grid.dim.width).foreach(x => grid(Pos(x, grid.dim.height - 1)) = '#')
     fill(grid)
     grid.findAll('o').size
   }
@@ -18,21 +18,21 @@ object Day14 extends MultiPuzzle[Int, Int] {
   private def fill(grid: Grid[Char]) = {
     def nextPos(p: Pos): Option[Pos] =
       Seq(
-        grid.dim.moveS(p.index, Direction4.Down).get, // one step down ?
-        grid.dim.moveS(p.index, Direction4.Left).get, // one step down ?
-        grid.dim.moveS(p.index, Direction4.Right).get // one step down ?
+        grid.dim.moveS(grid.dim.index(p), Direction4.Down).get, // one step down ?
+        grid.dim.moveS(grid.dim.index(p), Direction4.Left).get, // one step down ?
+        grid.dim.moveS(grid.dim.index(p), Direction4.Right).get // one step down ?
       ).find(p => grid(p) == '.').map(grid.dim.pos)
 
-    var sand    = Pos(500, 0)(grid.dim)
+    var sand    = Pos(500, 0)
     var blocked = false
     while (!blocked && sand.y < grid.dim.height - 1) {
       nextPos(sand) match {
         case Some(p) => sand = p
         case None =>
-          if (sand == Pos(500, 0)(grid.dim))
+          if (sand == Pos(500, 0))
             blocked = true
-          grid(sand.index) = 'o'
-          sand = Pos(500, 0)(grid.dim)
+          grid(sand) = 'o'
+          sand = Pos(500, 0)
       }
     }
   }
@@ -44,11 +44,11 @@ object Day14 extends MultiPuzzle[Int, Int] {
         (x, y)
       }
 
-    def allPositions(start: Pos, end: Pos, dim: Dimension): Seq[Pos] =
+    def allPositions(start: Pos, end: Pos) =
       if (start.x == end.x) {
-        (start.y to end.y by math.signum(end.y - start.y)).map(y => Pos(start.x, y)(dim))
+        (start.y to end.y by math.signum(end.y - start.y)).map(y => Pos(start.x, y))
       } else {
-        (start.x to end.x by math.signum(end.x - start.x)).map(x => Pos(x, start.y)(dim))
+        (start.x to end.x by math.signum(end.x - start.x)).map(x => Pos(x, start.y))
       }
 
     val paths: Seq[Array[(Int, Int)]] = input.map(parse).toList
@@ -59,8 +59,8 @@ object Day14 extends MultiPuzzle[Int, Int] {
     paths.foreach { path =>
       path.sliding(2).foreach {
         case Array(start, end) =>
-          allPositions(Pos(start._1, start._2)(grid.dim), Pos(end._1, end._2)(grid.dim), grid.dim)
-            .foreach(pos => grid(pos.index) = '#')
+          allPositions(Pos(start._1, start._2), Pos(end._1, end._2))
+            .foreach(pos => grid(pos) = '#')
       }
     }
     grid

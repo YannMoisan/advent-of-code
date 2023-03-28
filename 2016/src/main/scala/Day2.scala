@@ -19,9 +19,9 @@ object Day2 extends MultiPuzzle[String, String] {
     case (acc, i) => validMove(keypad)(i)(acc)
   }
 
-  def part1(lines: Iterator[String]): String = part(Pos(1, 1)(keypad1.dim).index, keypad1)(lines)
+  def part1(lines: Iterator[String]): String = part(keypad1.dim.index(Pos(1, 1)), keypad1)(lines)
 
-  def part2(lines: Iterator[String]): String = part(Pos(2, 2)(keypad2.dim).index, keypad2)(lines)
+  def part2(lines: Iterator[String]): String = part(keypad2.dim.index(Pos(2, 2)), keypad2)(lines)
 
   def part(init: Int, keypad: Grid[Char]) = { lines: Iterator[String] =>
     val parsed: Iterator[IndexedSeq[DirectionWithIndex]] = lines.map(_.map(parse))

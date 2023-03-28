@@ -22,9 +22,8 @@ class Grid2D[A: ClassTag](val grid: Array[Array[A]]) extends Grid[A] {
 
   def count(f: A => Boolean): Int = grid.map(_.count(f)).sum
 
-  def copy(): Grid2D[A] = {
+  def copy(): Grid2D[A] =
     new Grid2D(grid.map(_.clone()))
-  }
 
   def debug(): Unit =
     grid.foreach(line => Console.err.println(line.mkString))
@@ -32,7 +31,7 @@ class Grid2D[A: ClassTag](val grid: Array[Array[A]]) extends Grid[A] {
   override def equals(obj: Any): Boolean =
     obj match {
       case other: Grid2D[_] =>
-        dim.positions.forall(p => apply(p.index) == other(p.index))
+        dim.indices.forall(p => apply(p) == other(p))
       case _ => false
     }
 }

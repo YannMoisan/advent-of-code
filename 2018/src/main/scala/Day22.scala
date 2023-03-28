@@ -17,12 +17,12 @@ object Day22 extends MultiPuzzle[Int, Int] {
     val grid = Grid1D.fill(targetx + 1, targety + 1)(0)
     grid.dim.indices.foreach { i =>
       val geologicIndex = grid.dim.pos(i) match {
-        case Pos(0, 0, _)                 => 0
-        case Pos(`targetx`, `targety`, _) => 0 // stable identifier
-        case Pos(targetx, 0, _)           => targetx * 16807
-        case Pos(0, targety, _)           => targety * 48271
-        case Pos(x, y, _) =>
-          grid(Pos(x - 1, y)(grid.dim).index) * grid(Pos(x, y - 1)(grid.dim).index)
+        case Pos(0, 0)                 => 0
+        case Pos(`targetx`, `targety`) => 0 // stable identifier
+        case Pos(targetx, 0)           => targetx * 16807
+        case Pos(0, targety)           => targety * 48271
+        case Pos(x, y) =>
+          grid(Pos(x - 1, y)) * grid(Pos(x, y - 1))
       }
       val erosionLevel = (geologicIndex + depth) % 20183
       grid(i) = erosionLevel

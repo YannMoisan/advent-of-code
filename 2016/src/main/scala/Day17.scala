@@ -20,7 +20,7 @@ object Day17 extends SinglePuzzle[String, Int] {
   }
 
   def move(input: String)(s: State): Seq[State] =
-    if (s.p == Pos(3, 3)(Dimension(4, 4)).index) Seq.empty
+    if (s.p == Dimension(4, 4).index(Pos(3, 3))) Seq.empty
     else
       possibleMoves(input + s.history.map(dirToString).mkString)
         .collect {
@@ -32,15 +32,15 @@ object Day17 extends SinglePuzzle[String, Int] {
   case class State(p: Int, history: Seq[Direction4])
 
   override def part1(s: String): String = {
-    val init  = State(Pos(0, 0)(Dimension(4, 4)).index, Seq())
+    val init  = State(Dimension(4, 4).index(Pos(0, 0)), Seq())
     val nodes = BFS.breadth_first_traverse(init, move("qzthpkfp"))
-    nodes.find(_._1.p == Pos(3, 3)(Dimension(4, 4)).index).get._1.history.map(dirToString).mkString
+    nodes.find(_._1.p == Dimension(4, 4).index(Pos(3, 3))).get._1.history.map(dirToString).mkString
   }
 
   override def part2(s: String): Int = {
-    val init  = State(Pos(0, 0)(Dimension(4, 4)).index, Seq())
+    val init  = State(Dimension(4, 4).index(Pos(0, 0)), Seq())
     val nodes = BFS.breadth_first_traverse(init, move("qzthpkfp"))
-    val index = nodes.lastIndexWhere(_._1.p == Pos(3, 3)(Dimension(4, 4)).index)
+    val index = nodes.lastIndexWhere(_._1.p == Dimension(4, 4).index(Pos(3, 3)))
     nodes(index)._1.history.length
   }
 }

@@ -16,13 +16,13 @@ object Day13 extends SinglePuzzle[Int, Int] {
 
   override def part1(s: String): Int = {
     val grid: Grid[Char] = generateMaze(100, 100, 1350)
-    val stream           = BFS.breadth_first_traverse(Pos(1, 1)(grid.dim).index, moves(grid))
-    stream.find(_._1 == Pos(31, 39)(grid.dim).index).get._2.length - 1
+    val stream           = BFS.breadth_first_traverse(grid.dim.index(Pos(1, 1)), moves(grid))
+    stream.find(_._1 == grid.dim.index(Pos(31, 39))).get._2.length - 1
   }
 
   override def part2(s: String): Int = {
     val grid: Grid[Char]  = generateMaze(100, 100, 1350)
-    val stream            = BFS.breadth_first_traverse(Pos(1, 1)(grid.dim).index, moves(grid))
+    val stream            = BFS.breadth_first_traverse(grid.dim.index(Pos(1, 1)), moves(grid))
     val limitedStream     = stream.takeWhile(_._2.length <= 51)
     val visited: Set[Int] = limitedStream.map(_._1).toSet
     visited.size

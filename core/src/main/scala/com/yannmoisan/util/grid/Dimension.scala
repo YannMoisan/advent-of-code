@@ -8,10 +8,12 @@ sealed abstract case class Dimension(width: Int, height: Int) {
   private[grid] val positions = (for {
     y <- 0 until height
     x <- 0 until width
-  } yield Pos(x, y)(this)).toArray
+  } yield Pos(x, y)).toArray
 
   val indices     = 0 until width * height
   def pos(i: Int) = positions(i)
+
+  def index(pos: Pos): Int = pos.x + pos.y * width
 
   private val neighbors4_ =
     new PrecomputedNeighbors(new StandardMove(this) {}, Direction4.all)
@@ -25,10 +27,10 @@ sealed abstract case class Dimension(width: Int, height: Int) {
     new PrecomputedNeighbors(new StandardMove(this) {}, Direction8.all)
   def neighbors8(p: Int): Array[Int] = neighbors8_.neighbors(p)
 
-  private val move_                                 = new PrecomputedMove(new TorusShapedMove(this) {})
+  private val move_                                          = new PrecomputedMove(new TorusShapedMove(this) {})
   def move(index: Int, dir: DirectionWithIndex): Option[Int] = move_.move(index, dir)
 
-  private val moveS_                                 = new PrecomputedMove(new StandardMove(this) {})
+  private val moveS_                                          = new PrecomputedMove(new StandardMove(this) {})
   def moveS(index: Int, dir: DirectionWithIndex): Option[Int] = moveS_.move(index, dir)
 }
 

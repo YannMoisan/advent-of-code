@@ -46,8 +46,6 @@ object Day14 extends MultiPuzzle[Int, Int] {
           }
       }
     }
-    println(dist)
-    println(scores)
     scores.maxBy { case (_, v) => v }._2
   }
 

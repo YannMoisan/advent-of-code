@@ -1,4 +1,3 @@
-import scala.annotation.tailrec
 import scala.math.{max, min}
 
 // TODO : lens, state monad
@@ -103,10 +102,6 @@ object Day10 extends MultiPuzzle[String, Int] {
       GiveFromBot(botId, Recipient(lowType, lowId), Recipient(highType, highId))
   }
 
-  @tailrec
-  def until[S](s: S, f: S => S, pred: S => Boolean): S =
-    if (pred(s)) s else until(f(s), f, pred)
-
   override def part1(lines: Iterator[String]): String = {
     val instructions = lines.collect {
       parse
@@ -114,8 +109,10 @@ object Day10 extends MultiPuzzle[String, Int] {
 
     val init = State(Map[String, Bot](), Map[String, Output](), instructions, None)
 
-    val finalState = until[State](init, processNextInstruction, _.cond.isDefined)
-    finalState.cond.get
+    Iterator
+      .iterate(init)(processNextInstruction)
+      .find(_.cond.isDefined).get
+      .cond.get
   }
 
   override def part2(lines: Iterator[String]): Int = {
@@ -125,8 +122,11 @@ object Day10 extends MultiPuzzle[String, Int] {
 
     val init = State(Map[String, Bot](), Map[String, Output](), instructions, None)
 
-    val finalState = until[State](init, processNextInstruction, _.is.isEmpty)
-    val o          = finalState.outputs
+    val finalState = Iterator
+      .iterate(init)(processNextInstruction)
+      .find(_.is.isEmpty).get
+
+    val o = finalState.outputs
     o("0").chipId * o("1").chipId * o("2").chipId
   }
 

@@ -5,7 +5,6 @@ object Day19 extends MultiPuzzle[Int, Int] {
   // List(A,B,C) A => C,D
   // List(A,B,C)
 
-  // 662 possibilities ou 738 possibilities ?
   override def part1(input: Iterator[String]): Int = {
     val list = input.toList
     val transfo: Seq[(String, String)] = list.dropRight(2).map {
@@ -13,23 +12,14 @@ object Day19 extends MultiPuzzle[Int, Int] {
     }
     val molecule = list.last
     val split    = splitCamelCase(molecule)
-    println(split.mkString(","))
     val _ = split.foldLeft(0L) {
       case (acc, token) =>
-        //println(token)
-        //println(acc)
         val occ = transfo.count(x => x._1 == token)
         acc + occ
     }
 
     val replacements: Seq[Array[String]] = oneReplace(split.toArray, transfo)
-    println(replacements.size)
-    replacements.take(10).foreach(a => println(a.mkString))
     replacements.map(_.mkString).toSet.size
-//    println(splitCamelCase2("FooBaaaarBCDBaz"))
-//    println(splitCamelCase2("FooBaaaarBCD"))
-//    println(molecule)
-//    println(transfo)
   }
 
   override def part2(input: Iterator[String]): Int =

@@ -3,16 +3,24 @@
 object Day14 extends SinglePuzzle[Int, Int] {
 
   def md5x2016(s: String): String =
-    (1 to 2017).foldLeft(s) { case (acc, _) => MD5.md5(acc) }
+    Iterator.iterate(s)(MD5.md5).drop(2017).next()
 
-  def contains3dups(e: (String, Int)) =
-    e._1
-      .sliding(3).toList
+  def contains3dups(e: String): Option[Char] =
+    e.sliding(3)
       .find(s => s(0) == s(1) && s(1) == s(2))
-      .map(s => (s.head, e._2))
+      .map(s => s.head)
 
-  def contains5(stream: LazyList[(String, Int)], index: Int, c: Char) =
-    !stream.drop(index).take(1000).filter(_._1.contains(c.toString * 5)).isEmpty
+  def contains5(stream: LazyList[String], c: Char): Boolean =
+    stream.take(1000).exists(_.contains(c.toString * 5))
+
+  def keyIndices(s: LazyList[(String, Int)]): LazyList[Int] =
+    s match {
+      case (str, i) #:: rest =>
+        contains3dups(str) match {
+          case Some(c) if contains5(rest.map(_._1), c) => i #:: keyIndices(rest)
+          case _                                       => keyIndices(rest)
+        }
+    }
 
   def part(f: String => String) = { (_: String) =>
     val s: LazyList[(String, Int)] = LazyList
@@ -20,11 +28,9 @@ object Day14 extends SinglePuzzle[Int, Int] {
       .map(i => f(s"cuanljph$i"))
       .zipWithIndex
 
-    s.flatMap(contains3dups)
-      .filter(e => contains5(s, e._2 + 1, e._1))
+    keyIndices(s)
       .take(64)
       .last
-      ._2
   }
 
   override def part1(s: String): Int = part(MD5.md5)(s)

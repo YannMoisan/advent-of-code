@@ -1,7 +1,28 @@
 import com.yannmoisan.util.graph.BFS
 
+//import scala.collection.mutable
+
 object Day11 extends MultiPuzzle[Int, Int] {
-  type Floor = Set[String]
+  case class Foo(k: Int, v: Int)
+  object Foo {
+    def apply(s: String): Foo = {
+      val k = s(0) match {
+        case 'P' => 0
+        case 'T' => 1
+        case 'p' => 2
+        case 'R' => 3
+        case 'C' => 4
+        case 'E' => 5
+        case 'D' => 6
+      }
+      val v = s(1) match {
+        case 'M' => 1
+        case 'G' => 2
+      }
+      Foo(k, v)
+    }
+  }
+  type Floor = Set[Foo]
 
   case class State(floors: Seq[Floor], currentFloor: Int)
 
@@ -17,33 +38,45 @@ object Day11 extends MultiPuzzle[Int, Int] {
     } yield ns
   }
 
-  def update(s: State, destFloor: Int, objects: Set[String]): Option[State] = {
+  def update(s: State, destFloor: Int, objects: Set[Foo]): Option[State] = {
     val newCurFloor = s.floors(s.currentFloor).filterNot(objects.contains)
     val newDstFloor = s.floors(destFloor) ++ objects
-    val newState = s.copy(
-      floors = s.floors
-        .updated(s.currentFloor, newCurFloor)
-        .updated(destFloor, newDstFloor),
-      currentFloor = destFloor
-    )
-    if (isValidFloor(newCurFloor) && isValidFloor(newDstFloor)) Some(newState) else None
+    if (isValidFloor(newCurFloor) && isValidFloor(newDstFloor)) {
+      val newState = s.copy(
+        floors = s.floors
+          .updated(s.currentFloor, newCurFloor)
+          .updated(destFloor, newDstFloor),
+        currentFloor = destFloor
+      )
+      Some(newState)
+    } else None
   }
 
   def isValidFloor(f: Floor) = {
-    //is there a chip alone and a generator alone
-    val grouped: Map[Char, Seq[String]] = f.toList.groupBy(_(0))
-    val alone                           = grouped.filter { case (_, s) => s.size != 2 }
-    val alone2                          = alone.values.flatten.toList
-    !alone2.exists(_(1) == 'M') || !f.exists(_(1) == 'G')
+    var gs = 0
+    var ms = 0
+    f.foreach { s =>
+      if (s.v == 2)
+        gs += 1 << s.k
+      else
+        ms += 1 << s.k
+    }
+    gs == 0 || (~gs & ms) == 0
   }
 
   def init0 = State(
-    Seq(Set("HM", "LM"), Set("HG"), Set("LG"), Set()),
+    Seq(
+      Set("HM", "LM"),
+      Set("HG"),
+      Set("LG"),
+      Set()
+    ).map(_.map(Foo.apply)),
     0
   )
 
   def init1 = State(
-    Seq(Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM"), Set("pM", "PM"), Set(), Set()),
+    Seq(Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM"), Set("pM", "PM"), Set(), Set())
+      .map(_.map(Foo.apply)),
     0
   )
 
@@ -53,7 +86,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       Set("pM", "PM"),
       Set(),
       Set()
-    ),
+    ).map(_.map(Foo.apply)),
     0
   )
 
@@ -63,7 +96,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       Set(),
       Set(),
       Set("HM", "LM", "HG", "LG")
-    ),
+    ).map(_.map(Foo.apply)),
     3
   )
 
@@ -73,7 +106,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       Set(),
       Set(),
       Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM", "pM", "PM")
-    ),
+    ).map(_.map(Foo.apply)),
     3
   )
 
@@ -83,7 +116,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
       Set(),
       Set(),
       Set("PG", "TG", "TM", "pG", "RG", "RM", "CG", "CM", "pM", "PM", "EM", "DM", "EG", "DG")
-    ),
+    ).map(_.map(Foo.apply)),
     3
   )
 

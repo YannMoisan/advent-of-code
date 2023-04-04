@@ -1,4 +1,4 @@
-import com.yannmoisan.util.collection.firstDuplicateIndex
+import com.yannmoisan.util.geo.Position
 import com.yannmoisan.util.grid._
 
 object Day23 extends MultiPuzzle[Int, Int] {
@@ -18,82 +18,76 @@ object Day23 extends MultiPuzzle[Int, Int] {
    */
 
   override def part1(input: Iterator[String]): Int = {
-    val grid = enlarge(Grid1D(input), 10)
+    val grid = Grid1D(input)
 
-    val end = Iterator.iterate((grid, 0))(next).drop(10).next()
+    val sparseGrid: Set[Position] = grid.dim.indices.collect {
+      case i if (grid(i) == '#') =>
+        val p = grid.dim.pos(i)
+        Position(p.x, p.y)
+    }.toSet
+
+    val end = Iterator.iterate((sparseGrid, 0, -1))(next).drop(10).next()
     count(end._1)
   }
 
   override def part2(input: Iterator[String]): Int = {
-    val grid = enlarge(Grid1D(input), 500)
+    val grid = Grid1D(input)
 
-    val it = Iterator.iterate((grid, 0))(next)
-    firstDuplicateIndex(it).get
+    val sparseGrid: Set[Position] = grid.dim.indices.collect {
+      case i if (grid(i) == '#') =>
+        val p = grid.dim.pos(i)
+        Position(p.x, p.y)
+    }.toSet
+
+    val it = Iterator.iterate((sparseGrid, 0, -1))(next)
+    it.zipWithIndex.find(_._1._3 == 0).get._2
+  }
+  //    val grid = enlarge(Grid1D(input), 500)
+//
+//    val it = Iterator.iterate((grid, 0))(next)
+//    firstDuplicateIndex(it).get
+
+  private def next(tuple: (Set[Position], Int, Int)): (Set[Position], Int, Int) = {
+    val moveProposal: Set[(Position, Position)] = tuple._1.flatMap { pos =>
+      if (Direction8.all.count(dir => tuple._1.contains(Position.move(pos, dir))) > 0) {
+        val prop = (0 to 3)
+          .map(i => (i + tuple._2) % 4)
+          .find(j => propositions(j)._1.forall(dir => !tuple._1.contains(Position.move(pos, dir))))
+
+        prop.map(pp => (Position.move(pos, propositions(pp)._2), pos))
+      } else {
+        None
+      }
+    }
+
+    val selectedProposal: Map[Position, Set[Position]] =
+      moveProposal.groupMap(_._1)(_._2).filter(_._2.size == 1)
+    (
+      tuple._1.removedAll(selectedProposal.values.flatten) ++ selectedProposal.keys,
+      tuple._2 + 1,
+      selectedProposal.keys.size
+    )
   }
 
-  private def next(tuple: (Grid[Char], Int)): (Grid[Char], Int) = {
-    println(tuple._2)
-    val grid = tuple._1
-    val moveProposal: Seq[(Int, Pos)] = {
-      (for {
-        x <- 1 until grid.dim.width - 1
-        y <- 1 until grid.dim.height - 1
-      } yield Pos(x, y)).flatMap { pos =>
-        val adjCount = grid.dim.neighbors8(grid.dim.index(pos)).count(grid(_) == '#')
-        if (grid(pos) == '#' && adjCount != 0) {
+//  private def enlarge(grid: Grid[Char], size: Int): Grid[Char] =
+//    Grid1D.tabulate(Dimension(grid.dim.width + 2 * size, grid.dim.height + 2 * size)) { i =>
+//      val pos = Dimension(grid.dim.width + 2 * size, grid.dim.height + 2 * size).pos(i)
+//      if (pos.x < size || pos.x >= size + grid.dim.width || pos.y < size || pos.y >= grid.dim.height + size)
+//        '.'
+//      else
+//        grid(Pos(pos.x - size, pos.y - size))
+//    }
 
-          val prop = (0 to 3)
-            .map(i => (i + tuple._2) % 4).find { j =>
-              propositions(j)._1.forall(dir =>
-                grid(grid.dim.moveS(grid.dim.index(pos), dir).get) == '.'
-              )
-            }
-          prop.map(pp => (grid.dim.moveS(grid.dim.index(pos), propositions(pp)._2).get, pos))
-        } else
-          None
-      }
-    }
-    val ng = grid.copy()
-
-    moveProposal
-      .groupMap(_._1)(_._2)
-      .filter(_._2.size == 1)
-      .foreach {
-        case (dst, src) =>
-          ng(src.head) = '.'
-          ng(dst) = '#'
-      }
-    (ng, tuple._2 + 1)
-  }
-
-  private def enlarge(grid: Grid[Char], size: Int): Grid[Char] =
-    Grid1D.tabulate(Dimension(grid.dim.width + 2 * size, grid.dim.height + 2 * size)) { i =>
-      val pos = Dimension(grid.dim.width + 2 * size, grid.dim.height + 2 * size).pos(i)
-      if (pos.x < size || pos.x >= size + grid.dim.width || pos.y < size || pos.y >= grid.dim.height + size)
-        '.'
-      else
-        grid(Pos(pos.x - size, pos.y - size))
-    }
-
-  private def count(grid: Grid[Char]): Int = {
-    var minX = 1000
-    var maxX = 0
-    var minY = 1000
-    var maxY = 0
-    grid.dim.indices.foreach { i =>
-      val pos = grid.dim.pos(i)
-      if (grid(pos) == '#') {
-        if (pos.x < minX) minX = pos.x
-        if (pos.x > maxX) maxX = pos.x
-        if (pos.y < minY) minY = pos.y
-        if (pos.y > maxY) maxY = pos.y
-      }
-    }
+  private def count(grid: Set[Position]): Int = {
+    val minX = grid.minBy(_.x).x
+    val maxX = grid.maxBy(_.x).x
+    val minY = grid.minBy(_.y).y
+    val maxY = grid.maxBy(_.y).y
 
     (for {
       x <- minX to maxX
       y <- minY to maxY
-      if grid(Pos(x, y)) == '.'
+      if !grid.contains(Position(x, y))
     } yield (x, y)).size
   }
 }

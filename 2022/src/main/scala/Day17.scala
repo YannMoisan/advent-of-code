@@ -30,7 +30,8 @@ object Day17 extends SinglePuzzle[Int, Int] {
     +-------+*/
 
     // is falling possible ?
-    (0 until 2022).foreach(_ => fall(rocks.next(), grid, directions))
+    Iterator.iterate(4000 - 1)(fall(rocks.next(), grid, _, directions)).drop(2022).next()
+    //(0 until 2022).foreach(_ => fall(rocks.next(), grid, directions))
 //    grid.debug()
 
     4000 - (0 to grid.dim.height - 1).reverse
@@ -39,10 +40,12 @@ object Day17 extends SinglePuzzle[Int, Int] {
 
   override def part2(input: String): Int = 42
 
-  private def fall(rock: Array[String], grid: Grid[Char], directions: Iterator[Char]): Unit = {
-    val firstEmptyLine = (0 to grid.dim.height - 1).reverse
-      .find(y => (0 until 7).forall(x => grid(Pos(x, y)) == '.')).get
-
+  private def fall(
+      rock: Array[String],
+      grid: Grid[Char],
+      firstEmptyLine: Int,
+      directions: Iterator[Char]
+  ): Int = {
     // Each rock appears so that its left edge is two units away from the left wall
     // and its bottom edge is three units above the highest rock in the room (or the floor, if there isn't one).
     var current = Pos(2, firstEmptyLine - 3)
@@ -64,6 +67,7 @@ object Day17 extends SinglePuzzle[Int, Int] {
 //      current = Pos(current.x + xOffset, current.y)
 //    }
     rest(rock, grid, current)
+    math.min(firstEmptyLine, current.y - rock.length)
   }
 
   // 0123456

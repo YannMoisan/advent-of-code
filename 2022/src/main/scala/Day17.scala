@@ -1,6 +1,8 @@
 import com.yannmoisan.util.grid.{Grid, Grid1D, Pos}
 
 object Day17 extends SinglePuzzle[Int, Int] {
+  private val MaxHeight = 4000
+
   val pieces: Seq[Array[String]] = Seq(
     """####""",
     """.#.
@@ -18,9 +20,8 @@ object Day17 extends SinglePuzzle[Int, Int] {
   ).map(_.split("\n"))
 
   override def part1(input: String): Int = {
-    val grid = Grid1D.fill(7, 4000)('.')
+    val grid = Grid1D.fill(7, MaxHeight)('.')
 
-    //val strDirections              = ">>><<><>><<<>><>>><<<>>><<<><<<>><>><<>>"
     val directions: Iterator[Char] = Iterator.continually(input.toCharArray).flatten
 
     val rocks = Iterator.continually(pieces).flatten
@@ -30,11 +31,9 @@ object Day17 extends SinglePuzzle[Int, Int] {
     +-------+*/
 
     // is falling possible ?
-    Iterator.iterate(4000 - 1)(fall(rocks.next(), grid, _, directions)).drop(2022).next()
-    //(0 until 2022).foreach(_ => fall(rocks.next(), grid, directions))
-//    grid.debug()
+    Iterator.iterate(MaxHeight - 1)(fall(rocks.next(), grid, _, directions)).drop(2022).next()
 
-    4000 - (0 to grid.dim.height - 1).reverse
+    MaxHeight - (0 to grid.dim.height - 1).reverse
       .find(y => (0 until 7).forall(x => grid(Pos(x, y)) == '.')).get - 1
   }
 
@@ -62,15 +61,11 @@ object Day17 extends SinglePuzzle[Int, Int] {
         current = Pos(current.x, current.y + 1)
       } else continue = false
     }
-//    val xOffset = if (directions.next() == '>') +1 else -1
-//    if (canMove(rock, grid, Pos(current.x + xOffset, current.y))) {
-//      current = Pos(current.x + xOffset, current.y)
-//    }
+
     rest(rock, grid, current)
     math.min(firstEmptyLine, current.y - rock.length)
   }
 
-  // 0123456
   private def canMove(rock: Array[String], grid: Grid[Char], target: Pos): Boolean =
     if (target.y == grid.dim.height || target.x < 0 || target.x + rock.head.length > 7)
       false

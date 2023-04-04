@@ -1,3 +1,5 @@
+import scala.collection.mutable
+
 object Day18 extends MultiPuzzle[Int, Int] {
   case class Position3(x: Int, y: Int, z: Int)
   object Position3 {
@@ -17,6 +19,27 @@ object Day18 extends MultiPuzzle[Int, Int] {
     positions.toList.map(p => Position3.neighbors(p).count(n => !positions.contains(n))).sum
   }
 
-  override def part2(input: Iterator[String]): Int =
-    42
+  override def part2(input: Iterator[String]): Int = {
+    val positions = input.map { case s"$x,$y,$z" => Position3(x.toInt, y.toInt, z.toInt) }.toSet
+
+    val queue = mutable.Queue[Position3]()
+    queue.enqueue(Position3(0, 0, 0))
+    val visited = mutable.Set[Position3]()
+
+    while (!queue.isEmpty) {
+      val current = queue.dequeue()
+      Position3
+        .neighbors(current)
+        .filter(p => p.x >= -1 && p.x <= 22 && p.y >= -1 && p.y <= 22 && p.z >= -1 && p.z <= 22)
+        .filter(p => !positions.contains(p))
+        .filter(p => !visited.contains(p))
+        .foreach { p =>
+          queue.enqueue(p)
+          visited.add(p)
+        }
+    }
+
+    positions.toList
+      .map(p => Position3.neighbors(p).count(n => !positions.contains(n) && visited.contains(n))).sum
+  }
 }

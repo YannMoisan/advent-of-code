@@ -30,10 +30,7 @@ object Day17 extends SinglePuzzle[Int, Int] {
     +-------+*/
 
     // is falling possible ?
-    (0 until 2022).foreach { i =>
-      println(i)
-      fall(rocks.next(), grid, directions)
-    }
+    (0 until 2022).foreach(_ => fall(rocks.next(), grid, directions))
 //    grid.debug()
 
     4000 - (0 to grid.dim.height - 1).reverse
@@ -53,13 +50,11 @@ object Day17 extends SinglePuzzle[Int, Int] {
     var continue = true
 
     while (continue) {
-      val dir = directions.next()
-      println(s"dir=$dir, current=$current")
+      val dir     = directions.next()
       val xOffset = if (dir == '>') +1 else -1
       if (canMove(rock, grid, Pos(current.x + xOffset, current.y))) {
         current = Pos(current.x + xOffset, current.y)
       }
-      println("fall")
       if (canMove(rock, grid, Pos(current.x, current.y + 1))) {
         current = Pos(current.x, current.y + 1)
       } else continue = false
@@ -87,7 +82,6 @@ object Day17 extends SinglePuzzle[Int, Int] {
     }
 
   private def rest(rock: Array[String], grid: Grid[Char], target: Pos): Unit = {
-    println(s"rest=$target")
     val height = rock.length
     val width  = rock.head.length
     val rockPositions = (for {

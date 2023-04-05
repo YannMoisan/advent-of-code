@@ -1,105 +1,61 @@
 import com.yannmoisan.util.graph.BFS
 
+import scala.collection.immutable.ArraySeq
+
 object Day16 extends MultiPuzzle[Int, Int] {
   case class Valve(name: String, rate: Int, children: Seq[String])
 
-  case class State(minute: Int, opened: Set[String], current: String, released: Int)
+  case class IntValve(
+      id: Int,
+      name: String,
+      rate: Int,
+      children: Array[Int],
+      recChildrenWithFlow: Array[Int]
+  )
 
-  sealed trait Action extends Product with Serializable
-
-  case class Open(valve: String) extends Action
-
-  case class Move(valve: String) extends Action
+  case class State(minute: Int, opened: Long, current: Int, released: Int)
 
   object Action {
-    def possibleActions(valves: Map[String, Valve], s: State2, current: String): Seq[Action] =
-      if (s.minute == 30) Seq.empty
-      else {
-        val open = Option.when(valves(current).rate > 0 && !s.opened.contains(current)) {
-          Open(current)
+    def possibleActions(
+        valves: Array[IntValve],
+        dist: Array[Array[Int]],
+        maxTime: Int,
+        state: State
+    ): Seq[Int] =
+      ArraySeq
+        .unsafeWrapArray(valves(state.current).recChildrenWithFlow)
+        .filter { v =>
+          state.minute + dist(state.current)(v) < maxTime && (state.opened & 1L << v) == 0L
         }
-
-        val moves: Seq[Action] =
-          if (s.minute == 29) Seq.empty
-          else {
-            valves(current).children.map(dst => Move(dst))
-          }
-        open.fold(moves)(moves.+:(_))
-      }
   }
 
-  def next(valves: Map[String, Valve])(s: State): Seq[State] =
-    if (s.minute == 30) Seq.empty
-    else {
-      val open = Option.when(valves(s.current).rate > 0 && !s.opened.contains(s.current)) {
+  def next(valves: Array[IntValve], dist: Array[Array[Int]], maxTime: Int)(s: State): Seq[State] =
+    Action
+      .possibleActions(valves, dist, maxTime, s)
+      .map { v =>
         State(
-          s.minute + 1,
-          s.opened + s.current,
-          s.current,
-          s.released + (30 - s.minute) * valves(s.current).rate
+          s.minute + dist(s.current)(v) + 1,
+          s.opened | 1L << v,
+          v,
+          s.released + (maxTime - dist(s.current)(v) - s.minute) * valves(v).rate
         )
       }
 
-      val moves =
-        if (s.minute == 29) Seq.empty
-        else {
-          valves(s.current).children.map { dst =>
-            State(
-              s.minute + 1,
-              s.opened,
-              dst,
-              s.released
-            )
-          }
-        }
-      open.toSeq ++ moves
+  def transform(valves: Map[String, Valve]): Array[IntValve] = {
+    val nameToIndex = valves.keys.zipWithIndex.toMap
+    val arr         = Array.ofDim[IntValve](valves.size)
+    valves.foreach {
+      case (name, valve) =>
+        arr(nameToIndex(name)) = IntValve(
+          nameToIndex(name),
+          name,
+          valve.rate,
+          valve.children.map(nameToIndex).toArray,
+          valves.values.collect { case v if v.rate > 0 && v.name != name => nameToIndex(v.name) }.toArray
+        )
     }
-
-  case class State2(minute: Int, opened: Set[String], currents: Seq[String], released: Int)
-
-  def next2(valves: Map[String, Valve])(s: State2): Seq[State2] =
-    if (s.minute == 30) Seq.empty
-    else {
-
-      val actions0: Seq[Action] = Action.possibleActions(valves, s, s.currents(0))
-      val actions1: Seq[Action] = Action.possibleActions(valves, s, s.currents(1))
-
-      for {
-        a0 <- actions0
-        a1 <- actions1
-      } yield {
-        (a0, a1) match {
-          case (Open(v1), Open(v2)) =>
-            State2(
-              s.minute + 1,
-              s.opened ++ Set(v1, v2),
-              s.currents,
-              s.released + (30 - s.minute) * valves(v1).rate + (30 - s.minute) * valves(v2).rate
-            )
-          case (Open(v1), Move(v2)) =>
-            State2(
-              s.minute + 1,
-              s.opened + v1,
-              Seq(v1, v2),
-              s.released + (30 - s.minute) * valves(v1).rate
-            )
-          case (Move(v1), Open(v2)) =>
-            State2(
-              s.minute + 1,
-              s.opened + v2,
-              Seq(v1, v2),
-              s.released + (30 - s.minute) * valves(v2).rate
-            )
-          case (Move(v1), Move(v2)) =>
-            State2(
-              s.minute + 1,
-              s.opened,
-              Seq(v1, v2),
-              s.released
-            )
-        }
-      }
-    }
+    arr
+  }
 
   override def part1(input: Iterator[String]): Int = {
     val graph = input.map {
@@ -109,10 +65,17 @@ object Day16 extends MultiPuzzle[Int, Int] {
         (name, Valve(name, rate.toInt, Seq(children)))
     }.toMap
 
-    val init = State(1, Set.empty, "AA", 0)
+    val valves = transform(graph)
 
-    val res = BFS.breadth_first_traverse_no_path_it(init, next(graph))
-    res.filter(_.minute >= 29).maxBy(_.released).released
+    val dist = adjMatrix(valves)
+    floydWarshall(dist)
+
+    val init = State(1, 0L, valves.indexWhere(_.name == "AA"), 0)
+
+    BFS
+      .breadth_first_traverse_no_path_no_visited_it(init, next(valves, dist, 30))
+      .maxBy(_.released)
+      .released
   }
 
   override def part2(input: Iterator[String]): Int = {
@@ -123,9 +86,41 @@ object Day16 extends MultiPuzzle[Int, Int] {
         (name, Valve(name, rate.toInt, Seq(children)))
     }.toMap
 
-    val init2 = State2(5, Set.empty, Seq("AA", "AA"), 0)
+    val valves = transform(graph)
 
-    val res = BFS.breadth_first_traverse_no_path_it(init2, next2(graph))
-    res.filter(_.minute >= 29).maxBy(_.released).released
+    val dist = adjMatrix(valves)
+    floydWarshall(dist)
+
+    val init = State(1, 0L, valves.indexWhere(_.name == "AA"), 0)
+
+    val endStates = BFS
+      .breadth_first_traverse_no_path_no_visited_it(init, next(valves, dist, 26))
+      .filter(s => Action.possibleActions(valves, dist, 26, s).isEmpty)
+
+    endStates.map { end =>
+      val init2 = State(1, end.opened, valves.indexWhere(_.name == "AA"), end.released)
+      BFS
+        .breadth_first_traverse_no_path_no_visited_it(init2, next(valves, dist, 26))
+        .maxBy(_.released)
+        .released
+    }.max
+
   }
+
+  def adjMatrix(arr: Array[IntValve]): Array[Array[Int]] =
+    Array.tabulate(arr.length, arr.length) {
+      case (i, j) =>
+        if (arr(i).children.contains(j)) 1 else 10000
+    }
+
+  // https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
+  // in-place implementation
+  def floydWarshall(arr: Array[Array[Int]]): Unit =
+    for {
+      k <- 0 until arr.length
+      i <- 0 until arr.length
+      j <- 0 until arr.length
+    } {
+      arr(i)(j) = math.min(arr(i)(j), arr(i)(k) + arr(k)(j))
+    }
 }

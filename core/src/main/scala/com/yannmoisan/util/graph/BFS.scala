@@ -51,6 +51,27 @@ object BFS {
       }
     }
 
+  def breadth_first_traverse_no_path_no_visited_it[A](
+      node: A,
+      f: A => Seq[A]
+  ): Iterator[A] =
+    new Iterator[A] {
+      val queue = mutable.Queue[A]()
+//      val visited = mutable.Set[A]()
+      queue.enqueue(node)
+//      visited.add(node)
+
+      override def hasNext: Boolean = !queue.isEmpty
+
+      override def next(): A = {
+        val cur            = queue.dequeue()
+        val nextNotVisited = f(cur) //.filter(!visited.contains(_))
+        queue.enqueueAll(nextNotVisited)
+        //visited.addAll(nextNotVisited)
+        cur
+      }
+    }
+
   def main(args: Array[String]): Unit = {
     val init         = 0
     def next(i: Int) = List(i - 1, i + 1)

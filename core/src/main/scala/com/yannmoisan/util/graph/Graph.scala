@@ -20,7 +20,9 @@ object GraphTraversal extends App {
     0 -> List(1, 4, 5),
     1 -> List(3, 4),
     2 -> List(1),
-    3 -> List(2, 4)
+    3 -> List(2, 4),
+    4 -> List(),
+    5 -> List()
   )
 
   // 1. java.lang.StackOverflowError
@@ -32,7 +34,7 @@ object GraphTraversal extends App {
   // 2. global set of visited
   // Pb1 : not tail rec
   // Pb2 : mutable visited
-  def dfs2(start: Int, visited: mutable.Set[Int]): Unit = {
+  def dfs2(start: Int, visited: mutable.Set[Int] = mutable.Set.empty[Int]): Unit = {
     println(s"visited:$start")
     val _ = visited.add(start)
     g.get(start).foreach { n =>
@@ -47,7 +49,7 @@ object GraphTraversal extends App {
   // 2. global set of visited
   // Pb1 : not tail rec
   // Doesnt work on the example, 4 is visited multiple times because visited is not updating when backtracking occurs.
-  def dfs3(start: Int, visited: Set[Int]): Unit = {
+  def dfs3(start: Int, visited: Set[Int] = Set.empty): Unit = {
     println(s"visited:$start")
     //val _ = visited.add(start)
     g.get(start).foreach { n =>
@@ -116,5 +118,5 @@ object GraphTraversal extends App {
     }
   }
 
-  bfs(0)
+  BFS.breadth_first_traverse(0, g).foreach(println)
 }

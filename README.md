@@ -1,5 +1,7 @@
 # Advent of code
 
+![Build](https://github.com/YannMoisan/advent-of-code/actions/workflows/build.yml/badge.svg)
+
 ## Others
 
 ```

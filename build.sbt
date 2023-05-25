@@ -61,7 +61,7 @@ lazy val `advent-of-code-2019` = (project in file("2019"))
 lazy val `advent-of-code-2020` = (project in file("2020"))
   .dependsOn(core).settings(
     libraryDependencies += scalaTest     % Test,
-    libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.2.2"
+    libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.2.4"
   )
 
 lazy val `advent-of-code-2021` = (project in file("2021"))

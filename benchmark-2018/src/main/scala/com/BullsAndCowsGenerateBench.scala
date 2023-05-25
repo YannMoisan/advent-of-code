@@ -124,10 +124,8 @@ class BullsAndCowsGenerateBench {
         for {
           e <- l
           if !used.contains(e)
-        } {
-          _permutations2(e :: cur, used + e, depth + 1)
-          // backtrack
-        }
+        } _permutations2(e :: cur, used + e, depth + 1)
+        // backtrack
       }
 
     b.toList

@@ -41,9 +41,7 @@ class PrecomputedMove(underlying: AbsMove) extends Move {
     for {
       dir <- Direction8.all
       p   <- underlying.dim.positions
-    } {
-      arr(dir.value + 8 * underlying.dim.index(p)) = underlying.move(underlying.dim.index(p), dir)
-    }
+    } arr(dir.value + 8 * underlying.dim.index(p)) = underlying.move(underlying.dim.index(p), dir)
     arr
   }
 }

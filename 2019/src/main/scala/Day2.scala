@@ -9,9 +9,7 @@ object Day2 extends SinglePuzzle[Int, Int] {
     val outputs: Iterator[((Int, Int), Int)] = for {
       noun <- (0 to 99).iterator
       verb <- (0 to 99).iterator
-    } yield {
-      (noun, verb) -> computeOutput(program.clone(), noun, verb)
-    }
+    } yield (noun, verb) -> computeOutput(program.clone(), noun, verb)
     outputs.toMap
       .find(_._2 == 19690720)
       .map { case ((noun, verb), _) => 100 * noun + verb }

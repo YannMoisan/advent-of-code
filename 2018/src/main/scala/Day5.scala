@@ -5,14 +5,13 @@ object Day5 extends SinglePuzzle[Int, Int] {
   def react(s: String): Int = {
     var i = 0
     var t = s
-    while (i < t.length - 1) {
+    while (i < t.length - 1)
       if (t(i).toUpper == t(i + 1).toUpper && (t(i).isUpper ^ t(i + 1).isUpper)) {
         t = t.substring(0, i) + t.substring(i + 2, t.length)
         i = math.max(0, i - 1)
       } else {
         i += 1
       }
-    }
     t.length
   }
 

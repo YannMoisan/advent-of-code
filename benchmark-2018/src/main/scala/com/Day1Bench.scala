@@ -22,8 +22,8 @@ class Day1Bench {
     LazyList
       .continually(frequencies)
       .flatten
-      .scanLeft((0, Set.empty[Int])) {
-        case ((sum, visited), freq) => (sum + freq, visited + sum)
+      .scanLeft((0, Set.empty[Int])) { case ((sum, visited), freq) =>
+        (sum + freq, visited + sum)
       }
       .find { case (sum, visited) => visited.contains(sum) }
       .get._1
@@ -35,8 +35,8 @@ class Day1Bench {
     Iterator
       .continually(frequencies)
       .flatten
-      .scanLeft((0, Set.empty[Int])) {
-        case ((sum, visited), freq) => (sum + freq, visited + sum)
+      .scanLeft((0, Set.empty[Int])) { case ((sum, visited), freq) =>
+        (sum + freq, visited + sum)
       }
       .find { case (sum, visited) => visited.contains(sum) }
       .get._1

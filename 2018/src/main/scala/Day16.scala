@@ -44,10 +44,9 @@ object Day16 extends MultiPuzzle[Int, Int] {
     val program: Iterator[Array[Int]] = input.drop(2).map(_.split(" ").map(_.toInt))
     val init                          = Vector(0, 0, 0, 0)
     program
-      .foldLeft(init) {
-        case (regs, instruction) =>
-          val i = solution(instruction.apply(0))
-          i.execute(instruction(1), instruction(2), instruction(3))(regs)
+      .foldLeft(init) { case (regs, instruction) =>
+        val i = solution(instruction.apply(0))
+        i.execute(instruction(1), instruction(2), instruction(3))(regs)
       }.apply(0)
   }
 

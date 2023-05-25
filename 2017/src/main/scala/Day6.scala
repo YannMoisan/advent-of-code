@@ -4,10 +4,9 @@ object Day6 extends SinglePuzzle[Int, Int] {
     val max   = s.max
     val index = s.indexOf(max)
 
-    (1 to max).foldLeft(s.updated(index, 0)) {
-      case (s2, i) =>
-        val indexToUpdate = (index + i) % s.size
-        s2.updated(indexToUpdate, s2(indexToUpdate) + 1)
+    (1 to max).foldLeft(s.updated(index, 0)) { case (s2, i) =>
+      val indexToUpdate = (index + i) % s.size
+      s2.updated(indexToUpdate, s2(indexToUpdate) + 1)
     }
   }
 

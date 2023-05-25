@@ -10,12 +10,11 @@ object Day22 extends MultiPuzzle[Int, Long] with App {
 
   override def part1(input: Iterator[String]): Int = {
     val steps = input.map(parse)
-    val cubes = steps.foldLeft(Set.empty[(Int, Int, Int)]) {
-      case (acc, step) =>
-        if (step.isOn)
-          acc ++ toSet(step)
-        else
-          acc -- toSet(step)
+    val cubes = steps.foldLeft(Set.empty[(Int, Int, Int)]) { case (acc, step) =>
+      if (step.isOn)
+        acc ++ toSet(step)
+      else
+        acc -- toSet(step)
     }
     cubes.size
   }
@@ -92,15 +91,14 @@ object Day22 extends MultiPuzzle[Int, Long] with App {
       }
       //val _ = cubes.addAll(cubes2)
       if (step.isOn) {
-        cubes =
-          Cube(
-            min(cube.x1, cube.x2),
-            max(cube.x1, cube.x2),
-            min(cube.y1, cube.y2),
-            max(cube.y1, cube.y2),
-            min(cube.z1, cube.z2),
-            max(cube.z1, cube.z2)
-          ) :: cubes
+        cubes = Cube(
+          min(cube.x1, cube.x2),
+          max(cube.x1, cube.x2),
+          min(cube.y1, cube.y2),
+          max(cube.y1, cube.y2),
+          min(cube.z1, cube.z2),
+          max(cube.z1, cube.z2)
+        ) :: cubes
       }
     }
     cubes.map(_.size).sum
@@ -113,7 +111,9 @@ object Day22 extends MultiPuzzle[Int, Long] with App {
   }
 
   def toSet(pl: RebootStep): Set[(Int, Int, Int)] =
-    if (pl.cube.x1 > 50 || pl.cube.x2 < -50 || pl.cube.y1 > 50 || pl.cube.y2 < -50 || pl.cube.z1 > 50 || pl.cube.z2 < -50) {
+    if (
+      pl.cube.x1 > 50 || pl.cube.x2 < -50 || pl.cube.y1 > 50 || pl.cube.y2 < -50 || pl.cube.z1 > 50 || pl.cube.z2 < -50
+    ) {
       Set.empty
     } else {
       (for {

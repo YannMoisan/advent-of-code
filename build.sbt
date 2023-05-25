@@ -60,7 +60,7 @@ lazy val `advent-of-code-2019` = (project in file("2019"))
 
 lazy val `advent-of-code-2020` = (project in file("2020"))
   .dependsOn(core).settings(
-    libraryDependencies += scalaTest     % Test,
+    libraryDependencies += scalaTest      % Test,
     libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.2.2"
   )
 
@@ -82,7 +82,7 @@ lazy val `core` = (project in file("core")).settings(
 lazy val `benchmark-2018` = project
   .enablePlugins(JmhPlugin)
   .settings(
-    ).dependsOn(core, `advent-of-code-2021`)
+  ).dependsOn(core, `advent-of-code-2021`)
 //lazy val root = (project in file("."))
 //  .settings(
 //    name := "advent-of-code",

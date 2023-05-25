@@ -41,8 +41,8 @@ object Day8 extends MultiPuzzle[Int, Int] {
   override def part1(lines: Iterator[String]): Int = {
     val instructions = lines.map(parse)
     val state0       = State(Map.empty[String, Int])
-    val allStates = instructions.scanLeft(state0) {
-      case (s, instr) => execute(instr, s)
+    val allStates = instructions.scanLeft(state0) { case (s, instr) =>
+      execute(instr, s)
     }
     allStates.toSeq.lastOption.map(_.registers.maxBy(_._2)._2).getOrElse(0)
 
@@ -51,8 +51,8 @@ object Day8 extends MultiPuzzle[Int, Int] {
   override def part2(lines: Iterator[String]): Int = {
     val instructions = lines.map(parse)
     val state0       = State(Map.empty[String, Int])
-    val allStates = instructions.scanLeft(state0) {
-      case (s, instr) => execute(instr, s)
+    val allStates = instructions.scanLeft(state0) { case (s, instr) =>
+      execute(instr, s)
     }
     allStates.flatMap(_.registers.values).max
 

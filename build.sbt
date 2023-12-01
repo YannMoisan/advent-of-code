@@ -15,6 +15,7 @@ lazy val root = (project in file("."))
     `advent-of-code-2020`,
     `advent-of-code-2021`,
     `advent-of-code-2022`,
+    `advent-of-code-2023`,
     `benchmark-2018`
   )
   .settings(
@@ -70,6 +71,11 @@ lazy val `advent-of-code-2021` = (project in file("2021"))
   )
 
 lazy val `advent-of-code-2022` = (project in file("2022"))
+  .dependsOn(core).settings(
+    libraryDependencies += scalaTest % Test
+  )
+
+lazy val `advent-of-code-2023` = (project in file("2023"))
   .dependsOn(core).settings(
     libraryDependencies += scalaTest % Test
   )

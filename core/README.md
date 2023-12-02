@@ -4,7 +4,7 @@ The goal is to allow you to write as little code as possible for each puzzle.
 
 # Project structure
 
-I would recommend using a [multi project](https://www.scala-sbt.org/1.x/docs/Multi-Project.html) build.
+I recommend using a [multi project](https://www.scala-sbt.org/1.x/docs/Multi-Project.html) build.
 
 ```
 .
@@ -20,11 +20,11 @@ A generic application `Puzzles` is provided and is responsible for
 - reading the input file.
 - calling methods for each part and collecting execution time.
 
-The implementation relies on _convention over configuration_ principle.
+The implementation relies on the _convention over configuration_ principle.
 
 The input files must be placed in `src/main/resources` and suffixed by the day `input{{day}}`.
 
-The code must be placed into an object suffixed by the day `Day{{day}}.scala` 
+The code must be placed into an object suffixed with the day, such as `Day{{day}}.scala` 
 
 ```
 2021
@@ -38,7 +38,7 @@ The code must be placed into an object suffixed by the day `Day{{day}}.scala`
 │  │     └── Day2.scala
 ```
 
-2 base traits are provided
+Two base traits are provided
 - `SinglePuzzle` if the input file contains one line
 - `MultiPuzzle` if the input file contains multiple lines
 

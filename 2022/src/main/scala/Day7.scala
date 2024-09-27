@@ -4,17 +4,15 @@ object Day7 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val paths = parse(input)
     paths
-      .map {
-        case (currentDir, v) =>
-          v + paths.collect { case (k, v2) if k.startsWith(currentDir + "/") => v2 }.sum
+      .map { case (currentDir, v) =>
+        v + paths.collect { case (k, v2) if k.startsWith(currentDir + "/") => v2 }.sum
       }.filter(_ <= 100000).sum
   }
 
   override def part2(input: Iterator[String]): Int = {
     val paths = parse(input)
-    val totalSizes = paths.map {
-      case (currentDir, v) =>
-        v + paths.collect { case (k, v2) if k.startsWith(currentDir + "/") => v2 }.sum
+    val totalSizes = paths.map { case (currentDir, v) =>
+      v + paths.collect { case (k, v2) if k.startsWith(currentDir + "/") => v2 }.sum
     }
     val used     = 43313415
     val free     = 70000000 - used

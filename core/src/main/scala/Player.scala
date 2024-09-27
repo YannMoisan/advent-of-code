@@ -31,7 +31,7 @@ object Player extends App {
     } else {
       Console.err.println(s"from=$from/${candidates.size}")
       from = BruteForce.solve(guesses.toList, from, candidates)
-      candidates.slice(from*numberLength, (from +1)*numberLength).mkString
+      candidates.slice(from * numberLength, (from + 1) * numberLength).mkString
     }
 
     // Write an action using println
@@ -52,11 +52,11 @@ trait BullsAndCows {
 
 object BruteForce extends BullsAndCows {
   override def solve(guesses: List[Guess], from: Int, candidates: Array[Byte]): Int = {
-    val s = System.nanoTime()
-    var e = System.nanoTime()
+    val s     = System.nanoTime()
+    var e     = System.nanoTime()
     var found = false
-    var i = from
-    while (!found && (e-s) < 50 * 1000 * 1000) {
+    var i     = from
+    while (!found && (e - s) < 50 * 1000 * 1000) {
       if (i % 10000 == 0) {
         e = System.nanoTime()
       }
@@ -69,50 +69,49 @@ object BruteForce extends BullsAndCows {
     i
   }
 
-
   private def evaluate(sol: Array[Byte], solIdx: Int, guess: Array[Byte]): Int = {
-      // Find bulls
-      var bulls = 0
-      var cows = 0
-      // populate the state for the algo
-      var state = 0 // Array.ofDim[Boolean](10)
-      //mutable.Map[Char, Int]()
-      var i = 0
-      val len = guess.length
-      while (i < len) {
-        val s = sol(solIdx * len + i)
-        val g = guess(i)
-        if (s == g) {
-          bulls += 1
-        } else {
-          if ((state & 1 << s.toInt) > 0)
-            cows += 1
-          if ((state & 1 << g.toInt) > 0)
-            cows += 1
-          state |= 1 << s.toInt
-          state |= 1 << g.toInt
-        }
-        i += 1
+    // Find bulls
+    var bulls = 0
+    var cows  = 0
+    // populate the state for the algo
+    var state = 0 // Array.ofDim[Boolean](10)
+    //mutable.Map[Char, Int]()
+    var i   = 0
+    val len = guess.length
+    while (i < len) {
+      val s = sol(solIdx * len + i)
+      val g = guess(i)
+      if (s == g) {
+        bulls += 1
+      } else {
+        if ((state & 1 << s.toInt) > 0)
+          cows += 1
+        if ((state & 1 << g.toInt) > 0)
+          cows += 1
+        state |= 1 << s.toInt
+        state |= 1 << g.toInt
       }
-      bulls << 4 | cows
+      i += 1
     }
-
+    bulls << 4 | cows
   }
+
+}
 
 object Combinatorics extends App {
 
   def permutationsSB9flatNoLambda(k: Int): Array[Byte] = {
     // dfs
     val count = List(9, 9, 8, 7, 6, 5, 4, 3, 2, 1).take(k).product
-    var c = 0
-    val b = Array.ofDim[Byte](count * k)
-    val used = Array.ofDim[Boolean](10)
-    val cur = Array.ofDim[Byte](k)
-    val l0 = (1 to 9).map(_.toByte).toArray
-    val ln = (0 to 9).map(_.toByte).toArray
+    var c     = 0
+    val b     = Array.ofDim[Byte](count * k)
+    val used  = Array.ofDim[Boolean](10)
+    val cur   = Array.ofDim[Byte](k)
+    val l0    = (1 to 9).map(_.toByte).toArray
+    val ln    = (0 to 9).map(_.toByte).toArray
     _permutationsSB9(0)
 
-    def _permutationsSB9(depth: Int): Unit = {
+    def _permutationsSB9(depth: Int): Unit =
       if (depth == k) {
         //        if (cur.head != '0') {
         System.arraycopy(cur, 0, b, c * k, k)
@@ -120,10 +119,10 @@ object Combinatorics extends App {
         c += 1
         //        }
       } else {
-        val ll = if (depth == 0) l0 else ln
+        val ll      = if (depth == 0) l0 else ln
         var llCount = 0
         while (llCount < ll.length) {
-          val e = ll(llCount)
+          val e   = ll(llCount)
           val idx = e // - '0'
           if (!used(idx.toInt)) {
             used(idx.toInt) = true
@@ -136,7 +135,6 @@ object Combinatorics extends App {
           llCount += 1
         }
       }
-    }
 
     b
   }

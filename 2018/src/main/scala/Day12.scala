@@ -5,8 +5,8 @@ object Day12 extends MultiPuzzle[Int, Int] {
     val expanded                        = Array.fill(40)('.') ++ init ++ Array.fill(40)('.')
 
     val rules: Map[String, Char] = input
-      .drop(1).take(32).map {
-        case s"$from => $to" => (from, to.head)
+      .drop(1).take(32).map { case s"$from => $to" =>
+        (from, to.head)
       }.toMap
 
     val end: Array[Char] = Iterator.iterate(expanded)(update(_, rules)).drop(20).next()

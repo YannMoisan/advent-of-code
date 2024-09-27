@@ -55,7 +55,7 @@ object Puzzles extends App {
     case Some(d) =>
       puzzles.find(_.day() == d) match {
         case Some(puzzle) => puzzle.run()
-        case None => sys.error(s"Unknown day '$d'")
+        case None         => sys.error(s"Unknown day '$d'")
       }
     case None => puzzles.foreach(_.run())
   }

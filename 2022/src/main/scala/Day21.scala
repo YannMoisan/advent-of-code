@@ -18,8 +18,8 @@ object Day21 extends MultiPuzzle[Long, Long] {
   override def part1(input: Iterator[String]): Long = {
     val m = mutable.Map[String, String]()
 
-    input.foreach {
-      case line @ s"$o: $_" => m(o) = line
+    input.foreach { case line @ s"$o: $_" =>
+      m(o) = line
     }
 
     val root = buildExpressionTree(m, "root")
@@ -58,8 +58,8 @@ object Day21 extends MultiPuzzle[Long, Long] {
   override def part2(input: Iterator[String]): Long = {
     val m = mutable.Map[String, String]()
 
-    input.foreach {
-      case line @ s"$o: $_" => m(o) = line
+    input.foreach { case line @ s"$o: $_" =>
+      m(o) = line
     }
 
     val root = buildExpressionTree(m, "root")

@@ -1,16 +1,15 @@
 object Day11 extends SinglePuzzle[Int, Int] {
   override def part1(line: String): Int = {
     val m = Map("ne" -> 0, "n" -> 0, "nw" -> 0)
-    val allMaps: Array[Map[String, Int]] = line.split(",").scanLeft(m) {
-      case (m, dir) =>
-        dir match {
-          case "ne" => m.updated("ne", m("ne") + 1)
-          case "n"  => m.updated("n", m("n") + 1)
-          case "nw" => m.updated("nw", m("nw") + 1)
-          case "se" => m.updated("nw", m("nw") - 1)
-          case "s"  => m.updated("n", m("n") - 1)
-          case "sw" => m.updated("ne", m("ne") - 1)
-        }
+    val allMaps: Array[Map[String, Int]] = line.split(",").scanLeft(m) { case (m, dir) =>
+      dir match {
+        case "ne" => m.updated("ne", m("ne") + 1)
+        case "n"  => m.updated("n", m("n") + 1)
+        case "nw" => m.updated("nw", m("nw") + 1)
+        case "se" => m.updated("nw", m("nw") - 1)
+        case "s"  => m.updated("n", m("n") - 1)
+        case "sw" => m.updated("ne", m("ne") - 1)
+      }
     }
 
     allMaps.map { m =>

@@ -83,7 +83,9 @@ object Day19 extends MultiPuzzle[Int, Int] {
   def geodes(blueprint: Blueprint, maxTime: Int): Int = {
     val init = State(0, Vector(0, 0, 0, 0), Vector(1, 0, 0, 0), Array(false, false, false, false))
     BFS
-      .breadth_first_traverse_no_path_it(init, next(blueprint, maxTime)).filter(_.minute == maxTime).maxBy(
+      .breadth_first_traverse_no_path_it(init, next(blueprint, maxTime)).filter(
+        _.minute == maxTime
+      ).maxBy(
         _.resources(3)
       ).resources(3)
   }

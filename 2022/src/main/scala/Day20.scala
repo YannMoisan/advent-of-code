@@ -6,12 +6,11 @@ object Day20 extends MultiPuzzle[Int, Long] {
     val inputs = input.map(_.toInt).toArray.zipWithIndex
 
     val buf: ArrayBuffer[(Int, Int)] = ArrayBuffer(ArraySeq.unsafeWrapArray(inputs): _*)
-    inputs.foreach {
-      case element @ (value, _) =>
-        val prevIndex = buf.indexOf(element)
-        val newIndex  = math.floorMod(prevIndex + value, inputs.size - 1)
-        buf.remove(prevIndex)
-        buf.insert(newIndex, element)
+    inputs.foreach { case element @ (value, _) =>
+      val prevIndex = buf.indexOf(element)
+      val newIndex  = math.floorMod(prevIndex + value, inputs.size - 1)
+      buf.remove(prevIndex)
+      buf.insert(newIndex, element)
     }
 
     val buf2 = buf.map(_._1)
@@ -25,15 +24,13 @@ object Day20 extends MultiPuzzle[Int, Long] {
 
     val buf: ArrayBuffer[(Long, Int)] = ArrayBuffer(ArraySeq.unsafeWrapArray(inputs): _*)
 
-    (1 to 10).foreach {
-      case _ =>
-        inputs.foreach {
-          case element @ (value, _) =>
-            val prevIndex = buf.indexOf(element)
-            val newIndex  = math.floorMod(prevIndex + value, inputs.size.toLong - 1).toInt
-            buf.remove(prevIndex)
-            buf.insert(newIndex, element)
-        }
+    (1 to 10).foreach { case _ =>
+      inputs.foreach { case element @ (value, _) =>
+        val prevIndex = buf.indexOf(element)
+        val newIndex  = math.floorMod(prevIndex + value, inputs.size.toLong - 1).toInt
+        buf.remove(prevIndex)
+        buf.insert(newIndex, element)
+      }
     }
 
     val buf2 = buf.map(_._1)

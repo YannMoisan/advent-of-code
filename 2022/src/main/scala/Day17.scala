@@ -37,7 +37,9 @@ object Day17 extends SinglePuzzle[Int, Long] {
 
     // is falling possible ?
     Iterator
-      .iterate((MaxHeight - 1, 0, 0))(t => fall(t._3, grid, t._1, directions, t._2)).drop(2022).next()
+      .iterate((MaxHeight - 1, 0, 0))(t => fall(t._3, grid, t._1, directions, t._2)).drop(
+        2022
+      ).next()
 
     MaxHeight - (0 to grid.dim.height - 1).reverse
       .find(y => (0 until 7).forall(x => grid(Pos(x, y)) == '.')).get - 1
@@ -62,7 +64,9 @@ object Day17 extends SinglePuzzle[Int, Long] {
 
     // is falling possible ?
     Iterator
-      .iterate((MaxHeight - 1, 0, 0))(t => fall(t._3, grid, t._1, directions, t._2)).drop(2800).next()
+      .iterate((MaxHeight - 1, 0, 0))(t => fall(t._3, grid, t._1, directions, t._2)).drop(
+        2800
+      ).next()
 
     ((1000000000000L / 8550) * 13100) + MaxHeight - (0 to grid.dim.height - 1).reverse
       .find(y => (0 until 7).forall(x => grid(Pos(x, y)) == '.')).get - 1
@@ -113,22 +117,22 @@ object Day17 extends SinglePuzzle[Int, Long] {
     else {
       val height = rock.length
       val width  = rock.head.length
-      val rockPositions = (for {
+      val rockPositions = for {
         x <- 0 until width
         y <- 0 until height
         if rock(y)(x) == '#'
-      } yield Pos(x, y - (height - 1)))
+      } yield Pos(x, y - (height - 1))
       rockPositions.forall(pos => grid(Pos(target.x + pos.x, target.y + pos.y)) == '.')
     }
 
   private def rest(rock: Array[String], grid: Grid[Char], target: Pos): Unit = {
     val height = rock.length
     val width  = rock.head.length
-    val rockPositions = (for {
+    val rockPositions = for {
       x <- 0 until width
       y <- 0 until height
       if rock(y)(x) == '#'
-    } yield Pos(x, y - (height - 1)))
+    } yield Pos(x, y - (height - 1))
     rockPositions.foreach(pos => grid(Pos(target.x + pos.x, target.y + pos.y)) = '#')
   }
 

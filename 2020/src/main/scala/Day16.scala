@@ -44,9 +44,8 @@ object Day16 extends MultiPuzzle[Int, Long] {
   private def parse(input: Iterator[String]): (Array[Rule], Array[Int], List[Array[Int]]) = {
     val inputList = input.toList
 
-    val rules = inputList.collect {
-      case s"$field: $min1-$max1 or $min2-$max2" =>
-        Rule(field, MyRange(min1.toInt, max1.toInt), MyRange(min2.toInt, max2.toInt))
+    val rules = inputList.collect { case s"$field: $min1-$max1 or $min2-$max2" =>
+      Rule(field, MyRange(min1.toInt, max1.toInt), MyRange(min2.toInt, max2.toInt))
     }.toArray
 
     val tickets = inputList.collect {

@@ -1,8 +1,8 @@
 object Day15 extends MultiPuzzle[Int, Int] {
   val line = """Disc #\d has (\d+) positions; at time=0, it is at position (\d+).""".r
 
-  def parse: String => Disc = {
-    case line(nbPos, pos) => Disc(nbPos.toInt, pos.toInt)
+  def parse: String => Disc = { case line(nbPos, pos) =>
+    Disc(nbPos.toInt, pos.toInt)
   }
 
   def ok(discs: Seq[Disc])(time: Int) =

@@ -40,6 +40,8 @@ object Day18 extends MultiPuzzle[Int, Int] {
     }
 
     positions.toList
-      .map(p => Position3.neighbors(p).count(n => !positions.contains(n) && visited.contains(n))).sum
+      .map(p =>
+        Position3.neighbors(p).count(n => !positions.contains(n) && visited.contains(n))
+      ).sum
   }
 }

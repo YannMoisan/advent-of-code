@@ -14,27 +14,27 @@ object Day16 extends MultiPuzzle[Int, Int] {
 
   override def part1(input: Iterator[String]): Int =
     common(
-      input, {
-        case (item, qty) =>
-          item match {
+      input,
+      { case (item, qty) =>
+        item match {
 //        case "cats" | "trees" => scam(item) < qty
 //        case "pomeranians" | "goldfish" => scam(item) > qty
-            case _ => scam(item) == qty
+          case _ => scam(item) == qty
 
-          }
+        }
       }
     )
 
   override def part2(input: Iterator[String]): Int =
     common(
-      input, {
-        case (item, qty) =>
-          item match {
-            case "cats" | "trees"           => scam(item) < qty
-            case "pomeranians" | "goldfish" => scam(item) > qty
-            case _                          => scam(item) == qty
+      input,
+      { case (item, qty) =>
+        item match {
+          case "cats" | "trees"           => scam(item) < qty
+          case "pomeranians" | "goldfish" => scam(item) > qty
+          case _                          => scam(item) == qty
 
-          }
+        }
       }
     )
 

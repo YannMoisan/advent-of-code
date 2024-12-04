@@ -14,7 +14,7 @@ object Day24 extends MultiPuzzle[Int, Int] {
     // 3 : <
     val tmp = Array.fill(4)(mutable.Set[Pos]())
     grid.dim.indices.foreach { i =>
-      val pos = grid.dim.pos((i))
+      val pos = grid.dim.pos(i)
       if (grid(i) == 'v')
         tmp(0).add(pos)
       if (grid(i) == '^')
@@ -32,7 +32,9 @@ object Day24 extends MultiPuzzle[Int, Int] {
 
     // visited are used because same pos at the same time will give the same subgraph
     BFS
-      .breadth_first_traverse_no_path_it(start, next(grid, allBlizzards)).find(_._1 == Pos(100, 36)).get._2
+      .breadth_first_traverse_no_path_it(start, next(grid, allBlizzards)).find(
+        _._1 == Pos(100, 36)
+      ).get._2
   }
 
   private def simulate(blizzards: Array[Set[Pos]]): Array[Set[Pos]] =
@@ -68,7 +70,7 @@ object Day24 extends MultiPuzzle[Int, Int] {
     // 3 : <
     val tmp = Array.fill(4)(mutable.Set[Pos]())
     grid.dim.indices.foreach { i =>
-      val pos = grid.dim.pos((i))
+      val pos = grid.dim.pos(i)
       if (grid(i) == 'v')
         tmp(0).add(pos)
       if (grid(i) == '^')

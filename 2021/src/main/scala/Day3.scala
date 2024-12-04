@@ -37,9 +37,8 @@ object Day3 extends MultiPuzzle[Int, Int] {
 
   private def count1Bits(lines: Array[String]): Vector[Int] = {
     val len = lines.head.length
-    lines.foldLeft(Vector.fill(len)(0)) {
-      case (s, line) =>
-        Vector.tabulate(len)(i => s(i) + (if (line(i) == '1') 1 else 0))
+    lines.foldLeft(Vector.fill(len)(0)) { case (s, line) =>
+      Vector.tabulate(len)(i => s(i) + (if (line(i) == '1') 1 else 0))
     }
   }
 

@@ -77,8 +77,8 @@ object Day5 extends MultiPuzzle[Long, Long] {
     val seeds = parseSeeds(lines(0))
     var inters: List[Interval] =
       seeds
-        .grouped(2).collect {
-          case List(start, length) => Interval(start, start + length, identity)
+        .grouped(2).collect { case List(start, length) =>
+          Interval(start, start + length, identity)
         }.toList
     val converterA = parseConverter(lines, 4, 12)
     val converterB = parseConverter(lines, 15, 57)

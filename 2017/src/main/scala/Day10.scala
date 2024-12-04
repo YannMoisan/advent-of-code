@@ -13,19 +13,18 @@ object Day10 extends SinglePuzzle[Int, String] {
     )
 
   def reverse[A](s: IndexedSeq[A], from: Int, length: Int): IndexedSeq[A] =
-    (0 until length / 2).foldLeft(s) {
-      case (s, i) =>
-        val low  = (from + i) % s.size
-        val high = (from + length - 1 - i) % s.size
-        val tmp  = s(low)
-        s.updated(low, s(high))
-          .updated(high, tmp)
+    (0 until length / 2).foldLeft(s) { case (s, i) =>
+      val low  = (from + i)              % s.size
+      val high = (from + length - 1 - i) % s.size
+      val tmp  = s(low)
+      s.updated(low, s(high))
+        .updated(high, tmp)
     }
 
   override def part1(line: String): Int = {
     val stateF =
-      line.split(",").map(_.toInt).foldLeft(state0) {
-        case (s, i) => next(i, s)
+      line.split(",").map(_.toInt).foldLeft(state0) { case (s, i) =>
+        next(i, s)
       }
     stateF.list(0) * stateF.list(1)
   }
@@ -39,12 +38,12 @@ object KnotHash {
     val state0 = State(0 to 255, 0, 0)
 
     val lengths = s.map(_.toInt) ++ Seq(17, 31, 73, 47, 23)
-    val lengths64 = (0 until 63).foldLeft(lengths) {
-      case (l, _) => l ++ lengths
+    val lengths64 = (0 until 63).foldLeft(lengths) { case (l, _) =>
+      l ++ lengths
     }
     val stateF =
-      lengths64.foldLeft(state0) {
-        case (s, i) => next(i, s)
+      lengths64.foldLeft(state0) { case (s, i) =>
+        next(i, s)
       }
     val denseHash: Iterator[Int] =
       stateF.list.grouped(16).flatMap(_.reduceOption(_ ^ _).toList)

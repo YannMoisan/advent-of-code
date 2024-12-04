@@ -31,7 +31,7 @@ object Day17 extends MultiPuzzle[Int, Int] {
       y <- 0 until arr.length
       x <- 0 until arr.head.length
       if arr(y)(x) == '#'
-    } yield { Position3D(x, y, 0) }
+    } yield Position3D(x, y, 0)
     val grid = Grid3D(actives.toSet)
     Iterator.iterate(grid)(nextP1).drop(6).next().actives.size
   }
@@ -43,7 +43,9 @@ object Day17 extends MultiPuzzle[Int, Int] {
       z <- g.actives.minBy(_.z).z - 1 to g.actives.maxBy(_.z).z + 1
       pos   = Position3D(x, y, z)
       count = g.activeNeighbors(pos)
-      if (g.actives.contains(pos) && (count == 2 || count == 3)) || (!g.actives.contains(pos) && count == 3)
+      if (g.actives.contains(pos) && (count == 2 || count == 3)) || (!g.actives.contains(
+        pos
+      ) && count == 3)
     } yield pos
     Grid3D(actives.toSet)
   }
@@ -54,7 +56,7 @@ object Day17 extends MultiPuzzle[Int, Int] {
       y <- 0 until arr.length
       x <- 0 until arr.head.length
       if arr(y)(x) == '#'
-    } yield { Position4D(x, y, 0, 0) }
+    } yield Position4D(x, y, 0, 0)
     val grid = Grid4D(actives.toSet)
     Iterator.iterate(grid)(nextP2).drop(6).next().actives.size
   }
@@ -67,7 +69,9 @@ object Day17 extends MultiPuzzle[Int, Int] {
       t <- g.actives.minBy(_.t).t - 1 to g.actives.maxBy(_.t).t + 1
       pos   = Position4D(x, y, z, t)
       count = g.activeNeighbors(pos)
-      if (g.actives.contains(pos) && (count == 2 || count == 3)) || (!g.actives.contains(pos) && count == 3)
+      if (g.actives.contains(pos) && (count == 2 || count == 3)) || (!g.actives.contains(
+        pos
+      ) && count == 3)
     } yield pos
     Grid4D(actives.toSet)
   }

@@ -7,15 +7,14 @@ object Day19 extends MultiPuzzle[Int, Int] {
 
   override def part1(input: Iterator[String]): Int = {
     val list = input.toList
-    val transfo: Seq[(String, String)] = list.dropRight(2).map {
-      case s"$src => $dst" => (src, dst)
+    val transfo: Seq[(String, String)] = list.dropRight(2).map { case s"$src => $dst" =>
+      (src, dst)
     }
     val molecule = list.last
     val split    = splitCamelCase(molecule)
-    val _ = split.foldLeft(0L) {
-      case (acc, token) =>
-        val occ = transfo.count(x => x._1 == token)
-        acc + occ
+    val _ = split.foldLeft(0L) { case (acc, token) =>
+      val occ = transfo.count(x => x._1 == token)
+      acc + occ
     }
 
     val replacements: Seq[Array[String]] = oneReplace(split.toArray, transfo)
@@ -34,7 +33,7 @@ object Day19 extends MultiPuzzle[Int, Int] {
     var candidate = s(0).toString
     val res       = ArrayBuffer[String]()
     var pos       = 1
-    while (pos < s.length) {
+    while (pos < s.length)
       if (s(pos).isLower) {
         candidate += s(pos)
         pos += 1
@@ -43,7 +42,6 @@ object Day19 extends MultiPuzzle[Int, Int] {
         candidate = s(pos).toString
         pos += 1
       }
-    }
     // TODO avoid duplication for last token
     val _ = res.addOne(candidate)
     res.toList

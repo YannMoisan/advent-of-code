@@ -5,7 +5,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
         val s"Tile $id:" = lines.head
         (id, lines.tail.toArray)
       }.toList
-    val tmp3: Seq[(String, Seq[String])] = tiles.map { case (id, grid)    => (id, borderValues(grid)) }
+    val tmp3: Seq[(String, Seq[String])] = tiles.map { case (id, grid) => (id, borderValues(grid)) }
     val tmp: Seq[String]                 = tiles.flatMap { case (_, grid) => borderValues(grid) }
     val uniqueBorders: Set[String] = tmp
       .groupBy(identity).map { case (k, vals) => (k, vals.size) }.filter(_._2 == 1).map(_._1).toSet

@@ -9,12 +9,11 @@ object Day7 extends MultiPuzzle[Int, Int] {
     val _                                         = q.enqueue("shiny gold")
     while (!q.isEmpty) {
       val cur = q.dequeue()
-      rules.foreach {
-        case (outer, inners) =>
-          if (inners.exists(_._2 == cur)) {
-            val _ = visited.add(outer)
-            val _ = q.enqueue(outer)
-          }
+      rules.foreach { case (outer, inners) =>
+        if (inners.exists(_._2 == cur)) {
+          val _ = visited.add(outer)
+          val _ = q.enqueue(outer)
+        }
       }
     }
     visited.size

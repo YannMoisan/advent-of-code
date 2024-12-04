@@ -35,12 +35,11 @@ object Day10 extends MultiPuzzle[Int, Int] {
       .get.apply(0)._2
 
   private def iterator(input: Iterator[String]) = {
-    val points = input.map {
-      case s"position=<$px,$py> velocity=<$vx,$vy>" =>
-        Point(
-          Position(px.trim.toInt, py.trim.toInt),
-          new Direction(vx.trim.toInt, vy.trim.toInt)
-        )
+    val points = input.map { case s"position=<$px,$py> velocity=<$vx,$vy>" =>
+      Point(
+        Position(px.trim.toInt, py.trim.toInt),
+        new Direction(vx.trim.toInt, vy.trim.toInt)
+      )
     }.toArray
     Iterator
       .iterate(points)(_.map(p => Point(Position.move(p.p, p.v), p.v)))

@@ -48,7 +48,7 @@ object Day13 extends MultiPuzzle[Int, Long] {
 //    var i     = 0L
     var found = false
     while (!found) {
-      val cand = i * (41)
+      val cand = i * 41
       found = ids2.forall { case (id, delay) => (cand + delay) % id == 0 }
       if (!found)
         i += 419 // 557 // 419

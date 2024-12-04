@@ -109,15 +109,14 @@ object Day19 extends MultiPuzzle[Int, Int] {
     } yield (epp, esp)) ++ (for {
       epn <- pn
       esn <- sn
-    } yield (epn, esn))).toIndexedSeq.map {
-      case (perm, sign) =>
-        Pos(
-          (
-            p.c.productElement(perm._1).asInstanceOf[Int] * sign._1,
-            p.c.productElement(perm._2).asInstanceOf[Int] * sign._2,
-            p.c.productElement(perm._3).asInstanceOf[Int] * sign._3
-          )
+    } yield (epn, esn))).toIndexedSeq.map { case (perm, sign) =>
+      Pos(
+        (
+          p.c.productElement(perm._1).asInstanceOf[Int] * sign._1,
+          p.c.productElement(perm._2).asInstanceOf[Int] * sign._2,
+          p.c.productElement(perm._3).asInstanceOf[Int] * sign._3
         )
+      )
     }
   }
 }

@@ -21,17 +21,16 @@ object Day7 extends MultiPuzzle[String, Unit] {
     }
 
   override def part1(llines: Iterator[String]): String = {
-    val lines = llines.collect {
-      case pattern(word, weight, words) =>
-        Line(
-          word,
-          Integer.parseInt(weight),
-          if (words != null) words.split(", ").toSeq else Seq.empty[String]
-        )
+    val lines = llines.collect { case pattern(word, weight, words) =>
+      Line(
+        word,
+        Integer.parseInt(weight),
+        if (words != null) words.split(", ").toSeq else Seq.empty[String]
+      )
     }
 
-    val child2Parent = lines.foldLeft(Map.empty[String, String]) {
-      case (m, lines) => m ++ lines.words.map(_ -> lines.word)
+    val child2Parent = lines.foldLeft(Map.empty[String, String]) { case (m, lines) =>
+      m ++ lines.words.map(_ -> lines.word)
     }
 
 //    val parent2Child = lines.map(line => line.word -> line).toMap

@@ -17,10 +17,9 @@ object Day8 extends MultiPuzzle[Int, Int] {
   // brute force : 5040
   override def part2(input: Iterator[String]): Int =
     input
-      .map(parseLine).map {
-        case (signals, values) =>
-          val mappi = mapping(signals)
-          decode2(values, mappi)
+      .map(parseLine).map { case (signals, values) =>
+        val mappi = mapping(signals)
+        decode2(values, mappi)
       }.sum
 
   private def parseLine(line: String): (Array[String], Array[String]) = {

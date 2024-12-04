@@ -33,11 +33,10 @@ object Day3 extends MultiPuzzle[Int, Int] {
   def fullPath(path: Array[Move]): Vector[Position] = {
     val init = Vector(Position(0, 0))
 
-    val positions = path.foldLeft(init) {
-      case (state, move) =>
-        val newPath =
-          Iterator.iterate(state.last)(Position.move(_, move.direction)).drop(1).take(move.length)
-        state ++ newPath
+    val positions = path.foldLeft(init) { case (state, move) =>
+      val newPath =
+        Iterator.iterate(state.last)(Position.move(_, move.direction)).drop(1).take(move.length)
+      state ++ newPath
     }
     positions.drop(1) // remove Position(0,0)
   }

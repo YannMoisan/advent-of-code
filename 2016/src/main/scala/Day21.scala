@@ -44,13 +44,13 @@ object Day21 extends MultiPuzzle[String, String] {
     s.patch(p1, s.substring(p1, p2 + 1).reverse, p2 - p1 + 1)
 
   def undoNext(instruction: String, s: String): String = instruction match {
-    case reversePos(p1, p2) => reverse(s, p1.toInt, p2.toInt) //nothing
+    case reversePos(p1, p2) => reverse(s, p1.toInt, p2.toInt)        //nothing
     case rotatePos(p1)      => undoRotatePos(s, p1)
-    case rotateLeft(p1)     => rotateRight(s, p1.toInt) // left => right
-    case rotateRight(p1)    => rotateLeft(s, p1.toInt) // right => left
-    case swapPos(p1, p2)    => swap(s, p1.toInt, p2.toInt) // nothing
+    case rotateLeft(p1)     => rotateRight(s, p1.toInt)              // left => right
+    case rotateRight(p1)    => rotateLeft(s, p1.toInt)               // right => left
+    case swapPos(p1, p2)    => swap(s, p1.toInt, p2.toInt)           // nothing
     case swapLetter(p1, p2) => swap(s, s.indexOf(p1), s.indexOf(p2)) // nothing
-    case movePos(p1, p2)    => movePos(s, p2.toInt, p1.toInt) // rev order
+    case movePos(p1, p2)    => movePos(s, p2.toInt, p1.toInt)        // rev order
   }
 
   def undoRotatePos(s: String, p1: String) =

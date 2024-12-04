@@ -16,7 +16,9 @@ object Day15 extends SinglePuzzle[Int, Int] {
       case s"$h=$v" => arr(hash(h)).update(h, v.toInt)
     }
     arr.indices.map { arrIndex =>
-      arr(arrIndex).zipWithIndex.map { case ((_, v), index) => (arrIndex + 1) * v * (index + 1) }.sum
+      arr(arrIndex).zipWithIndex.map { case ((_, v), index) =>
+        (arrIndex + 1) * v * (index + 1)
+      }.sum
     }.sum
   }
 }

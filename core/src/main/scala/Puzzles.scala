@@ -42,22 +42,24 @@ trait SinglePuzzle[O1, O2] extends Puzzle[O1, O2] {
   override def input = lines.next()
 }
 
-object Puzzles extends App {
-  val puzzles = findPuzzles()
+object Puzzles {
+  def main(args: Array[String]) = {
+    val puzzles = findPuzzles()
 
-  val day = if (args.length == 1) {
-    Some(args(0))
-  } else {
-    None
-  }
+    val day = if (args.length == 1) {
+      Some(args(0))
+    } else {
+      None
+    }
 
-  day match {
-    case Some(d) =>
-      puzzles.find(_.day() == d) match {
-        case Some(puzzle) => puzzle.run()
-        case None => sys.error(s"Unknown day '$d'")
-      }
-    case None => puzzles.foreach(_.run())
+    day match {
+      case Some(d) =>
+        puzzles.find(_.day() == d) match {
+          case Some(puzzle) => puzzle.run()
+          case None         => sys.error(s"Unknown day '$d'")
+        }
+      case None => puzzles.foreach(_.run())
+    }
   }
 
   // use runtime reflection to detect implemented puzzles

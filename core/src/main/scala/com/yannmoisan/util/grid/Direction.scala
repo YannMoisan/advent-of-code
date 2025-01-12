@@ -15,7 +15,7 @@ class Direction(val dx: Int, val dy: Int) {
   }
 }
 
-sealed abstract class DirectionWithIndex(
+abstract class DirectionWithIndex(
     override val dx: Int,
     override val dy: Int,
     val value: Int

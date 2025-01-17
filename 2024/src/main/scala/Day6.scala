@@ -30,11 +30,11 @@ object Day6 extends MultiPuzzle[Int, Int] {
   case class Guard(dir: Direction4, pos: Int)
 
   override def part2(input: Iterator[String]): Int = {
-    val grid                = Grid1D(input)
-    val guard               = Guard(Direction4.Up, grid.find('^').get)
+    val grid  = Grid1D(input)
+    val guard = Guard(Direction4.Up, grid.find('^').get)
 
     grid.dim.indices
-      .filter { i => grid(i) != '#' && grid(i) != '^' }
+      .filter(i => grid(i) != '#' && grid(i) != '^')
       .filter { i =>
         grid(i) = '#'
         val res = isLoop(grid, guard)

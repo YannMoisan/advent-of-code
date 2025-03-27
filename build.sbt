@@ -29,7 +29,7 @@ lazy val `advent-of-code-2015` = (project in file("2015"))
     libraryDependencies += scalaTest % Test
   )
 
-val monocleVersion = "2.0.5"
+val monocleVersion = "2.1.0"
 
 lazy val `advent-of-code-2016` = (project in file("2016"))
   .dependsOn(core)

@@ -5,7 +5,7 @@ object Day3 extends SinglePuzzle[Int, Unit] {
 
     def values(circle: Int): Seq[Int] = {
       val step  = circle * 2
-      val first = math.pow(circle.toDouble * 2 - 1, 2).toInt + (circle)
+      val first = math.pow(circle.toDouble * 2 - 1, 2).toInt + circle
 
       (0 to 3).map(i => first + (i * +step))
     }

@@ -10,13 +10,12 @@ object Day20 extends MultiPuzzle[Long, Long] {
   def mergeRange(ranges: Seq[Range]): Seq[Range] = {
     val sorted = ranges.sortBy(_.start)
     sorted
-      .foldLeft(List[Range]()) {
-        case (acc, range) =>
-          acc match {
-            case h :: t if h.end + 1 >= range.start =>
-              Range(h.start, math.max(h.end, range.end)) :: t
-            case _ => range :: acc
-          }
+      .foldLeft(List[Range]()) { case (acc, range) =>
+        acc match {
+          case h :: t if h.end + 1 >= range.start =>
+            Range(h.start, math.max(h.end, range.end)) :: t
+          case _ => range :: acc
+        }
       }.reverse
   }
 

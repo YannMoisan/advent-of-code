@@ -39,11 +39,10 @@ object Day14 extends MultiPuzzle[Int, Int] {
         )
       }
       val max = dist.maxBy { case (_, v) => v }._2
-      dist.foreach {
-        case (k, v) =>
-          if (v == max) {
-            scores.updateWith(k)(o => Some(o.getOrElse(0) + 1))
-          }
+      dist.foreach { case (k, v) =>
+        if (v == max) {
+          scores.updateWith(k)(o => Some(o.getOrElse(0) + 1))
+        }
       }
     }
     scores.maxBy { case (_, v) => v }._2

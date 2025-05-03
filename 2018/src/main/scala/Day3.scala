@@ -11,12 +11,11 @@ object Day3 extends MultiPuzzle[Int, Int] {
     val lines                  = iter.toArray
     val parsedLines            = lines.map(parseLine)
     val arr: Array[Array[Int]] = Array.fill(1000)(Array.fill(1000)(0))
-    for (elem <- parsedLines) {
+    for (elem <- parsedLines)
       for {
         x <- (elem.x until elem.x + elem.w)
         y <- (elem.y until elem.y + elem.h)
       } arr(y)(x) = arr(y)(x) + 1
-    }
     arr.map(a => a.count(_ >= 2)).sum
   }
 

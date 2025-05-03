@@ -20,7 +20,7 @@ object Day19 extends MultiPuzzle[Int, Int] {
   def generateRegex(rules: List[String]): String = {
     // TODO : improve with DFS
     val m = mutable.Map[String, String]()
-    while (!m.contains("0")) {
+    while (!m.contains("0"))
       rules.foreach {
         case s"$id: $a $b | $c $d" =>
           if (m.contains(a) && m.contains(b) && m.contains(c) && m.contains(d))
@@ -31,7 +31,6 @@ object Day19 extends MultiPuzzle[Int, Int] {
         case s"""$id: "b"""" => m(id) = "b"
         case s"$id: $a"      => if (m.contains(a)) m(id) = m(a)
       }
-    }
 
 //    m.toList.sortBy(_._1.toInt).foreach(kv => println(kv))
 //    println(m("0"))
@@ -44,7 +43,7 @@ object Day19 extends MultiPuzzle[Int, Int] {
   def generateRegexes(rules: List[String]): Seq[String] = {
     // TODO : improve with DFS
     val m = mutable.Map[String, String]()
-    while (!m.contains("0")) {
+    while (!m.contains("0"))
       rules.foreach {
         case s"$id: $a $b | $c $d" =>
           if (m.contains(a) && m.contains(b) && m.contains(c) && m.contains(d))
@@ -55,7 +54,6 @@ object Day19 extends MultiPuzzle[Int, Int] {
         case s"""$id: "b"""" => m(id) = "b"
         case s"$id: $a"      => if (m.contains(a)) m(id) = m(a)
       }
-    }
 
     //    m.toList.sortBy(_._1.toInt).foreach(kv => println(kv))
     //    println(m("0"))

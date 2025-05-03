@@ -41,16 +41,15 @@ object Day20 extends MultiPuzzle[Int, Int] {
     (for {
       x <- 49 until end.head.length - 49
       y <- 49 until end.length - 49
-    } yield { if (end(y)(x) == '#') 1 else 0 }).sum
+    } yield if (end(y)(x) == '#') 1 else 0).sum
   }
 
   override def part2(input: Iterator[String]): Int = 42
 
   def next(algorithm: String)(grid: Array[String]): Array[String] =
     Array
-      .tabulate(grid.head.length, grid.length) {
-        case (y, x) =>
-          algorithm(value(grid, x, y))
+      .tabulate(grid.head.length, grid.length) { case (y, x) =>
+        algorithm(value(grid, x, y))
       }.map(_.mkString)
 
   def value(g: Array[String], x: Int, y: Int) = {
@@ -60,7 +59,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
       ny = y + j
       nx = x + i
       if nx >= 0 && nx < g.head.length && ny >= 0 && ny < g.length
-    } yield { if (g(ny)(nx) == '#') '1' else '0' }
+    } yield if (g(ny)(nx) == '#') '1' else '0'
     Integer.parseInt(bits.mkString, 2)
   }
 
@@ -68,13 +67,12 @@ object Day20 extends MultiPuzzle[Int, Int] {
     val newWidth  = g.head.length + 2 * size
     val newHeight = g.size + 2 * size
     Array
-      .tabulate(newHeight, newWidth) {
-        case (y, x) =>
-          if (x < size || x >= g.head.length + size || y < size || y >= g.size + size) {
-            '.'
-          } else {
-            g(y - size)(x - size)
-          }
+      .tabulate(newHeight, newWidth) { case (y, x) =>
+        if (x < size || x >= g.head.length + size || y < size || y >= g.size + size) {
+          '.'
+        } else {
+          g(y - size)(x - size)
+        }
       }.map(_.mkString)
   }
 }

@@ -20,9 +20,7 @@ object Day5 extends MultiPuzzle[Int, Int] {
     val tmp = for {
       start  <- 0 to s.length - 4
       offset <- start + 2 to s.length - 2
-    } yield {
-      s.substring(start, start + 2) == s.substring(offset, offset + 2)
-    }
+    } yield s.substring(start, start + 2) == s.substring(offset, offset + 2)
     tmp.exists(identity)
   }
 

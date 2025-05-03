@@ -48,9 +48,7 @@ object Day13 extends MultiPuzzle[Int, Int] {
     for {
       x <- 0 until grid.head.length
       y <- 0 until grid.length / 2
-    } {
-      newGrid(y)(x) = if (grid(y)(x) == '.' && grid(grid.length - y - 1)(x) == '.') '.' else '#'
-    }
+    } newGrid(y)(x) = if (grid(y)(x) == '.' && grid(grid.length - y - 1)(x) == '.') '.' else '#'
 
     newGrid
   }
@@ -62,10 +60,8 @@ object Day13 extends MultiPuzzle[Int, Int] {
     for {
       x <- 0 until grid.head.length / 2
       y <- 0 until grid.length
-    } {
-      newGrid(y)(x) =
-        if (grid(y)(x) == '.' && grid(y)(grid.head.length - x - 1) == '.') '.' else '#'
-    }
+    } newGrid(y)(x) =
+      if (grid(y)(x) == '.' && grid(y)(grid.head.length - x - 1) == '.') '.' else '#'
 
     newGrid
   }

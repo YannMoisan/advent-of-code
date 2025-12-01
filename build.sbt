@@ -1,6 +1,6 @@
 import Dependencies._
 
-ThisBuild / scalaVersion := "2.13.6"
+ThisBuild / scalaVersion := "2.13.11"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.example"
 ThisBuild / organizationName := "example"
@@ -17,6 +17,7 @@ lazy val root = (project in file("."))
     `advent-of-code-2022`,
     `advent-of-code-2023`,
     `advent-of-code-2024`,
+    `advent-of-code-2025`,
     `benchmark-2018`
   )
   .settings(
@@ -88,6 +89,12 @@ lazy val `advent-of-code-2023` = (project in file("2023"))
   )
 
 lazy val `advent-of-code-2024` = (project in file("2024"))
+  .dependsOn(core)
+  .settings(
+    libraryDependencies += scalaTest % Test
+  )
+
+lazy val `advent-of-code-2025` = (project in file("2025"))
   .dependsOn(core)
   .settings(
     libraryDependencies += scalaTest % Test

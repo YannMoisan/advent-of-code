@@ -4,49 +4,46 @@ object Day5 extends MultiPuzzle[Int, Long] {
 
   override def part1(input: Iterator[String]): Int = {
     val (strIntervals, ids) = input.splitAt(187)
-    val intervals: List[(Long, Long)] = strIntervals.map { s =>
-      val Array(fst, snd) = s.split("-")
-      (fst.toLong, snd.toLong)
+    val intervals: List[Interval] = strIntervals.map { s =>
+      val Array(start, end) = s.split("-")
+      Interval(start.toLong, end.toLong)
     }.toList
 
-    println(intervals.size)
-    intervals.take(5).map(println)
-
-    ids.drop(1).map(_.toLong).count { id =>
-      intervals.exists(inter => inter._1 <= id && inter._2 >= id)
-    }
-
+    ids.drop(1).map(_.toLong).count(id => intervals.exists(_.contains(id)))
   }
 
   override def part2(input: Iterator[String]): Long = {
     val (strIntervals, _) = input.splitAt(187)
-    val intervals: List[(Long, Long)] = strIntervals.map { s =>
-      val Array(fst, snd) = s.split("-")
-      (fst.toLong, snd.toLong)
+    val intervals: List[Interval] = strIntervals.map { s =>
+      val Array(start, end) = s.split("-")
+      Interval(start.toLong, end.toLong)
     }.toList
 
-    val sorted = intervals.sortBy(_._1)
-    val tmp    = ListBuffer[(Long, Long)]()
-    var i      = 1
-    var cur    = sorted.head
-    while (i < sorted.length) {
-      val next   = sorted(i)
-      val merged = merge(cur, next)
-      if (merged.size == 2) {
-        tmp.addOne(cur)
-        cur = next
-      } else {
-        cur = merged.head
+    val sorted          = intervals.sortBy(_.start)
+    val mergedIntervals = ListBuffer[Interval]()
+    var cur             = sorted.head
+    (1 until sorted.length).foreach { i =>
+      val next = sorted(i)
+      merge(cur, next) match {
+        case List(_, _) =>
+          mergedIntervals.addOne(cur)
+          cur = next
+        case List(merged) => cur = merged
+        case _            =>
       }
-      i += 1
     }
-    tmp.addOne(cur)
-    tmp.map { case (a, b) => 1 + b - a }.sum
-
+    mergedIntervals.addOne(cur)
+    mergedIntervals.map(_.size).sum
   }
 
-  private def merge(a: (Long, Long), b: (Long, Long)): List[(Long, Long)] =
-    if (b._1 >= a._1 && b._1 <= a._2)
-      List((a._1, Math.max(a._2, b._2)))
+  private def merge(a: Interval, b: Interval): List[Interval] =
+    if (b.start >= a.start && b.start <= a.end)
+      List(Interval(a.start, Math.max(a.end, b.end)))
     else List(a, b)
+
+  // represent an inclusive interval
+  case class Interval(start: Long, end: Long) {
+    def contains(value: Long): Boolean = value >= start && value <= end
+    def size                           = end - start + 1
+  }
 }

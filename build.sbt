@@ -89,8 +89,9 @@ lazy val `advent-of-code-2023` = (project in file("2023"))
   )
 
 lazy val `advent-of-code-2024` = (project in file("2024"))
-  .dependsOn(core)
+  .dependsOn(core3)
   .settings(
+    scalaVersion := "3.3.0",
     libraryDependencies += scalaTest % Test
   )
 
@@ -101,6 +102,13 @@ lazy val `advent-of-code-2025` = (project in file("2025"))
   )
 
 lazy val `core` = (project in file("core")).settings(
+  libraryDependencies += scalaTest,
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.13.10"
+)
+
+lazy val `core3` = (project in file("core")).settings(
+  scalaVersion := "3.3.0",
+  target := file("target/core3"),
   libraryDependencies += scalaTest,
   libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.13.10"
 )

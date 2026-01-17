@@ -68,7 +68,7 @@ object GraphTraversal extends App {
     var stack   = List(start)
     val visited = mutable.Set[Int]()
     while (!stack.isEmpty) {
-      val h :: t = stack
+      val h :: t = stack: @unchecked
       stack = t
       println(s"visited:$h")
       val _ = visited.add(h)

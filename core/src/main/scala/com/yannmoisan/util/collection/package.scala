@@ -18,7 +18,7 @@ package object collection {
     while (it.hasNext) {
       val cur = it.next()
       if (visited.contains(cur)) return Some(cur)
-      visited.add(cur)
+      visited += cur
     }
     None
   }
@@ -29,7 +29,7 @@ package object collection {
     while (it2.hasNext) {
       val (cur, idx) = it2.next()
       if (visited.contains(cur)) return Some(idx)
-      visited.add(cur)
+      visited += cur
     }
     None
   }

@@ -292,8 +292,6 @@ object Combinatorics extends App {
       }
     }
 
-  List(2) ::: List(1)
-
   println(permutationsWithReplacement(List("A", "B", "C", "D"), 2))
   println(permutationsWithReplacement(List("A", "B", "C", "D"), 2).size)
 

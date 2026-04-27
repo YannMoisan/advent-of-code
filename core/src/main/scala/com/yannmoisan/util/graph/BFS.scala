@@ -38,7 +38,7 @@ object BFS {
       val queue   = mutable.Queue[A]()
       val visited = mutable.Set[A]()
       queue.enqueue(node)
-      visited.add(node)
+      visited += node
 
       override def hasNext: Boolean = !queue.isEmpty
 

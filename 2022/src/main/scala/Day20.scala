@@ -38,7 +38,7 @@ object Day20 extends MultiPuzzle[Int, Long] {
 
     val buf2 = buf.map(_._1)
 
-    val index0 = buf2.indexOf(0)
+    val index0 = buf2.indexOf(0L)
     Seq(1000, 2000, 3000).map(i => buf2((index0 + i) % buf.size)).sum
   }
 }

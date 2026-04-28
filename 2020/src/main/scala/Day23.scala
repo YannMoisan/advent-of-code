@@ -35,13 +35,12 @@ object Day23 extends MultiPuzzle[Long, Long] {
     // find destination
     var dest   = -1
     var target = currentCupLabel - 1
-    while (target >= 1 && dest == -1) {
+    while (target >= 1 && dest == -1)
       if (target == a || target == b || target == c) {
         target = target - 1
       } else {
         dest = target
       }
-    }
     if (dest == -1) {
       dest = (max - 2 to max).toSet.diff(Set(a, b, c)).max
     }

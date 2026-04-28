@@ -55,21 +55,22 @@ object Day22 extends MultiPuzzle[Int, Int] {
       case forward =>
         val length = forward.toInt
         val targetPosAndDir = Iterator
-          .iterate((grid.dim.pos(state._1), state._2)) {
-            case (pos, _) =>
-              val position    = Position(pos.x, pos.y)
-              val newPosition = Position.move(position, state._2)
-              val newPos      = Pos(newPosition.x, newPosition.y)
+          .iterate((grid.dim.pos(state._1), state._2)) { case (pos, _) =>
+            val position    = Position(pos.x, pos.y)
+            val newPosition = Position.move(position, state._2)
+            val newPos      = Pos(newPosition.x, newPosition.y)
 
-              // need to wrap ?
-              if (newPos.x < 0 || newPos.x >= grid.dim.width || newPos.y < 0 || newPos.y >= grid.dim.height || grid(
-                    newPos
-                  ) == ' ') {
-                val candidate = wrap1(newPos, state._2, grid)
-                if (grid(candidate._1) == '#') (pos, state._2) else candidate
-              } else if (grid(newPos) == '#') (pos, state._2)
-              else (newPos, state._2)
-            // is it a wall ?
+            // need to wrap ?
+            if (
+              newPos.x < 0 || newPos.x >= grid.dim.width || newPos.y < 0 || newPos.y >= grid.dim.height || grid(
+                newPos
+              ) == ' '
+            ) {
+              val candidate = wrap1(newPos, state._2, grid)
+              if (grid(candidate._1) == '#') (pos, state._2) else candidate
+            } else if (grid(newPos) == '#') (pos, state._2)
+            else (newPos, state._2)
+          // is it a wall ?
           }.drop(length).next()
         (grid.dim.index(targetPosAndDir._1), state._2)
     }
@@ -81,36 +82,40 @@ object Day22 extends MultiPuzzle[Int, Int] {
       case forward =>
         val length = forward.toInt
         val targetPosAndDir = Iterator
-          .iterate((grid.dim.pos(state._1), state._2)) {
-            case (pos, dir) =>
-              val position    = Position(pos.x, pos.y)
-              val newPosition = Position.move(position, dir)
-              val newPos      = Pos(newPosition.x, newPosition.y)
+          .iterate((grid.dim.pos(state._1), state._2)) { case (pos, dir) =>
+            val position    = Position(pos.x, pos.y)
+            val newPosition = Position.move(position, dir)
+            val newPos      = Pos(newPosition.x, newPosition.y)
 
-              // need to wrap ?
-              if (newPos.x < 0 || newPos.x >= grid.dim.width || newPos.y < 0 || newPos.y >= grid.dim.height || grid(
-                    newPos
-                  ) == ' ') {
-                val candidate = wrap2(newPos)
-                if (grid(candidate._1) == '#') (pos, dir) else candidate
-              } else if (grid(newPos) == '#') (pos, dir)
-              else (newPos, dir)
-            // is it a wall ?
+            // need to wrap ?
+            if (
+              newPos.x < 0 || newPos.x >= grid.dim.width || newPos.y < 0 || newPos.y >= grid.dim.height || grid(
+                newPos
+              ) == ' '
+            ) {
+              val candidate = wrap2(newPos)
+              if (grid(candidate._1) == '#') (pos, dir) else candidate
+            } else if (grid(newPos) == '#') (pos, dir)
+            else (newPos, dir)
+          // is it a wall ?
           }.drop(length).next()
         (grid.dim.index(targetPosAndDir._1), targetPosAndDir._2)
     }
 
   def wrap1(newPos: Pos, dir: Direction4, grid: Grid[Char]): (Pos, Direction4) =
-    (dir match {
-      case Direction4.Right =>
-        (0 until grid.dim.width).map(Pos(_, newPos.y)).find(grid(_) != ' ').get
-      case Direction4.Left =>
-        (0 until grid.dim.width).reverse.map(Pos(_, newPos.y)).find(grid(_) != ' ').get
-      case Direction4.Up =>
-        (0 until grid.dim.height).reverse.map(Pos(newPos.x, _)).find(grid(_) != ' ').get
-      case Direction4.Down =>
-        (0 until grid.dim.height).map(Pos(newPos.x, _)).find(grid(_) != ' ').get
-    }, dir)
+    (
+      dir match {
+        case Direction4.Right =>
+          (0 until grid.dim.width).map(Pos(_, newPos.y)).find(grid(_) != ' ').get
+        case Direction4.Left =>
+          (0 until grid.dim.width).reverse.map(Pos(_, newPos.y)).find(grid(_) != ' ').get
+        case Direction4.Up =>
+          (0 until grid.dim.height).reverse.map(Pos(newPos.x, _)).find(grid(_) != ' ').get
+        case Direction4.Down =>
+          (0 until grid.dim.height).map(Pos(newPos.x, _)).find(grid(_) != ' ').get
+      },
+      dir
+    )
 
   // ...111222
   // ...111222

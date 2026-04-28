@@ -1,7 +1,7 @@
 object Day10 extends MultiPuzzle[Int, Long] {
-  private val matchings = Map('>' -> '<', ']' -> '[', '}' -> '{', ')'  -> '(')
-  private val scores    = Map(')' -> 3, ']'   -> 57, '}'  -> 1197, '>' -> 25137)
-  private val scores2   = Map('(' -> 1, '['   -> 2, '{'   -> 3, '<'    -> 4)
+  private val matchings = Map('>' -> '<', ']' -> '[', '}' -> '{', ')' -> '(')
+  private val scores    = Map(')' -> 3, ']' -> 57, '}' -> 1197, '>' -> 25137)
+  private val scores2   = Map('(' -> 1, '[' -> 2, '{' -> 3, '<' -> 4)
 
   override def part1(input: Iterator[String]): Int =
     input.map(parse).map(_._2).sum
@@ -18,17 +18,16 @@ object Day10 extends MultiPuzzle[Int, Long] {
 
   private def parse(line: String): (List[Char], Int) =
     line
-      .foldLeft((List.empty[Char], 0)) {
-        case (acc, c) =>
-          if (acc._2 == 0) {
-            if (Seq('[', '(', '{', '<').contains(c))
-              (c :: acc._1, 0)
-            else {
-              acc._1 match {
-                case h :: t if h == matchings(c) => (t, 0)
-                case _                           => (acc._1, scores(c))
-              }
+      .foldLeft((List.empty[Char], 0)) { case (acc, c) =>
+        if (acc._2 == 0) {
+          if (Seq('[', '(', '{', '<').contains(c))
+            (c :: acc._1, 0)
+          else {
+            acc._1 match {
+              case h :: t if h == matchings(c) => (t, 0)
+              case _                           => (acc._1, scores(c))
             }
-          } else acc
+          }
+        } else acc
       }
 }

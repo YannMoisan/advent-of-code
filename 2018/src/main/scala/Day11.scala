@@ -46,18 +46,14 @@ object Day11 extends SinglePuzzle[String, String] {
       size <- sizes
       x    <- 1 to 300 - size + 1
       y    <- 1 to 300 - size + 1
-    } yield {
-      (x, y, size)
-    }
+    } yield (x, y, size)
 
     candidates
       .map { c =>
         val sum = (for {
           dx <- 0 until c._3
           dy <- 0 until c._3
-        } yield {
-          grid(Pos(c._1 + dx - 1, c._2 + dy - 1))
-        }).sum
+        } yield grid(Pos(c._1 + dx - 1, c._2 + dy - 1))).sum
         (c, sum)
       }.maxBy(_._2)._1
 

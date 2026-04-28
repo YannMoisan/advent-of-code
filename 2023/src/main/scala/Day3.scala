@@ -18,13 +18,11 @@ object Day3 extends MultiPuzzle[Int, Int] {
           for {
             ii <- (i - 1) to (i + 1)
             jj <- (j - 1) to (j + 1)
-          } {
-            if (ii != i || jj != j) {
-              if (ii >= 0 && ii < arr.length) {
-                if (jj >= 0 && jj < arr.head.length) {
-                  if (!arr(ii)(jj).isDigit && arr(ii)(jj) != '.')
-                    detected = true
-                }
+          } if (ii != i || jj != j) {
+            if (ii >= 0 && ii < arr.length) {
+              if (jj >= 0 && jj < arr.head.length) {
+                if (!arr(ii)(jj).isDigit && arr(ii)(jj) != '.')
+                  detected = true
               }
             }
           }
@@ -63,13 +61,11 @@ object Day3 extends MultiPuzzle[Int, Int] {
           for {
             ii <- (i - 1) to (i + 1)
             jj <- (j - 1) to (j + 1)
-          } {
-            if (ii != i || jj != j) {
-              if (ii >= 0 && ii < arr.length) {
-                if (jj >= 0 && jj < arr.head.length) {
-                  if (arr(ii)(jj) == '*')
-                    detected.addOne((ii, jj))
-                }
+          } if (ii != i || jj != j) {
+            if (ii >= 0 && ii < arr.length) {
+              if (jj >= 0 && jj < arr.head.length) {
+                if (arr(ii)(jj) == '*')
+                  detected.addOne((ii, jj))
               }
             }
           }

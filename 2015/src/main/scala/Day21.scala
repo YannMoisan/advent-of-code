@@ -46,9 +46,7 @@ object Day21 extends MultiPuzzle[Int, Int] {
           val List(a, b) = l
           (Some(a), Some(b))
       })
-    } yield {
-      Items(weapon, armor, ring._1, ring._2)
-    }
+    } yield Items(weapon, armor, ring._1, ring._2)
 
   case class Player(hp: Int, damage: Int, armor: Int)
 
@@ -69,7 +67,7 @@ object Day21 extends MultiPuzzle[Int, Int] {
     var player  = p
     var boss    = Player(103, 9, 2) // from my input
 
-    while (player.hp > 0 && boss.hp > 0) {
+    while (player.hp > 0 && boss.hp > 0)
       // Player turn
       if (current == 0) {
         boss = Player(boss.hp - math.max(1, player.damage - boss.armor), boss.damage, boss.armor)
@@ -80,7 +78,6 @@ object Day21 extends MultiPuzzle[Int, Int] {
           Player(player.hp - math.max(1, boss.damage - player.armor), player.damage, player.armor)
         current = 0
       }
-    }
     player.hp > 0
   }
 }

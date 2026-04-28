@@ -11,9 +11,8 @@ object Day9 extends MultiPuzzle[Int, Int] {
 
   def allSequences(l: List[Int]): List[List[Int]] = {
     var sequences = List(l)
-    while (!sequences.last.forall(_ == 0)) {
+    while (!sequences.last.forall(_ == 0))
       sequences = sequences :+ nextSequence(sequences.last)
-    }
     sequences
   }
 

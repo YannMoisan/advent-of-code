@@ -4,12 +4,10 @@ object Dynamic extends App {
     for {
       i <- a.indices
       j <- b.indices
-    } {
-      if (a(i) == b(j))
-        dp(i)(j) = 1 + (if (i > 0 && j > 0) dp(i - 1)(j - 1) else 0)
-      else
-        dp(i)(j) = 0
-    }
+    } if (a(i) == b(j))
+      dp(i)(j) = 1 + (if (i > 0 && j > 0) dp(i - 1)(j - 1) else 0)
+    else
+      dp(i)(j) = 0
 
     dp.foreach(arr => println(arr.mkString))
 
@@ -21,12 +19,10 @@ object Dynamic extends App {
     for {
       i <- a.indices
       j <- b.indices
-    } {
-      if (dp(i)(j) > maxv) {
-        maxv = dp(i)(j)
-        maxi = i
-        maxj = j
-      }
+    } if (dp(i)(j) > maxv) {
+      maxv = dp(i)(j)
+      maxi = i
+      maxj = j
     }
     (maxi - maxv + 1 to maxi).map(i => a(i)).mkString
   }
@@ -58,10 +54,8 @@ object Dynamic extends App {
     for {
       i <- a.indices
       j <- b.indices
-    } {
-      if (dp(i)(j) > maxv) {
-        maxv = dp(i)(j)
-      }
+    } if (dp(i)(j) > maxv) {
+      maxv = dp(i)(j)
     }
     maxv
   }

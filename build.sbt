@@ -97,7 +97,7 @@ lazy val `advent-of-code-2024` = (project in file("2024"))
 lazy val `advent-of-code-2025` = (project in file("2025"))
   .dependsOn(core)
   .settings(
-    scalaVersion := "3.3.4",
+    scalaVersion := "3.3.7",
     // Use scalatest_2.13 to match the artifact pulled from core's test scope
     libraryDependencies += (scalaTest % Test).cross(CrossVersion.for3Use2_13)
   )

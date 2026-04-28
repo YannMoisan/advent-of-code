@@ -58,8 +58,8 @@ object Day8 extends MultiPuzzle[Int, Int] {
     val grid       = Grid1D(input)
     val chars      = grid.dim.indices.map(grid(_)).toSet.-('.')
     val charAndPos = chars.map(c => (c, grid.findAll(c)))
-    charAndPos.flatMap {
-      case (_, indices) => computeAntiNodes2(grid, indices.toList) ++ charAndPos.flatMap(_._2)
+    charAndPos.flatMap { case (_, indices) =>
+      computeAntiNodes2(grid, indices.toList) ++ charAndPos.flatMap(_._2)
     }.size
   }
 }

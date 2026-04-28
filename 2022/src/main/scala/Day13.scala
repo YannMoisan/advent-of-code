@@ -11,8 +11,8 @@ object Day13 extends MultiPuzzle[Int, Int] {
     input
       .map(_.replace("10", "a"))
       .grouped(3).zipWithIndex.collect {
-        case ((Seq(fst, snd, _), i)) if compare(fst, snd) == -1 => i + 1
-        case ((Seq(fst, snd), i)) if compare(fst, snd) == -1    => i + 1
+        case (Seq(fst, snd, _), i) if compare(fst, snd) == -1 => i + 1
+        case (Seq(fst, snd), i) if compare(fst, snd) == -1    => i + 1
       }.sum
 
   override def part2(input: Iterator[String]): Int = {

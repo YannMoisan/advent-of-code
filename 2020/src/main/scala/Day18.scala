@@ -5,8 +5,8 @@ object Day18 extends MultiPuzzle[Int, Int] {
     def number[X: P]: P[Int]      = P(CharIn("0-9").rep(1).!.map(_.toInt))
     def operator[X: P]: P[String] = P("+").!
     def expr[X: P]                = P(parser | number)
-    def parser[X: P]: P[Int] = P(expr ~ operator ~ number).map {
-      case (lhs, "+", rhs) => lhs + rhs
+    def parser[X: P]: P[Int] = P(expr ~ operator ~ number).map { case (lhs, "+", rhs) =>
+      lhs + rhs
     }
 
     println(fastparse.parse("3+4+5", parser(_)))

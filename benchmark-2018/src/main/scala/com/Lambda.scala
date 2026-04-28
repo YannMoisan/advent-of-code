@@ -18,7 +18,7 @@ class Lambda {
 
   val lambda1: Int => Boolean          = i => i % 2 == 0
   val lambda2: ((Int, Int)) => Boolean = i => i._1 % 2 == 0
-  def method1(i: Int)                  = i % 2 == 0
+  def method1(i: Int)                  = i    % 2 == 0
   def method2(t: (Int, Int))           = t._1 % 2 == 0
 
   @Benchmark

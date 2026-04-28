@@ -42,8 +42,8 @@ class Y2015D18Bench {
 
   //@Benchmark
   def c_flatten_better(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState(acc, neighborIndices_flatten_better)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState(acc, neighborIndices_flatten_better)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -56,32 +56,32 @@ class Y2015D18Bench {
 
   //@Benchmark
   def e_offset_constants(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState(acc, neighborIndices_offset_constants)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState(acc, neighborIndices_offset_constants)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def f_offset_better_for(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState(acc, neighborIndices_offset_better_for)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState(acc, neighborIndices_offset_better_for)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def g_offset_collect(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState(acc, neighborIndices_offset_collect)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState(acc, neighborIndices_offset_collect)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def h_offset_pool(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState(acc, neighborIndices_offset_pool)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState(acc, neighborIndices_offset_pool)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -94,48 +94,48 @@ class Y2015D18Bench {
 
   //@Benchmark
   def j_foreach(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_foreach(acc, neighborIndices_cache)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_foreach(acc, neighborIndices_cache)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def k_while(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_while(acc, neighborIndices_cache)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_while(acc, neighborIndices_cache)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def l_no_lambda_call(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_no_lambda_call(acc)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_no_lambda_call(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def m_no_method_call(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_no_method_call(acc)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_no_method_call(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def n_vector_array(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_vector_array(acc)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_vector_array(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
 
   //@Benchmark
   def o_inline3_colbased(): Unit = {
-    val end = (1 to 100).foldLeft(grid) {
-      case (acc, _) => nextState_inline3_colbased(acc)
+    val end = (1 to 100).foldLeft(grid) { case (acc, _) =>
+      nextState_inline3_colbased(acc)
     }
     assert(end.map(_.count(_ == '#')).sum == 814)
   }
@@ -175,8 +175,8 @@ class Y2015D18Bench {
       col <- grid.head.indices
     } {
       val neighborIndices_ = neighborIndices(row, col)
-      val neighborsOn = neighborIndices_.count {
-        case (neighborRow, neighborCol) => grid(neighborRow)(neighborCol) == '#'
+      val neighborsOn = neighborIndices_.count { case (neighborRow, neighborCol) =>
+        grid(neighborRow)(neighborCol) == '#'
       }
       newState(row)(col) = (grid(row)(col), neighborsOn) match {
         case ('#', 2) | ('#', 3) => '#'
@@ -200,9 +200,8 @@ class Y2015D18Bench {
     } {
       val neighborIndices_ = neighborIndices(row, col)
       var neighborsOn      = 0
-      neighborIndices_.foreach {
-        case (neighborRow, neighborCol) =>
-          if (grid(neighborRow)(neighborCol) == '#') neighborsOn += 1
+      neighborIndices_.foreach { case (neighborRow, neighborCol) =>
+        if (grid(neighborRow)(neighborCol) == '#') neighborsOn += 1
       }
       //{ case (neighborRow, neighborCol) => grid(neighborRow)(neighborCol) == '#' }
       newState(row)(col) = (grid(row)(col), neighborsOn) match {
@@ -517,14 +516,14 @@ class Y2015D18Bench {
   def neighborIndices_offset_collect(row: Int, col: Int): Seq[(Int, Int)] =
     offsets
       .collect {
-        case (or, oc) if (row + or >= 0 && row + or < 100 && col + oc >= 0 && col + oc < 100) =>
+        case (or, oc) if row + or >= 0 && row + or < 100 && col + oc >= 0 && col + oc < 100 =>
           (row + or, col + oc)
       }
 
   def neighborIndices_offset_pool(row: Int, col: Int): Seq[(Int, Int)] =
     offsets
       .collect {
-        case (or, oc) if (row + or >= 0 && row + or < 100 && col + oc >= 0 && col + oc < 100) =>
+        case (or, oc) if row + or >= 0 && row + or < 100 && col + oc >= 0 && col + oc < 100 =>
           indicesPool(row + or)(col + oc)
       }
 
@@ -536,9 +535,7 @@ class Y2015D18Bench {
     for {
       r <- 0 until 100
       c <- 0 until 100
-    } {
-      arr(r)(c) = (r, c)
-    }
+    } arr(r)(c) = (r, c)
     arr
   }
 
@@ -547,9 +544,7 @@ class Y2015D18Bench {
     for {
       r <- 0 until 100
       c <- 0 until 100
-    } {
-      arr(r)(c) = neighborIndices(r, c)
-    }
+    } arr(r)(c) = neighborIndices(r, c)
     arr
   }
 
@@ -558,9 +553,7 @@ class Y2015D18Bench {
     for {
       r <- 0 until 100
       c <- 0 until 100
-    } {
-      arr(r)(c) = neighborIndices(r, c).toArray
-    }
+    } arr(r)(c) = neighborIndices(r, c).toArray
     arr
   }
 
@@ -569,9 +562,7 @@ class Y2015D18Bench {
     for {
       r <- 0 until 100
       c <- 0 until 100
-    } {
-      arr(r * 100 + c) = neighborIndices(r, c).map { case (r, c) => r * 100 + c }.toArray
-    }
+    } arr(r * 100 + c) = neighborIndices(r, c).map { case (r, c) => r * 100 + c }.toArray
     arr
   }
 

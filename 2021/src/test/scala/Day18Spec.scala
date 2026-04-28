@@ -17,7 +17,9 @@ class Day18Spec extends AnyFlatSpec with Matchers {
   }
 
   it should "work on example 4" in {
-    Day18.explode("[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]") shouldEqual "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"
+    Day18.explode(
+      "[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]"
+    ) shouldEqual "[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]"
   }
 
   it should "work on example 5" in {
@@ -25,7 +27,9 @@ class Day18Spec extends AnyFlatSpec with Matchers {
   }
 
   it should "work on big example - explode 1" in {
-    Day18.explode("[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]") shouldEqual "[[[[0,7],4],[7,[[8,4],9]]],[1,1]]"
+    Day18.explode(
+      "[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]"
+    ) shouldEqual "[[[[0,7],4],[7,[[8,4],9]]],[1,1]]"
   }
 
   it should "work on big example - explode 2" in {
@@ -43,12 +47,16 @@ class Day18Spec extends AnyFlatSpec with Matchers {
 //    [[[[0,7],4],[[[7,8]],[0,13]]],[1,1]]
 
   it should "work on big example - split 2" in {
-    Day18.split("[[[[0,7],4],[[7,8],[0,13]]],[1,1]]") shouldEqual "[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]"
+    Day18.split(
+      "[[[[0,7],4],[[7,8],[0,13]]],[1,1]]"
+    ) shouldEqual "[[[[0,7],4],[[7,8],[0,[6,7]]]],[1,1]]"
   }
 
   behavior of "reduce"
   it should "work on big example" in {
-    Day18.reduce("[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]") shouldEqual "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"
+    Day18.reduce(
+      "[[[[[4,3],4],4],[7,[[8,4],9]]],[1,1]]"
+    ) shouldEqual "[[[[0,7],4],[[7,8],[6,0]]],[8,1]]"
   }
 
   behavior of "add"

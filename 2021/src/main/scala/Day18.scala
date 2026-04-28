@@ -24,9 +24,7 @@ object Day18 extends MultiPuzzle[Int, Int] with App {
       i <- 0 until lines.length
       j <- 0 until lines.length
       if i != j
-    } yield {
-      magnitude(parse(add(lines(i), lines(j))))
-    }).max
+    } yield magnitude(parse(add(lines(i), lines(j))))).max
   }
 
   def magnitude(e: Element): Int =

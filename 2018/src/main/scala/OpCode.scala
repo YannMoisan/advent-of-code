@@ -49,29 +49,29 @@ object OpCode {
   }
 
   case object gtir extends OpCode {
-    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = (if (in1 > regs(in2)) 1 else 0)
+    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = if (in1 > regs(in2)) 1 else 0
   }
 
   case object gtri extends OpCode {
-    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = (if (regs(in1) > in2) 1 else 0)
+    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = if (regs(in1) > in2) 1 else 0
   }
 
   case object gtrr extends OpCode {
     override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int =
-      (if (regs(in1) > regs(in2)) 1 else 0)
+      if (regs(in1) > regs(in2)) 1 else 0
   }
 
   case object eqir extends OpCode {
-    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = (if (in1 == regs(in2)) 1 else 0)
+    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = if (in1 == regs(in2)) 1 else 0
   }
 
   case object eqri extends OpCode {
-    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = (if (regs(in1) == in2) 1 else 0)
+    override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int = if (regs(in1) == in2) 1 else 0
   }
 
   case object eqrr extends OpCode {
     override def op(in1: Int, in2: Int)(regs: Vector[Int]): Int =
-      (if (regs(in1) == regs(in2)) 1 else 0)
+      if (regs(in1) == regs(in2)) 1 else 0
   }
 
   val opcodes: Seq[OpCode] = Seq(

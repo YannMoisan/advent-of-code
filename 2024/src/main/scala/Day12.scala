@@ -21,7 +21,9 @@ object Day12 extends MultiPuzzle[Int, Int] {
         val i = q.dequeue()
         area += 1
         perimeter += (4 - g.dim
-          .neighbors4(i).count(k => g(k) == g(start))) // perimeter outside the map should be considered
+          .neighbors4(i).count(k =>
+            g(k) == g(start)
+          )) // perimeter outside the map should be considered
         g.dim.neighbors4(i).foreach { j =>
           if (g(j) == g(start) && !visited.contains(j)) {
             // 1320076 (too low)
@@ -58,7 +60,9 @@ object Day12 extends MultiPuzzle[Int, Int] {
         val i = q.dequeue()
         area += 1
         perimeter += (4 - g.dim
-          .neighbors4(i).count(k => g(k) == g(start))) // perimeter outside the map should be considered
+          .neighbors4(i).count(k =>
+            g(k) == g(start)
+          )) // perimeter outside the map should be considered
         val p = g.dim.pos(i)
 
         // D1A

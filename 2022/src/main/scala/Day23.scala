@@ -21,7 +21,7 @@ object Day23 extends MultiPuzzle[Int, Int] {
     val grid = Grid1D(input)
 
     val sparseGrid: Set[Position] = grid.dim.indices.collect {
-      case i if (grid(i) == '#') =>
+      case i if grid(i) == '#' =>
         val p = grid.dim.pos(i)
         Position(p.x, p.y)
     }.toSet
@@ -34,7 +34,7 @@ object Day23 extends MultiPuzzle[Int, Int] {
     val grid = Grid1D(input)
 
     val sparseGrid: Set[Position] = grid.dim.indices.collect {
-      case i if (grid(i) == '#') =>
+      case i if grid(i) == '#' =>
         val p = grid.dim.pos(i)
         Position(p.x, p.y)
     }.toSet

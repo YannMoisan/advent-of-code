@@ -23,11 +23,10 @@ object Day12 extends MultiPuzzle[Int, Long] {
       Moon(Position(6, -1, 2), vel0)
     )
 
-    val end: Array[Moon] = (0 until 1000).foldLeft(moons) {
-      case (acc, _) =>
-        //println(s"step $i")
-        //acc.foreach(println)
-        move(acc)
+    val end: Array[Moon] = (0 until 1000).foldLeft(moons) { case (acc, _) =>
+      //println(s"step $i")
+      //acc.foreach(println)
+      move(acc)
     }
 
     end.map(_.energy).foreach(println)

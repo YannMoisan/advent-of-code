@@ -42,7 +42,7 @@ object Day9 extends SinglePuzzle[Long, Long] {
   def compact2(buffer0: Array[Block]): Array[Block] = {
     var buffer = buffer0.clone()
     var i      = buffer.length - 1
-    while (i >= 0) {
+    while (i >= 0)
       //println(buffer.mkString(","))
       //(buffer.length - 1 to 0 by -1).foreach { i =>
       // If it is a File, find a free space
@@ -76,7 +76,6 @@ object Day9 extends SinglePuzzle[Long, Long] {
       } else {
         i -= 1
       }
-    }
     buffer
   }
   // à remplacer avec un nouveau free space

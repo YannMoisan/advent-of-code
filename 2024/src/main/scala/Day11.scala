@@ -16,11 +16,10 @@ object Day11 extends SinglePuzzle[Int, Long] {
     numbers.foreach(number => occurences.put(number, 1))
     (0 until 75).foreach { _ =>
       val newOccurences = mutable.Map[Long, Long]()
-      occurences.foreach {
-        case (number, occ) =>
-          nextCache.getOrElseUpdate(number, next0(number)).foreach { nextNumber =>
-            newOccurences.update(nextNumber, newOccurences.getOrElse(nextNumber, 0L) + occ)
-          }
+      occurences.foreach { case (number, occ) =>
+        nextCache.getOrElseUpdate(number, next0(number)).foreach { nextNumber =>
+          newOccurences.update(nextNumber, newOccurences.getOrElse(nextNumber, 0L) + occ)
+        }
       }
       occurences = newOccurences
     }

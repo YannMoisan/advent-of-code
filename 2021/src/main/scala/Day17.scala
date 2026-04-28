@@ -3,7 +3,9 @@ object Day17 extends MultiPuzzle[Int, Int] {
   override def part1(input: Iterator[String]): Int = {
     val max = computeSolutions().maxBy(_._2)
     Iterator
-      .iterate(State((0, 0), (max._1, max._2)))(next).takeWhile(_.velocity._2 >= 0).maxBy(_.pos._2).pos._2
+      .iterate(State((0, 0), (max._1, max._2)))(next).takeWhile(_.velocity._2 >= 0).maxBy(
+        _.pos._2
+      ).pos._2
   }
 
   override def part2(input: Iterator[String]): Int =

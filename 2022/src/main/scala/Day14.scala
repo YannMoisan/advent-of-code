@@ -25,7 +25,7 @@ object Day14 extends MultiPuzzle[Int, Int] {
 
     var sand    = Pos(500, 0)
     var blocked = false
-    while (!blocked && sand.y < grid.dim.height - 1) {
+    while (!blocked && sand.y < grid.dim.height - 1)
       nextPos(sand) match {
         case Some(p) => sand = p
         case None =>
@@ -34,7 +34,6 @@ object Day14 extends MultiPuzzle[Int, Int] {
           grid(sand) = 'o'
           sand = Pos(500, 0)
       }
-    }
   }
 
   private def makeGrid(input: Iterator[String]): Grid1D[Char] = {
@@ -57,10 +56,9 @@ object Day14 extends MultiPuzzle[Int, Int] {
 
     // add paths on the grid
     paths.foreach { path =>
-      path.sliding(2).foreach {
-        case Array(start, end) =>
-          allPositions(Pos(start._1, start._2), Pos(end._1, end._2))
-            .foreach(pos => grid(pos) = '#')
+      path.sliding(2).foreach { case Array(start, end) =>
+        allPositions(Pos(start._1, start._2), Pos(end._1, end._2))
+          .foreach(pos => grid(pos) = '#')
       }
     }
     grid

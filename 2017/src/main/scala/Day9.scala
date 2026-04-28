@@ -8,13 +8,12 @@ object Day9 extends SinglePuzzle[Int, Int] {
     val state0 = State(1, 0)
 
     cleaned
-      .foldLeft(state0) {
-        case (s, c) =>
-          c match {
-            case '{' => State(s.level + 1, s.sum + s.level)
-            case '}' => State(s.level - 1, s.sum)
-            case _   => s
-          }
+      .foldLeft(state0) { case (s, c) =>
+        c match {
+          case '{' => State(s.level + 1, s.sum + s.level)
+          case '}' => State(s.level - 1, s.sum)
+          case _   => s
+        }
       }
       .sum
   }

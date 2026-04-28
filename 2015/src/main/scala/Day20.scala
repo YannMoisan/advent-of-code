@@ -7,9 +7,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
     for {
       elf <- 1 until Limit
       inc <- elf until Limit by elf
-    } {
-      houses(inc) = houses(inc) + elf * 10
-    }
+    } houses(inc) = houses(inc) + elf * 10
 
     (1 until Limit).find(i => houses(i) > 34000000).get
   }
@@ -21,9 +19,7 @@ object Day20 extends MultiPuzzle[Int, Int] {
     for {
       elf <- 1 until Limit
       inc <- (elf until Limit by elf).take(50)
-    } {
-      houses(inc) = houses(inc) + elf * 11
-    }
+    } houses(inc) = houses(inc) + elf * 11
 
     (1 until Limit).find(i => houses(i) > 34000000).get
   }

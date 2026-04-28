@@ -44,15 +44,16 @@ object Day16 extends MultiPuzzle[Int, Int] {
   def transform(valves: Map[String, Valve]): Array[IntValve] = {
     val nameToIndex = valves.keys.zipWithIndex.toMap
     val arr         = Array.ofDim[IntValve](valves.size)
-    valves.foreach {
-      case (name, valve) =>
-        arr(nameToIndex(name)) = IntValve(
-          nameToIndex(name),
-          name,
-          valve.rate,
-          valve.children.map(nameToIndex).toArray,
-          valves.values.collect { case v if v.rate > 0 && v.name != name => nameToIndex(v.name) }.toArray
-        )
+    valves.foreach { case (name, valve) =>
+      arr(nameToIndex(name)) = IntValve(
+        nameToIndex(name),
+        name,
+        valve.rate,
+        valve.children.map(nameToIndex).toArray,
+        valves.values.collect {
+          case v if v.rate > 0 && v.name != name => nameToIndex(v.name)
+        }.toArray
+      )
     }
     arr
   }
@@ -108,9 +109,8 @@ object Day16 extends MultiPuzzle[Int, Int] {
   }
 
   def adjMatrix(arr: Array[IntValve]): Array[Array[Int]] =
-    Array.tabulate(arr.length, arr.length) {
-      case (i, j) =>
-        if (arr(i).children.contains(j)) 1 else 10000
+    Array.tabulate(arr.length, arr.length) { case (i, j) =>
+      if (arr(i).children.contains(j)) 1 else 10000
     }
 
   // https://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm
@@ -120,7 +120,5 @@ object Day16 extends MultiPuzzle[Int, Int] {
       k <- 0 until arr.length
       i <- 0 until arr.length
       j <- 0 until arr.length
-    } {
-      arr(i)(j) = math.min(arr(i)(j), arr(i)(k) + arr(k)(j))
-    }
+    } arr(i)(j) = math.min(arr(i)(j), arr(i)(k) + arr(k)(j))
 }

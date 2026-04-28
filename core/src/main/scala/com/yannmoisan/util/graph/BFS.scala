@@ -5,8 +5,7 @@ import scala.collection.mutable
 
 object BFS {
 
-  /**
-    * Breadth first traversal of a graph defined by a function `A => Seq[A]`.
+  /** Breadth first traversal of a graph defined by a function `A => Seq[A]`.
     * Each node is visited at most one time.
     *
     * @param node

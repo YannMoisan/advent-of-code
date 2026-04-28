@@ -9,9 +9,9 @@ object Day12 extends MultiPuzzle[Int, Int] {
 
   def parseEdges(in: Array[String]): Map[String, Array[String]] =
     in.flatMap { line =>
-        val Array(from, to) = line.split("-")
-        Seq((from, to), (to, from))
-      }.groupMap(_._1)(_._2)
+      val Array(from, to) = line.split("-")
+      Seq((from, to), (to, from))
+    }.groupMap(_._1)(_._2)
 
   case class State(cur: String, history: List[String])
 

@@ -9,8 +9,8 @@ object Day3 extends MultiPuzzle[Int, Long] {
 
   override def part2(input: Iterator[String]): Long =
     input.map { line =>
-      val results = (12 to 1 by -1).scanLeft(('0', line)) {
-        case ((_, s), i) => findMaxCharAndNextString(s, i)
+      val results = (12 to 1 by -1).scanLeft(('0', line)) { case ((_, s), i) =>
+        findMaxCharAndNextString(s, i)
       }
       results.tail.map(_._1).mkString.toLong
     }.sum

@@ -24,7 +24,7 @@ object Day19 extends SinglePuzzle[Int, Int] {
     val all = (0 until n).map(i => new Node(i, null, null))
     (0 until n).map { i =>
       all(i).prev = all((n + i - 1) % n)
-      all(i).next = all((i + 1)     % n)
+      all(i).next = all((i + 1) % n)
     }
 
     var start = all(0)

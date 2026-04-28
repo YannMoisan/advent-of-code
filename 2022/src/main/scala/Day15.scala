@@ -28,19 +28,18 @@ object Day15 extends MultiPuzzle[Int, Long] {
   }
 
   private def makeIntervals(input: List[String], y: Int) =
-    input.flatMap {
-      case s"Sensor at x=${sx}, y=${sy}: closest beacon is at x=${bx}, y=${by}" =>
-        val s  = Position(sx.toInt, sy.toInt)
-        val b  = Position(bx.toInt, by.toInt)
-        val d  = Position.manhattan(s, b)
-        val d2 = Position.manhattan(s, Position(s.x, y))
-        if (d2 <= d) {
-          val inf = s.x - (d - d2)
-          val sup = s.x + (d - d2)
-          Some(Interval(inf, sup))
-        } else {
-          None
-        }
+    input.flatMap { case s"Sensor at x=${sx}, y=${sy}: closest beacon is at x=${bx}, y=${by}" =>
+      val s  = Position(sx.toInt, sy.toInt)
+      val b  = Position(bx.toInt, by.toInt)
+      val d  = Position.manhattan(s, b)
+      val d2 = Position.manhattan(s, Position(s.x, y))
+      if (d2 <= d) {
+        val inf = s.x - (d - d2)
+        val sup = s.x + (d - d2)
+        Some(Interval(inf, sup))
+      } else {
+        None
+      }
     }.toList
 
   override def part2(input: Iterator[String]): Long = {

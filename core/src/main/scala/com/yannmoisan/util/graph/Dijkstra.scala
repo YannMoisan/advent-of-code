@@ -13,13 +13,12 @@ object Dijkstra {
       // find min
       val (d, s1) = toVisit.head
       val _       = toVisit.remove((d, s1))
-      grid(s1).foreach {
-        case (j, d2) =>
-          if (dist(j) > dist(s1) + d2) {
-            val _ = toVisit.remove((dist(j), j))
-            dist(j) = dist(s1) + d2
-            val _ = toVisit.addOne((dist(j), j))
-          }
+      grid(s1).foreach { case (j, d2) =>
+        if (dist(j) > dist(s1) + d2) {
+          val _ = toVisit.remove((dist(j), j))
+          dist(j) = dist(s1) + d2
+          val _ = toVisit.addOne((dist(j), j))
+        }
       }
     }
     dist(end)

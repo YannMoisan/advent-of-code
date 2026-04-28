@@ -14,7 +14,7 @@ object Day11 extends MultiPuzzle[Int, Int] {
   def flash(g: Grid[Int]): Int = {
     g.dim.indices.foreach { case p => g(p) = g(p) + 1 }
 
-    while (g.dim.indices.exists(p => g(p) > 9)) {
+    while (g.dim.indices.exists(p => g(p) > 9))
       g.dim.indices.foreach { p =>
         if (g(p) > 9) {
           g(p) = -1
@@ -25,7 +25,6 @@ object Day11 extends MultiPuzzle[Int, Int] {
           }
         }
       }
-    }
 
     var flash = 0
     g.dim.indices.foreach { p =>

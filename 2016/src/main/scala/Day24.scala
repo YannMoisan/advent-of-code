@@ -11,7 +11,7 @@ object Day24 extends MultiPuzzle[Int, Int] {
   // no need to convert char to int
   def findNumbers(grid: Grid[Char]): Seq[(Int, Int)] =
     grid.dim.indices.collect {
-      case i if (grid(i) != '.' && grid(i) != '#') => (grid(i).asDigit, i)
+      case i if grid(i) != '.' && grid(i) != '#' => (grid(i).asDigit, i)
     }
 
   def dist(grid: Grid[Char], p1: Int, p2: Int): Int = {

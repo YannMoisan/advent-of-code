@@ -46,9 +46,7 @@ object Day6 extends MultiPuzzle[Int, Int] {
     for {
       x <- (0 until 1000)
       y <- (0 until 1000)
-    } {
-      arr(y)(x) = points.map { case (px, py) => dist(x, y, px, py) }.sum
-    }
+    } arr(y)(x) = points.map { case (px, py) => dist(x, y, px, py) }.sum
 
     arr.flatten.count(_ < 10000)
   }

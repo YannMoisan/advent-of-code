@@ -11,7 +11,7 @@ object Dijkstra {
     while (toVisit.size > 0) {
       // find min
       val (d, s1) = toVisit.head
-      val _ = toVisit.remove((d, s1))
+      val _       = toVisit.remove((d, s1))
       grid.dim.neighbors4(s1).foreach { j =>
         if (dist(j) > dist(s1) + grid(j)) {
           val _ = toVisit.remove((dist(j), j))

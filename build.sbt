@@ -30,7 +30,7 @@ lazy val `advent-of-code-2015` = (project in file("2015"))
     libraryDependencies += scalaTest % Test
   )
 
-val monocleVersion = "2.1.0"
+val monocleVersion = "3.3.0"
 
 lazy val `advent-of-code-2016` = (project in file("2016"))
   .dependsOn(core)
@@ -39,8 +39,8 @@ lazy val `advent-of-code-2016` = (project in file("2016"))
     libraryDependencies += scalaTest % Test,
     // Change this to another test framework if you prefer
     libraryDependencies ++= Seq(
-      "com.github.julien-truffaut" %% "monocle-core"  % monocleVersion,
-      "com.github.julien-truffaut" %% "monocle-macro" % monocleVersion,
+      "dev.optics"                 %% "monocle-core"  % monocleVersion,
+      "dev.optics"                 %% "monocle-macro" % monocleVersion,
       "com.github.julien-truffaut" %% "monocle-law"   % monocleVersion % "test"
     )
   )
